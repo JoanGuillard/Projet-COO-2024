@@ -1,2 +1,4 @@
-package Ihm;public class Ihm {
+package Ihm;
+
+public class Ihm {
 }

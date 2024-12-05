@@ -7,5 +7,9 @@ public class Partie {
     private ArrayList<Animal> lesAnimaux;
     private ArrayList<ArrayList<String>> carte;
 
+    public Partie(Personnage personnage){
+        this.personnage = personnage;
+    }
+
 
 }

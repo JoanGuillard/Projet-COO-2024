@@ -1,2 +1,4 @@
-package Modele;public class Ecureuil {
+package Modele;
+
+public class Ecureuil {
 }

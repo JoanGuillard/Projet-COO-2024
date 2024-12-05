@@ -1,2 +1,4 @@
-package Modele;public class Singe {
+package Modele;
+
+public class Singe {
 }

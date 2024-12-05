@@ -1,17 +1,39 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Entrée with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        // Press Maj+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        String filePath = "jeu\\src\\carte.txt";
+        ArrayList<String> test = new ArrayList<String>();
+        try {
+            // Créer une instance de Scanner pour lire le fichier
+            Scanner scanner = new Scanner(new File(filePath));
 
-            // Press Maj+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+            // Lire le fichier ligne par ligne
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine(); // Lire la ligne actuelle
+                //System.out.println("Nouvelle ligne : " + line);
+
+                // Parcourir chaque caractère de la ligne
+                for (int i = 0; i < line.length(); i++) {
+
+                    char c = line.charAt(i); // Récupérer le caractère à la position i
+                    test.add(String.valueOf(c));
+                    System.out.print(test.get(test.size()-1) + "\u001B[42m");
+                    //System.out.print(c);
+
+                }
+                System.out.println();
+            }
+
+            // Fermer le scanner
+            scanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.err.println("Fichier introuvable : " + e.getMessage());
         }
     }
 }
