@@ -1,4 +1,4 @@
-package Modele;
+package modele;
 
 import java.util.ArrayList;
 
@@ -12,6 +12,7 @@ public abstract class Animal {
     private int cptNourritureAmi;
     private ArrayList<String> regimeAlimentaire;
     private Etat etat;
+    private String element;
 
     public Animal(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger){
         this.abscisse = abscisse;
@@ -21,6 +22,7 @@ public abstract class Animal {
         this.cptTourSansManger =0;
         this.cptNourritureAmi = 0;
         this.ami = false;
+        this.element = " ";
     }
 
     public void nouvellePosition(int abscisse, int ordonnee){

@@ -1,4 +1,4 @@
-package Ihm;
+package vue;
 
 public class Ihm {
 }
