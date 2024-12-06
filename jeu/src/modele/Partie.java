@@ -4,7 +4,7 @@ import exceptions.ActionImpossibleException;
 import exceptions.CommandeInconnueException;
 import exceptions.DeplacementImpossibleException;
 import exceptions.ObjetNonRamassableException;
-
+import static modele.CouleursAffichage.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,30 +13,36 @@ import java.util.Scanner;
 public abstract class Partie {
     private Personnage personnage;
     private ArrayList<Animal> lesAnimaux;
-    private ArrayList<ArrayList<String>> carte;
+    private ArrayList<ArrayList<ElementCarte>> carte;
 
     public Partie(Personnage personnage){
         this.personnage = personnage;
     }
 
 
-
+    /**
+     * Permet de charger une carte à partir d'un fichier .txt
+     * @param fichier le fichier à charger
+     */
     public void chargerCarte(String fichier){
-        this.carte = new ArrayList<ArrayList<String>>();
+        this.carte = new ArrayList<ArrayList<ElementCarte>>();
         try {
             Scanner scanner = new Scanner(new File(fichier));
-
+            int ordonnee =0;
             while (scanner.hasNextLine()) {
-                ArrayList<String> ligneCarte = new ArrayList<String>();
+                ArrayList<ElementCarte> ligneCarte = new ArrayList<ElementCarte>();
                 String line = scanner.nextLine();
 
                 for (int i = 0; i < line.length(); i++) {
                     char c = line.charAt(i);
-                    ajouterElementCarte(String.valueOf(c)); //Utilisation du Patron de méthode pour ajouter les éléments dans la carte.
+                    ligneCarte.add(ajouterElementCarte(String.valueOf(c),i,ordonnee));
+                    //Utilisation du Patron de méthode pour ajouter les éléments dans la carte.
                     // Raison : identifier les éléments selon le type de partie (buisson pour la forêt et rocher pour la jungle par ex)
-                    // et leur attribuer les couleurs qui leur correspond directement dans la carte.
+                    // et leur attribuer la couleur qui leur correspond directement dans la carte.
+
                 }
                 this.carte.add(ligneCarte);
+                ordonnee++;
             }
 
 
@@ -47,39 +53,77 @@ public abstract class Partie {
         }
     }
 
+    /**
+     *
+     * @return La carte en chaîne de caratères
+     */
+
     public String toString(){
         String res = "";
-        for(int i =0; i< carte.size(); i++){
-            for(int j =0; j < carte.get(i).size(); j++){
-                res+=  carte.get(i).get(j)  ;
+        for (ArrayList<ElementCarte> elementCartes : carte) {
+            for (ElementCarte elementCarte : elementCartes) {
+                res += elementCarte.getApparence();
             }
-            res+='\n';
+            res += '\n';
         }
         return res ;
     }
 
-    public abstract void ajouterElementCarte(String element);
+    /**
+     * Crée un objet de type Element et lui définit une apparence selon le caractère rencontré
+     * @param element l'élément rencontré dans le fichier .txt
+     * @param abscisse l'abscisse de l'élément rencontré (utile seulement pour le personnage et les animaux)
+     * @param ordonnee l'ordonnee de l'élément rencontré (utile seulement pour le personnage et les animaux)
+     * @return un objet de type ElementCarte
+     */
+    public abstract ElementCarte ajouterElementCarte(String element,int abscisse,int ordonnee);
 
-    public abstract void nvPositionAnimal(Animal animal);
+    /**
+     * Permet d'afficher l'apparence de l'animal sur la carte en fonction du type de la partie et de l'animal
+     * @param animal L'animal à afficher
+     */
 
+
+    /**
+     * Vérifie si l'élément en paramètre est de la nourriture en fonction du type de partie
+     * @param element L'élément à vérifier
+     * @return true si l'élément est de la nourriture et false sinon
+     */
     public abstract boolean estNourriture(String element);
 
-    public abstract boolean estAnimal(String element);
+    /**
+     * Vérifie si l'élément en paramètre est un animal en fonction du type de la partie
+     * @param element L'élément à vérifier
+     * @return true si l'élément est un animal, false sinon
+     */
+    public boolean estAnimal(ElementCarte element) {
+        return element instanceof Animal;
+    }
 
-    public void passerTourAnimaux() throws Exception {
-        for(int i =0; i < lesAnimaux.size(); i++){
-            lesAnimaux.get(i).seDeplacer(this.getCarte());
-            nvPositionAnimal(lesAnimaux.get(i));
+    /**
+     * Permet de déplacer les animaux présents sur la carte
+     */
+    public void passerTourAnimaux() {
+        for (Animal animal : lesAnimaux) {
+            setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(" "));
+            animal.seDeplacer(this.getCarte());
+            setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
         }
     }
 
-    public void deplacerPersonnage(String position) throws Exception {
-        int[] coordonnees = getCoordonnees(position, personnage.getAbscisse(), personnage.getOrdonnee());
+    /**
+     * Permet de déplacer le personnage selon la direction qu'il a choisi
+     * @param direction la direction choisie par le personnage
+     * @throws Exception se lève si le personnage tente d'effectuer un déplacement impossible (limite de carte, obstacle)
+     */
+    public void deplacerPersonnage(String direction) throws Exception {
+        int[] coordonnees = getCoordonnees(direction, personnage.getAbscisse(), personnage.getOrdonnee());
         int nvAbscisse = coordonnees[0];
         int nvOrdonnee = coordonnees[1];
         if(estCaseVide(nvAbscisse,nvOrdonnee)){
-            setCase(personnage.getAbscisse(), personnage.getOrdonnee(), " ");
-            setCase(nvAbscisse,nvOrdonnee, personnage.getApparence());
+            setCase(personnage.getAbscisse(), personnage.getOrdonnee(), carte.get(nvOrdonnee).get(nvAbscisse));
+            setCase(nvAbscisse,nvOrdonnee, personnage);
+            carte.get(nvOrdonnee).get(nvAbscisse).nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
             personnage.nouvellePosition(nvAbscisse,nvOrdonnee);
         }else{
             throw new DeplacementImpossibleException("Deplacement impossible !");
@@ -87,22 +131,28 @@ public abstract class Partie {
 
     }
 
+    /**
+     * Ajoute un objet à l'inventaire du personnage
+     * @param positionObjet la position de l'objet à ajouter
+     * @throws Exception se lève si la case où doit se trouver l'objet est vide
+     */
     public void ramasserObjetPersonnage(String positionObjet) throws Exception{
         int[] coordonneesObjet = getCoordonnees(positionObjet, personnage.getAbscisse(), personnage.getOrdonnee());
         int nvAbscisse = coordonneesObjet[0];
         int nvOrdonnee = coordonneesObjet[1];
-        if(estNourriture(getCase(nvAbscisse,nvOrdonnee))){
-            personnage.ajouterDansInventaire(setCaseString(" ",positionObjet,personnage.getAbscisse(),personnage.getOrdonnee()));
+        if(estNourriture(getCase(nvAbscisse,nvOrdonnee).getApparence())){
+            personnage.ajouterDansInventaire(setCaseString(new ElementCarte(" "),positionObjet,personnage.getAbscisse(),personnage.getOrdonnee()));
         }else{
             throw new ObjetNonRamassableException("Cette case est vide ou l'objet ne peut pas être ramassé !");
         }
     }
 
     public void frapperAnimalPersonnage(String positionAnimal) throws Exception{
-        if(estAnimal(positionAnimal)){
-            int[] coordonneesAnimal = getCoordonnees(positionAnimal, personnage.getAbscisse(), personnage.getOrdonnee());
-            Animal animal = getAnimal(coordonneesAnimal[0],coordonneesAnimal[1]);
-            animal.devenirEnnemi();
+
+        int[] coordonneesAnimal = getCoordonnees(positionAnimal, personnage.getAbscisse(), personnage.getOrdonnee());
+        ElementCarte animal = getCase(coordonneesAnimal[0],coordonneesAnimal[1]);
+        if(estAnimal(animal)){
+            ((Animal) animal).devenirEnnemi();
         }else{
             throw new ActionImpossibleException("Action impossible");
         }
@@ -113,7 +163,7 @@ public abstract class Partie {
         int[] coordonnees = getCoordonnees(position, personnage.getAbscisse(), personnage.getOrdonnee());
         if(personnage.getNbObjet(objet) >0 && estCaseVide(coordonnees[0], coordonnees[1])){
             personnage.deposerObjet(objet);
-            setCase(coordonnees[0],coordonnees[1],objet);
+            getCase(coordonnees[0],coordonnees[1]).setApparence(objet);
         }
     }
 
@@ -125,37 +175,34 @@ public abstract class Partie {
         return lesAnimaux;
     }
 
-    public ArrayList<ArrayList<String>> getCarte() {
+    public ArrayList<ArrayList<ElementCarte>> getCarte() {
         return carte;
     }
 
-    public String getCase(int abscisse, int ordonnee){
+    public ElementCarte getCase(int abscisse, int ordonnee){
         return carte.get(ordonnee).get(abscisse);
     }
 
     public boolean estCaseVide(int abscisse, int ordonnee){
-        if(carte.get(ordonnee).get(abscisse).equals(" ")){
-            return true;
-        }
-        return false;
+        return carte.get(ordonnee).get(abscisse).getApparence().equals(" ");
     }
 
-    public void setCase(int abscisse, int ordonnee, String element){
+    public void setCase(int abscisse, int ordonnee, ElementCarte element){
         carte.get(ordonnee).set(abscisse,element);
 
     }
 
-    public String setCaseString(String element, String position,int abscisse, int ordonnee) throws Exception {
+    public String setCaseString(ElementCarte element, String position,int abscisse, int ordonnee) throws Exception {
         int[] coordonnees = getCoordonnees(position,abscisse,ordonnee);
-        String res = getCase(coordonnees[0],coordonnees[1]);
-        setCase(coordonnees[0],coordonnees[1]," ");
+        String res = getCase(coordonnees[0],coordonnees[1]).getApparence();
+        getCase(coordonnees[0],coordonnees[1]).setApparence(" ");
         return res;
     }
 
     public int[] getCoordonnees(String position, int abscisse, int ordonnee) throws Exception{
         int[] coordonnees = new int[2];
         switch (position) {
-            case "z":
+            case "H":
                 if (ordonnee - 1 >= 0) {
                     coordonnees[0]=abscisse;
                     coordonnees[1]=ordonnee-1;
@@ -164,7 +211,7 @@ public abstract class Partie {
                     throw new DeplacementImpossibleException("La case du dessus n'est pas accessible !");
                 }
 
-            case "d":
+            case "D":
                 if (abscisse + 1 < carte.get(0).size()) {
                     coordonnees[0]=abscisse+1;
                     coordonnees[1]=ordonnee;
@@ -173,7 +220,7 @@ public abstract class Partie {
                     throw new DeplacementImpossibleException("La case de droite n'est pas accessible !");
                 }
 
-            case "q":
+            case "G":
                 if (abscisse - 1 >= 0) {
                     coordonnees[0]=abscisse-1;
                     coordonnees[1]=ordonnee;
@@ -182,7 +229,7 @@ public abstract class Partie {
                     throw new DeplacementImpossibleException("La case de gauche n'est pas accessible !");
                 }
 
-            case "s":
+            case "B":
                 if (ordonnee + 1 < carte.size()) {
                     coordonnees[0]=abscisse;
                     coordonnees[1]=ordonnee+1;
@@ -195,12 +242,5 @@ public abstract class Partie {
         }
     }
 
-    public Animal getAnimal(int abscisse, int ordonnee) throws ActionImpossibleException {
-        for(Animal animal : lesAnimaux){
-            if(animal.getAbscisse() == abscisse && animal.getOrdonnee() == ordonnee){
-                return animal;
-            }
-        }
-        throw new ActionImpossibleException("Action impossible");
-    }
+
 }

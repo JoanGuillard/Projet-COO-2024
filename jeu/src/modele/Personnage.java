@@ -4,41 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Personnage {
+import static modele.CouleursAffichage.*;
+
+public class Personnage extends ElementCarte{
+
+
     private String nom;
     private String apparence;
-    private int abscisse;
-    private int ordonnee;
     private Map<String,Integer> inventaire;
 
-    public Personnage(String nom){
-        this.nom = nom;
-        this.apparence = "@";
+    public Personnage(){
+        super(ANSI_WHITE_BACKGROUND + ANSI_BLACK + "@" + ANSI_RESET);
         this.inventaire = new HashMap<String,Integer>();
     }
 
-    public void nouvellePosition(int abscisse, int ordonnee){
-        this.abscisse = abscisse;
-        this.ordonnee = ordonnee;
-    }
-    public String getNom() {
-        return nom;
-    }
-
-    public int getAbscisse() {
-        return abscisse;
-    }
-
-    public String getApparence() {
-        return apparence;
-    }
-
-    public int getOrdonnee() {
-        return ordonnee;
-    }
-
-    public void setInventaire(){
-
+    public void setInventaire(String element){
+        this.inventaire.putIfAbsent(element,0);
     }
 
     public void deposerObjet(String objet){

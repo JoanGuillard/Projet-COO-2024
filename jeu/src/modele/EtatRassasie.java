@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.ArrayList;
+import static modele.CouleursAffichage.*;
 
 public class EtatRassasie implements Etat{
 
@@ -14,15 +15,15 @@ public class EtatRassasie implements Etat{
         return instance;
     }
     @Override
-    public void seDeplacer(Animal animal, ArrayList<ArrayList<String>> carte) {
+    public void seDeplacer(Animal animal, ArrayList<ArrayList<ElementCarte>> carte) {
         int abscisse = animal.getAbscisse();
         int ordonnee = animal.getOrdonnee();
 
-        if(carte.get(ordonnee).get(abscisse+1).equals(" ")){
+        if(carte.get(ordonnee).get(abscisse+1).getApparence().equals(" ")){
             animal.nouvellePosition(abscisse+1,ordonnee);
-        } else if (carte.get(ordonnee+1).get(abscisse).equals(" ")) {
+        } else if (carte.get(ordonnee+1).get(abscisse).getApparence().equals(" ")) {
             animal.nouvellePosition(abscisse,ordonnee+1);
-        } else if (carte.get(ordonnee-1).get(abscisse).equals(" ")) {
+        } else if (carte.get(ordonnee-1).get(abscisse).getApparence().equals(" ")) {
             animal.nouvellePosition(abscisse,ordonnee-1);
         } else{
             animal.nouvellePosition(abscisse-1,ordonnee);
@@ -31,6 +32,15 @@ public class EtatRassasie implements Etat{
         animal.augmenterCptSansManger();
         if(animal.getNbTourSansManger() == animal.getCptTourSansManger()){
             animal.changerEtat(EtatAffame.getInstance());
+        }
+    }
+
+    @Override
+    public String toString(Animal animal) {
+        if(animal.isAmi()){
+            return ANSI_PURPLE + animal.toString() + ANSI_RESET;
+        }else{
+            return ANSI_BLUE + animal.toString() + ANSI_RESET;
         }
     }
 }

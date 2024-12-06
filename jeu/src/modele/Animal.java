@@ -2,32 +2,24 @@ package modele;
 
 import java.util.ArrayList;
 
-public abstract class Animal {
+public abstract class Animal extends ElementCarte{
     private boolean ami;
-    private int abscisse;
-    private int ordonnee;
+
     private int nbTourSansManger;
     private int cptTourSansManger;
     private int nbNourritureAmi;
     private int cptNourritureAmi;
     private ArrayList<String> regimeAlimentaire;
     private Etat etat;
-    private String element;
+    private String apparence;
 
     public Animal(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger){
-        this.abscisse = abscisse;
-        this.ordonnee = ordonnee;
         this.nbNourritureAmi = nbNourritureAmi;
         this.nbTourSansManger = nbTourSansManger;
         this.cptTourSansManger =0;
         this.cptNourritureAmi = 0;
         this.ami = false;
-        this.element = " ";
-    }
-
-    public void nouvellePosition(int abscisse, int ordonnee){
-        this.ordonnee = ordonnee;
-        this.abscisse = abscisse;
+        this.etat = EtatRassasie.getInstance();
     }
 
     public void seNourrir(boolean estNourriParAmi){
@@ -38,19 +30,13 @@ public abstract class Animal {
                 devenirAmi();
             }
         }
+        this.changerEtat(EtatRassasie.getInstance());
     }
 
     public void devenirAmi(){
         this.ami = true;
     }
 
-    public int getAbscisse() {
-        return abscisse;
-    }
-
-    public int getOrdonnee() {
-        return ordonnee;
-    }
 
     public int getNbTourSansManger() {
         return nbTourSansManger;
@@ -76,19 +62,27 @@ public abstract class Animal {
         this.ami = false;
     }
 
-    public void seDeplacer(ArrayList<ArrayList<String>> carte){
+    public void seDeplacer(ArrayList<ArrayList<ElementCarte>> carte){
         etat.seDeplacer(this,carte);
     }
 
-    public abstract String toString();
+    public String toString(){
+        String nvApparence = etat.toString(this);
+        return nvApparence;
+    }
 
     public void augmenterCptSansManger(){
         this.cptTourSansManger++;
     }
 
+
     public void augmenterCptNourritureAmi(){this.cptNourritureAmi++;}
 
     public void changerEtat(Etat nouvelEtat){
         this.etat = nouvelEtat;
+    }
+
+    public boolean isAmi() {
+        return ami;
     }
 }
