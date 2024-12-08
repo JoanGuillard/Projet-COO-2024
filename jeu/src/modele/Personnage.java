@@ -14,7 +14,7 @@ public class Personnage extends ElementCarte{
     private Map<String,Integer> inventaire;
 
     public Personnage(){
-        super(ANSI_WHITE_BACKGROUND + ANSI_BLACK + "@" + ANSI_RESET);
+        super(ANSI_BLACK_BACKGROUND + ANSI_PURPLE + "@" + ANSI_RESET);
         this.inventaire = new HashMap<String,Integer>();
     }
 

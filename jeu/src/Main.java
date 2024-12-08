@@ -1,3 +1,4 @@
+import modele.ElementCarte;
 import modele.Partie;
 import modele.Personnage;
 import modele.SansDangerPartieForet;
@@ -14,7 +15,9 @@ public class Main {
         SansDangerPartieForet p = new SansDangerPartieForet(new Personnage());
         p.chargerCarte("jeu/src/cartes/carte.txt");
         System.out.println(p.toString());
-
-
+        for(int i =0; i<50; i++){
+            p.passerTourAnimaux();
+            System.out.println(p.toString());
+        }
     }
 }

@@ -17,6 +17,7 @@ public abstract class Partie {
 
     public Partie(Personnage personnage){
         this.personnage = personnage;
+        this.lesAnimaux = new ArrayList<Animal>();
     }
 
 
@@ -33,7 +34,7 @@ public abstract class Partie {
                 ArrayList<ElementCarte> ligneCarte = new ArrayList<ElementCarte>();
                 String line = scanner.nextLine();
 
-                for (int i = 0; i < line.length(); i++) {
+                for (int i = 0; i < line.length(); i++){
                     char c = line.charAt(i);
                     ligneCarte.add(ajouterElementCarte(String.valueOf(c),i,ordonnee));
                     //Utilisation du Patron de méthode pour ajouter les éléments dans la carte.
@@ -53,6 +54,9 @@ public abstract class Partie {
         }
     }
 
+
+    public abstract String afficherElement(ElementCarte e);
+
     /**
      *
      * @return La carte en chaîne de caratères
@@ -62,7 +66,7 @@ public abstract class Partie {
         String res = "";
         for (ArrayList<ElementCarte> elementCartes : carte) {
             for (ElementCarte elementCarte : elementCartes) {
-                res += elementCarte.getApparence();
+                res += afficherElement(elementCarte);
             }
             res += '\n';
         }
@@ -105,9 +109,9 @@ public abstract class Partie {
      */
     public void passerTourAnimaux() {
         for (Animal animal : lesAnimaux) {
-            setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(" "));
+            this.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(" "));
             animal.seDeplacer(this.getCarte());
-            setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
+            this.setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
         }
     }
 
