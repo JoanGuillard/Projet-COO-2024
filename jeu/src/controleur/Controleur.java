@@ -69,7 +69,7 @@ public class Controleur {
                     }else{
                         partie = new SansDangerPartieJungle(personnage);
                     }
-                    carte.chargerCarte(cheminFichier, partie);
+                    partie.chargerCarte(cheminFichier);
                     jouerTour(partie);
                 }
             }
@@ -85,7 +85,7 @@ public class Controleur {
         int hauteur = ihm.demanderCoordonnes("hauteur");
         if (hauteur == 0) return false;
 
-        carte.creerNouvelleCarte(largeur, hauteur, partie);
+        //partie.creerNouvelleCarte(largeur, hauteur);
         return true;
     }
     private void jouerTour(Partie partie) {

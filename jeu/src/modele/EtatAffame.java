@@ -1,9 +1,13 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import static modele.CouleursAffichage.*;
 
-public class EtatAffame implements Etat{
+public class EtatAffame extends Etat{
     private static EtatAffame instance;
 
     public EtatAffame(){}
@@ -18,15 +22,31 @@ public class EtatAffame implements Etat{
         int abscisseAnimal = animal.getAbscisse();
         int ordonneeAnimal = animal.getOrdonnee();
         for(String nourriture : animal.getRegimeAlimentaire()){
-            if(carte.get(ordonneeAnimal-1).get(abscisseAnimal).getApparence().equals(nourriture)){
+            if( verifierCase(abscisseAnimal, ordonneeAnimal-1, carte,nourriture) ){
                 animal.nouvellePosition(abscisseAnimal,ordonneeAnimal-1);
-
+                animal.seNourrir(false);
+                return;
+            } else if ( verifierCase(abscisseAnimal, ordonneeAnimal+1, carte,nourriture) ) {
+                animal.nouvellePosition(abscisseAnimal,ordonneeAnimal+1);
+                animal.seNourrir(false);
+                return;
+            } else if ( verifierCase(abscisseAnimal-1, ordonneeAnimal, carte,nourriture) ) {
+                animal.nouvellePosition(abscisseAnimal-1,ordonneeAnimal);
+                animal.seNourrir(false);
+                return;
+            } else if ( verifierCase(abscisseAnimal+1, ordonneeAnimal, carte,nourriture) ) {
+                animal.nouvellePosition(abscisseAnimal+1,ordonneeAnimal);
+                animal.seNourrir(false);
+                return;
             }
         }
+        deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal);
     }
+
+
 
     @Override
     public String toString(Animal animal) {
-        return ANSI_BLACK + animal.getApparence() + ANSI_RESET;
+        return ANSI_BLACK_BACKGROUND + ANSI_RED + animal.getApparence() + ANSI_RESET;
     }
 }

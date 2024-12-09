@@ -8,21 +8,35 @@ public class SansDangerPartieForet extends Partie{
     }
 
     @Override
+    public String afficherElement(ElementCarte e) {
+        switch(e.getApparence()){
+            case "C":
+                return ANSI_WHITE_BACKGROUND + ANSI_BLACK + e.getApparence() + ANSI_RESET;
+            case "G":
+                return ANSI_RED_BACKGROUND + ANSI_BLACK + e.getApparence() + ANSI_RESET;
+            case "A", "B":
+                return ANSI_BLACK_BACKGROUND + ANSI_GREEN + e.getApparence() + ANSI_RESET;
+            case "@":
+                return e.getApparence();
+            case "E":
+                return e.toString();
+            default:
+                return ANSI_GREEN_BACKGROUND + e.getApparence() + ANSI_RESET;
+        }
+    }
+
+    @Override
     public ElementCarte ajouterElementCarte(String element,int abscisse, int ordonnee) {
         switch(element){
-            case "C":
-                return new ElementCarte(ANSI_WHITE_BACKGROUND + ANSI_BLACK + element + ANSI_RESET);
-            case "G":
-                return new ElementCarte(ANSI_RED_BACKGROUND + ANSI_BLACK + element + ANSI_RESET);
-            case "A", "B":
-                return new ElementCarte(ANSI_BLACK_BACKGROUND + ANSI_GREEN + element + ANSI_RESET);
             case "@":
                 getPersonnage().nouvellePosition(abscisse,ordonnee);
-                return  getPersonnage();
+                return getPersonnage();
             case "E":
-                return new Ecureuil(abscisse,ordonnee,1,5);
+                Ecureuil e = new Ecureuil(abscisse,ordonnee,1,5);
+                getLesAnimaux().add(e);
+                return e;
             default:
-                return new ElementCarte(ANSI_GREEN_BACKGROUND + element + ANSI_RESET);
+                return new ElementCarte(element);
         }
     }
 

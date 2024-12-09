@@ -1,7 +1,6 @@
-import modele.Partie;
-import modele.Personnage;
-import modele.SansDangerPartieForet;
+import modele.*;
 import controleur.Controleur;
+import vue.Ihm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +11,7 @@ import static modele.CouleursAffichage.ANSI_BLACK;
 
 public class Main {
     public static void main(String[] args) {
-        Controleur controleur = new Controleur();
+        /*Controleur controleur = new Controleur();
 
         // Lancer le jeu
         System.out.println("Bienvenue dans le jeu de gestion de carte !");
@@ -21,11 +20,53 @@ public class Main {
 
         controleur.jouerPartie();
 
-        System.out.println("Merci d'avoir joué ! À bientôt.");
+        System.out.println("Merci d'avoir joué ! À bientôt.");*/
+        Ihm ihm = new Ihm();
         SansDangerPartieForet p = new SansDangerPartieForet(new Personnage());
-        p.chargerCarte("jeu/src/cartes/carte.txt");
+        p.chargerCarte("jeu/src/cartesForet/carte.txt");
         System.out.println(p.toString());
+        for(int i =0; i<50; i++){
+            try {
+                int choixAction = ihm.demanderActionJoueur();
+                switch (choixAction) {
+                    case 1:
+                        // Déplacement du personnage
+                        String direction = ihm.demanderDirection();
+                        if (direction.equals("Q")) {
+                            ihm.afficherMessage("Vous avez choisi de quitter le jeu. Merci d'avoir joué !");
+                            break;
+                        } else {
+                            p.deplacerPersonnage(direction);
+                            System.out.println(p.toString());
 
+                            ihm.afficherMessage("Vous vous êtes déplacé vers : " + direction);
+                        }
+                        break;
 
+                    case 2:
+                        String directionRamassage = ihm.demanderDirection();
+                        // Ramasser un objet
+                        p.ramasserObjetPersonnage(directionRamassage);
+                        System.out.println(p.toString());
+                        ihm.afficherMessage("Vous avez ramassé un objet.");
+                        break;
+
+                    case 3:
+                        String objet = ihm.demanderObjetADeposer(p.getPersonnage());
+                        String directionDepot = ihm.demanderDirection();
+                        // Poser un objet
+                        p.deposerObjetPersonnage(directionDepot, objet);
+                        System.out.println(p.toString());
+                        ihm.afficherMessage("Vous avez posé un objet.");
+                        break;
+                }
+                    p.passerTourAnimaux();
+                    System.out.println(p.toString());
+
+            }
+            catch (Exception e){
+                break;
+            }
+        }
     }
 }

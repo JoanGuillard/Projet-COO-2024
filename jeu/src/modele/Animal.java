@@ -20,6 +20,8 @@ public abstract class Animal extends ElementCarte{
         this.cptNourritureAmi = 0;
         this.ami = false;
         this.etat = EtatRassasie.getInstance();
+        this.nouvellePosition(abscisse,ordonnee);
+        this.regimeAlimentaire = new ArrayList<String>();
     }
 
     public void seNourrir(boolean estNourriParAmi){
@@ -67,9 +69,9 @@ public abstract class Animal extends ElementCarte{
     }
 
     public String toString(){
-        String nvApparence = etat.toString(this);
-        return nvApparence;
+        return etat.toString(this);
     }
+
 
     public void augmenterCptSansManger(){
         this.cptTourSansManger++;

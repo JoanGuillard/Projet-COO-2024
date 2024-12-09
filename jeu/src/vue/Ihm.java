@@ -1,6 +1,10 @@
 package vue;
 
+import modele.Personnage;
+
 import java.io.File;
+import java.lang.invoke.StringConcatFactory;
+import java.util.List;
 import java.util.Scanner;
 
 public class Ihm {
@@ -179,5 +183,25 @@ public class Ihm {
         System.out.println(message);
     }
 
+    public String demanderObjetADeposer(Personnage p){
+        boolean choixIncorrect = true;
+        String res = "";
+        for(String item : p.getInventaire().keySet()){
+            res += item + " en poche : " + p.getInventaire().get(item) + '\n';
+        }
+        System.out.println(res);
+        while(choixIncorrect) {
+            if (scanner.hasNext()) {
+                String reponse = scanner.next().toUpperCase();
+                if(p.isInInventaire(reponse)){
+                    choixIncorrect = false;
+                    return reponse;
+                }else{
+                    System.out.println("Veuillez saisir un élément présent dans votre inventaire");
+                }
+            }
+        }
+        return "";
+    }
 
 }

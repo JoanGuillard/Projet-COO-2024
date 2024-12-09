@@ -5,34 +5,55 @@ public class SansDangerPartieJungle extends Partie {
 
     public SansDangerPartieJungle(Personnage personnage) {
         super(personnage);
-        getPersonnage().setInventaire("B");
         getPersonnage().setInventaire("C");
+        getPersonnage().setInventaire("B");
+    }
+
+    @Override
+    public String afficherElement(ElementCarte e) {
+        switch (e.getApparence()) {
+            //banane
+            case "B":
+                return ANSI_YELLOW_BACKGROUND + ANSI_BLACK + e.getApparence() + ANSI_RESET;
+            //champignon
+            case "C":
+                return ANSI_WHITE_BACKGROUND + ANSI_BLACK + e.getApparence() + ANSI_RESET;
+            //singe
+            case "S":
+                return e.toString();
+            //personnage
+            case "@":
+                return getPersonnage().getApparence();
+            //rocher
+            case "R":
+                return ANSI_CYAN_BACKGROUND + ANSI_BLACK + e.getApparence() + ANSI_RESET;
+            //cocotier
+            case "T":
+                return ANSI_BLACK_BACKGROUND + ANSI_GREEN + e.getApparence() + ANSI_RESET;
+            default:
+                return ANSI_GREEN_BACKGROUND + e.getApparence() + ANSI_RESET;
+        }
     }
 
     @Override
     public ElementCarte ajouterElementCarte(String element, int abscisse, int ordonnee) {
         switch (element) {
-            case "B":
-                return new ElementCarte(ANSI_YELLOW_BACKGROUND + ANSI_BLACK + element + ANSI_RESET);
-            case "C":
-                return new ElementCarte(ANSI_GREEN_BACKGROUND + ANSI_WHITE + element + ANSI_RESET);
             case "S":
-                return new Singe(abscisse, ordonnee, 2, 3);
+                Singe s = new Singe(abscisse, ordonnee, 2, 3);
+                getLesAnimaux().add(s);
+                return s;
             case "@":
                 getPersonnage().nouvellePosition(abscisse, ordonnee);
                 return getPersonnage();
-            case " ": // Zone vide
-                return new ElementCarte(ANSI_GREEN_BACKGROUND + " " + ANSI_RESET);
             default:
-                return new ElementCarte(ANSI_GREEN_BACKGROUND + element + ANSI_RESET);
+                return new ElementCarte(element);
         }
     }
 
     @Override
     public boolean estNourriture(String element) {
         switch (element) {
-            case "B":
-            case "C":
+            case "B" , "C":
                 return true;
             default:
                 return false;

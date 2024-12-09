@@ -1,5 +1,9 @@
 package modele;
 
+import exceptions.CommandeInconnueException;
+import exceptions.DeplacementImpossibleException;
+
+import javax.swing.text.Element;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -12,8 +16,8 @@ public class Carte {
     private int hauteur;
 
 
-    private Carte() {
-        this.carte = new ArrayList<>();
+    public Carte() {
+        this.carte = new ArrayList<ArrayList<ElementCarte>>();
     }
 
     public static Carte getInstance() {
@@ -24,52 +28,6 @@ public class Carte {
     }
 
     // Charger une carte depuis un fichier
-    public void chargerCarte(String fichier,Partie partie){
-        this.carte = new ArrayList<ArrayList<ElementCarte>>();
-        try {
-            Scanner scanner = new Scanner(new File(fichier));
-            int ordonnee =0;
-            while (scanner.hasNextLine()) {
-                ArrayList<ElementCarte> ligneCarte = new ArrayList<ElementCarte>();
-                String line = scanner.nextLine();
-
-                for (int i = 0; i < line.length(); i++) {
-                    char c = line.charAt(i);
-                    ligneCarte.add(partie.ajouterElementCarte(String.valueOf(c),i,ordonnee));
-                    //Utilisation du Patron de méthode pour ajouter les éléments dans la carte.
-                    // Raison : identifier les éléments selon le type de partie (buisson pour la forêt et rocher pour la jungle par ex)
-                    // et leur attribuer la couleur qui leur correspond directement dans la carte.
-
-                }
-                this.carte.add(ligneCarte);
-                ordonnee++;
-            }
-
-
-            scanner.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Fichier introuvable : " + e.getMessage());
-        }
-    }
-
-    public void creerNouvelleCarte(int abscisse, int ordonne, Partie partie) {
-        this.carte.clear();
-        this.hauteur = ordonne;
-        this.largeur = abscisse;
-
-        for (int i = 0; i < hauteur; i++) {
-            ArrayList<ElementCarte> ligneCarte = new ArrayList<>();
-            for (int j = 0; j < largeur; j++) {
-                if (i == 0 || i == hauteur - 1 || j == 0 || j == largeur - 1) {
-                    ligneCarte.add(partie.ajouterElementCarte("A", i, j));
-                } else {
-                    ligneCarte.add(partie.ajouterElementCarte(" ", i, j));
-                }
-            }
-            carte.add(ligneCarte);
-        }
-    }
 
     public ElementCarte getElement(int x, int y) {
         if (x >= 0 && x < hauteur && y >= 0 && y < largeur) {
@@ -84,6 +42,10 @@ public class Carte {
         }
     }
 
+    public void ajouterLigne(ArrayList<ElementCarte> ligne){
+        carte.add(ligne);
+    }
+
 
     public int getLargeur() {
         return largeur;
@@ -91,5 +53,73 @@ public class Carte {
 
     public int getHauteur() {
         return hauteur;
+    }
+
+    public int[] getCoordonnees(String position, int abscisse, int ordonnee) throws Exception{
+        int[] coordonnees = new int[2];
+        switch (position) {
+            case "H":
+                if (ordonnee - 1 >= 0) {
+                    coordonnees[0]=abscisse;
+                    coordonnees[1]=ordonnee-1;
+                    return coordonnees;
+                } else {
+                    throw new DeplacementImpossibleException("La case du dessus n'est pas accessible !");
+                }
+
+            case "D":
+                if (abscisse + 1 < carte.get(0).size()) {
+                    coordonnees[0]=abscisse+1;
+                    coordonnees[1]=ordonnee;
+                    return coordonnees;
+                } else {
+                    throw new DeplacementImpossibleException("La case de droite n'est pas accessible !");
+                }
+
+            case "G":
+                if (abscisse - 1 >= 0) {
+                    coordonnees[0]=abscisse-1;
+                    coordonnees[1]=ordonnee;
+                    return coordonnees;
+                } else {
+                    throw new DeplacementImpossibleException("La case de gauche n'est pas accessible !");
+                }
+
+            case "B":
+                if (ordonnee + 1 < carte.size()) {
+                    coordonnees[0]=abscisse;
+                    coordonnees[1]=ordonnee+1;
+                    return coordonnees;
+                } else {
+                    throw new DeplacementImpossibleException("La case du dessous n'est pas accessible !");
+                }
+            default:
+                throw new CommandeInconnueException("Commande inconnue");
+        }
+    }
+
+
+
+    public String setCaseString(ElementCarte element, String position,int abscisse, int ordonnee) throws Exception {
+        int[] coordonnees = getCoordonnees(position,abscisse,ordonnee);
+        String res = getCase(coordonnees[0],coordonnees[1]).getApparence();
+        getCase(coordonnees[0],coordonnees[1]).setApparence(" ");
+        return res;
+    }
+
+    public ArrayList<ArrayList<ElementCarte>> getCarte() {
+        return carte;
+    }
+
+    public ElementCarte getCase(int abscisse, int ordonnee){
+        return carte.get(ordonnee).get(abscisse);
+    }
+
+    public boolean estCaseVide(int abscisse, int ordonnee){
+        return carte.get(ordonnee).get(abscisse).getApparence().equals(" ");
+    }
+
+    public void setCase(int abscisse, int ordonnee, ElementCarte element){
+        carte.get(ordonnee).set(abscisse,element);
     }
 }
