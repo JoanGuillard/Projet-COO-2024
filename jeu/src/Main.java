@@ -59,13 +59,19 @@ public class Main {
                         System.out.println(p.toString());
                         ihm.afficherMessage("Vous avez posé un objet.");
                         break;
+                    case 4:
+                        String directionAnimal = ihm.demanderDirection();
+                        // Interagir avec un animal
+                        p.frapperAnimalPersonnage(directionAnimal);
+                        ihm.afficherMessage("Vous avez interagi avec un animal.");
+                        break;
                 }
                     p.passerTourAnimaux();
                     System.out.println(p.toString());
 
             }
             catch (Exception e){
-                break;
+                System.out.println(e.getMessage());
             }
         }
     }

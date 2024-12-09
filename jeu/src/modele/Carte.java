@@ -42,6 +42,10 @@ public class Carte {
         }
     }
 
+    public void setDimensions(){
+        this.hauteur = carte.size();
+        this.largeur = carte.get(0).size();
+    }
     public void ajouterLigne(ArrayList<ElementCarte> ligne){
         carte.add(ligne);
     }
@@ -121,5 +125,16 @@ public class Carte {
 
     public void setCase(int abscisse, int ordonnee, ElementCarte element){
         carte.get(ordonnee).set(abscisse,element);
+    }
+
+    public boolean verifierCase(int abscisse, int ordonnee , String element){
+        return ordonnee < hauteur && ordonnee >= 0 && abscisse >= 0 && abscisse < largeur && getCase(abscisse,ordonnee).getApparence().equals(element);
+    }
+
+    public boolean estCaseAdjacente(int abscisse, int ordonnee, String element){
+        return verifierCase(abscisse+1, ordonnee, element) ||
+                verifierCase(abscisse-1, ordonnee, element) ||
+                verifierCase(abscisse, ordonnee+1, element) ||
+                verifierCase(abscisse, ordonnee-1, element);
     }
 }

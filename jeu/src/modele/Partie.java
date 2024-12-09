@@ -45,6 +45,7 @@ public abstract class Partie {
                 carte.ajouterLigne(ligneCarte);
                 ordonnee++;
             }
+            carte.setDimensions();
 
 
             scanner.close();
@@ -128,7 +129,7 @@ public abstract class Partie {
     public void passerTourAnimaux() {
         for (Animal animal : lesAnimaux) {
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(" "));
-            animal.seDeplacer(carte.getCarte());
+            animal.seDeplacer(carte, personnage);
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
         }
     }

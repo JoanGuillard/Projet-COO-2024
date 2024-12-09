@@ -64,8 +64,8 @@ public abstract class Animal extends ElementCarte{
         this.ami = false;
     }
 
-    public void seDeplacer(ArrayList<ArrayList<ElementCarte>> carte){
-        etat.seDeplacer(this,carte);
+    public void seDeplacer(Carte carte, Personnage personnage){
+        etat.seDeplacer(this,carte,personnage);
     }
 
     public String toString(){

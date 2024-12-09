@@ -18,25 +18,25 @@ public class EtatAffame extends Etat{
         return instance;
     }
     @Override
-    public void seDeplacer(Animal animal, ArrayList<ArrayList<ElementCarte>> carte) {
+    public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         int abscisseAnimal = animal.getAbscisse();
         int ordonneeAnimal = animal.getOrdonnee();
         for(String nourriture : animal.getRegimeAlimentaire()){
-            if( verifierCase(abscisseAnimal, ordonneeAnimal-1, carte,nourriture) ){
+            if( carte.verifierCase(abscisseAnimal, ordonneeAnimal-1, nourriture) ){
                 animal.nouvellePosition(abscisseAnimal,ordonneeAnimal-1);
-                animal.seNourrir(false);
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal,ordonneeAnimal-1, personnage.getApparence()));
                 return;
-            } else if ( verifierCase(abscisseAnimal, ordonneeAnimal+1, carte,nourriture) ) {
+            } else if ( carte.verifierCase(abscisseAnimal, ordonneeAnimal+1, nourriture) ) {
                 animal.nouvellePosition(abscisseAnimal,ordonneeAnimal+1);
-                animal.seNourrir(false);
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal,ordonneeAnimal+1, personnage.getApparence()));
                 return;
-            } else if ( verifierCase(abscisseAnimal-1, ordonneeAnimal, carte,nourriture) ) {
+            } else if ( carte.verifierCase(abscisseAnimal-1, ordonneeAnimal, nourriture) ) {
                 animal.nouvellePosition(abscisseAnimal-1,ordonneeAnimal);
-                animal.seNourrir(false);
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal-1,ordonneeAnimal, personnage.getApparence()));
                 return;
-            } else if ( verifierCase(abscisseAnimal+1, ordonneeAnimal, carte,nourriture) ) {
+            } else if ( carte.verifierCase(abscisseAnimal+1, ordonneeAnimal,nourriture) ) {
                 animal.nouvellePosition(abscisseAnimal+1,ordonneeAnimal);
-                animal.seNourrir(false);
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal+1,ordonneeAnimal, personnage.getApparence()));
                 return;
             }
         }

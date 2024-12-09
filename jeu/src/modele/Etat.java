@@ -7,30 +7,28 @@ import java.util.Random;
 
 public abstract class Etat {
 
-    public abstract void seDeplacer(Animal animal, ArrayList<ArrayList<ElementCarte>> carte);
+    public abstract void seDeplacer(Animal animal, Carte carte, Personnage personnage);
     public abstract String toString(Animal animal);
 
-    public boolean verifierCase(int abscisse, int ordonnee , ArrayList<ArrayList<ElementCarte>> carte,String element){
-        return ordonnee < carte.size() && ordonnee >= 0 && abscisse >= 0 && abscisse < carte.get(ordonnee).size() && carte.get(ordonnee).get(abscisse).getApparence().equals(element);
-    }
 
-    public void deplacementAleatoire(ArrayList<ArrayList<ElementCarte>> carte, int abscisseAnimal, int ordonneeAnimal,Animal animal){
+
+    public void deplacementAleatoire(Carte carte, int abscisseAnimal, int ordonneeAnimal,Animal animal){
         Map<Integer, Integer> abscissesVides = new HashMap<Integer,Integer>();
         Map<Integer, Integer> ordonneesVides = new HashMap<Integer,Integer>();
         int nbCaseVide = 0;
-        if(verifierCase(abscisseAnimal,ordonneeAnimal-1,carte," ")){
+        if(carte.verifierCase(abscisseAnimal,ordonneeAnimal-1," ")){
             nbCaseVide++;
             abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal);
             ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal-1);
-        }if (verifierCase(abscisseAnimal,ordonneeAnimal+1,carte, " ")){
+        }if (carte.verifierCase(abscisseAnimal,ordonneeAnimal+1, " ")){
             nbCaseVide++;
             abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal);
             ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal+1);
-        }if (verifierCase(abscisseAnimal-1,ordonneeAnimal,carte," ")){
+        }if (carte.verifierCase(abscisseAnimal-1,ordonneeAnimal," ")){
             nbCaseVide++;
             abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal-1);
             ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal);
-        }if(verifierCase(abscisseAnimal+1,ordonneeAnimal,carte," ")){
+        }if(carte.verifierCase(abscisseAnimal+1,ordonneeAnimal," ")){
             nbCaseVide++;
             abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal+1);
             ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal);

@@ -15,7 +15,7 @@ public class EtatRassasie extends Etat{
         return instance;
     }
     @Override
-    public void seDeplacer(Animal animal, ArrayList<ArrayList<ElementCarte>> carte) {
+    public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         int abscisse = animal.getAbscisse();
         int ordonnee = animal.getOrdonnee();
         deplacementAleatoire(carte, abscisse, ordonnee, animal);
