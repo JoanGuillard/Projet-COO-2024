@@ -1,10 +1,16 @@
 package modele;
+import java.util.Random;
+
 import static modele.CouleursAffichage.*;
 public class SansDangerPartieForet extends Partie{
     public SansDangerPartieForet(Personnage personnage) {
         super(personnage);
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("G");
+    }
+
+    @Override
+    public void remplirCarte(Carte carte) {
     }
 
     @Override
@@ -48,6 +54,20 @@ public class SansDangerPartieForet extends Partie{
             default:
                 return false;
         }
+    }
+    @Override
+    protected String genererElementAleatoire(Random random) {
+        int chance = random.nextInt(100);
+        if (chance < 50) return " ";  // 50% vide
+        else if (chance < 70) return "C"; // 20% champignon
+        else   return "G"; // 30% gland
+
+    }
+    @Override
+    public void initialiserCarte(int largeur, int hauteur) {
+        Carte carte = creerNouvelleCarte(largeur, hauteur);
+        remplirCarte(carte);
+        this.setCarte(carte);
     }
 
 

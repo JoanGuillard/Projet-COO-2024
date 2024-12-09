@@ -8,6 +8,7 @@ import static modele.CouleursAffichage.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public abstract class Partie {
@@ -55,23 +56,22 @@ public abstract class Partie {
         }
     }
 
-    /*public void creerNouvelleCarte(int abscisse, int ordonne) {
-        this.carte.clear();
-        this.hauteur = ordonne;
-        this.largeur = abscisse;
-
+    public Carte creerNouvelleCarte(int largeur, int hauteur) {
+        Carte nouvelleCarte = new Carte();
         for (int i = 0; i < hauteur; i++) {
             ArrayList<ElementCarte> ligneCarte = new ArrayList<>();
             for (int j = 0; j < largeur; j++) {
                 if (i == 0 || i == hauteur - 1 || j == 0 || j == largeur - 1) {
-                    ligneCarte.add(partie.ajouterElementCarte("A", i, j));
+                    ligneCarte.add(ajouterElementCarte("A", j, i));
                 } else {
-                    ligneCarte.add(partie.ajouterElementCarte(" ", i, j));
+                    ligneCarte.add(ajouterElementCarte(" ", j, i));
                 }
             }
-            carte.add(ligneCarte);
+            nouvelleCarte.ajouterLigne(ligneCarte);
         }
-    }*/
+        nouvelleCarte.setDimensions();
+        return nouvelleCarte;
+    }
 
 
     public abstract String afficherElement(ElementCarte e);
@@ -81,9 +81,9 @@ public abstract class Partie {
      * @return La carte en chaîne de caratères
      */
 
-    public String toString(){
+    public String toString(ArrayList<ArrayList<ElementCarte>> carte){
         String res = "";
-        for (ArrayList<ElementCarte> elementCartes : carte.getCarte()) {
+        for (ArrayList<ElementCarte> elementCartes : carte) {
             for (ElementCarte elementCarte : elementCartes) {
                 res += afficherElement(elementCarte);
             }
@@ -91,6 +91,14 @@ public abstract class Partie {
         }
         return res ;
     }
+
+    /**
+     * remplie la carte selon le theme choisi
+     * @param carte
+     */
+    public abstract void remplirCarte(Carte carte);
+    protected abstract String genererElementAleatoire(Random random);
+    public abstract void initialiserCarte(int largeur, int hauteur);
 
     /**
      * Crée un objet de type Element et lui définit une apparence selon le caractère rencontré
@@ -200,10 +208,34 @@ public abstract class Partie {
     }
 
 
+    /**
+     * place la personnage dans une case non bloquee pour le premier coup
+     * @param carte
+     * @param random
+     */
+    public void ajouterPersonnageDansZoneProtegee(Carte carte, Random random) {
+        int hauteur = carte.getHauteur();
+        int largeur = carte.getLargeur();
+        boolean positionTrouvee = false;
 
+        while (!positionTrouvee) {
+            int x = random.nextInt(largeur - 2) + 1;
+            int y = random.nextInt(hauteur - 2) + 1;
 
+            if (carte.getCase(x, y).getApparence().equals(" ") &&
+                    carte.getCase(x - 1, y).getApparence().matches("[ABTR]") &&
+                    carte.getCase(x + 1, y).getApparence().matches("[ABTR]") &&
+                    carte.getCase(x, y - 1).getApparence().matches("[ABTR]") &&
+                    carte.getCase(x, y + 1).getApparence().matches("[ABTR]")) {
 
+                carte.setCase(x, y, getPersonnage());
+                getPersonnage().nouvellePosition(x, y);
+                positionTrouvee = true;
+            }
+        }
+    }
 
-
-
+    public void setCarte(Carte carte) {
+        this.carte = carte;
+    }
 }

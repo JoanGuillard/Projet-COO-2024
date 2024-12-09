@@ -1,10 +1,10 @@
 package vue;
 
+import modele.Carte;
 import modele.Personnage;
 
 import java.io.File;
-import java.lang.invoke.StringConcatFactory;
-import java.util.List;
+
 import java.util.Scanner;
 
 public class Ihm {
@@ -14,6 +14,7 @@ public class Ihm {
     public Ihm() {
         this.scanner = new Scanner(System.in);
     }
+    Carte carte = Carte.getInstance();
 
 
     /**
@@ -78,9 +79,9 @@ public class Ihm {
      * @return l'entier correspondant au choix,-1 pour quitter ou aucun choix
      */
     public int demanderCreationCarte() {
-        boolean choixIncorrect = true;
-        int choix = -1;
-        while (choixIncorrect) {
+        boolean choixIncorrect = false;
+        int choix = 0;
+        while (!choixIncorrect) {
             System.out.println("Pour demarrer une partie,voulez vous:");
             System.out.println("1 : creer une nouvelle carte");
             System.out.println("2 : charger une carte via un fichier .txt");
@@ -88,15 +89,15 @@ public class Ihm {
             System.out.println("Veuillez saisir l'entier qui correspond a votre choix.");
             if (scanner.hasNextInt()) {
                 choix = scanner.nextInt();
-                if (0 < choix && choix <= 3) {
-                    choixIncorrect = false;
+                if (0 <= choix && choix <= 3) {
+                    choixIncorrect = true;
                     return choix;
                 }
             }
             System.out.println("L'entier que vous avez choisi ne correspond a aucun choix.Veuillez saisir un entier valide.");
             scanner.nextLine();
         }
-        return -1;
+        return choix;
     }
 
     /**

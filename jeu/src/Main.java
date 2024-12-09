@@ -1,3 +1,4 @@
+import controleur.ControleurJungle;
 import modele.*;
 import controleur.Controleur;
 import vue.Ihm;
@@ -22,8 +23,21 @@ public class Main {
 
         System.out.println("Merci d'avoir joué ! À bientôt.");*/
         Ihm ihm = new Ihm();
-        SansDangerPartieForet p = new SansDangerPartieForet(new Personnage());
-        p.chargerCarte("jeu/src/cartesForet/carte.txt");
+        /*Controleur controleur = new Controleur() {
+            @Override
+            public Partie creerPartie() {
+                return null;  // Vous ne créez pas de partie ici, car c'est géré dans les sous-contrôleurs
+            }
+
+            @Override
+            public void jouerTour(Partie partie) {
+                // Implémentation spécifique à chaque sous-contrôleur
+            }
+        };*/
+        Controleur controleur = new ControleurJungle();
+
+        // Lancez le jeu
+        controleur.lancerPartie();/*p.chargerCarte("jeu/src/cartesForet/carte.txt");
         System.out.println(p.toString());
         for(int i =0; i<50; i++){
             try {
@@ -73,6 +87,6 @@ public class Main {
             catch (Exception e){
                 System.out.println(e.getMessage());
             }
-        }
+        }*/
     }
 }

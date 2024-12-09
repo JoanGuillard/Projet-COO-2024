@@ -112,7 +112,7 @@ public class Carte {
     }
 
     public ArrayList<ArrayList<ElementCarte>> getCarte() {
-        return carte;
+        return this.carte;
     }
 
     public ElementCarte getCase(int abscisse, int ordonnee){
@@ -137,4 +137,5 @@ public class Carte {
                 verifierCase(abscisse, ordonnee+1, element) ||
                 verifierCase(abscisse, ordonnee-1, element);
     }
+
 }
