@@ -6,6 +6,7 @@ import vue.Ihm;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -36,10 +37,11 @@ public class Main {
                 // Implémentation spécifique à chaque sous-contrôleur
             }
         };*/
-        Controleur controleur = new ControleurJungle();
+        //Controleur controleur = new ControleurJungle();
 
         // Lancez le jeu
-        controleur.lancerPartie();/*p.chargerCarte("jeu/src/cartesForet/carte.txt");
+        Partie p = new SansDangerPartieForet(new Personnage());
+        p.chargerCarte("jeu/src/cartesForet/carte.txt");
         System.out.println(p.toString());
         for(int i =0; i<50; i++){
             try {
@@ -89,6 +91,6 @@ public class Main {
             catch (Exception e){
                 System.out.println(e.getMessage());
             }
-        }*/
+        }
     }
 }

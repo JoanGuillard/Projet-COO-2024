@@ -81,9 +81,9 @@ public abstract class Partie {
      * @return La carte en chaîne de caratères
      */
 
-    public String toString(ArrayList<ArrayList<ElementCarte>> carte){
+    public String toString(Carte carte){
         String res = "";
-        for (ArrayList<ElementCarte> elementCartes : carte) {
+        for (ArrayList<ElementCarte> elementCartes : carte.getCarte()) {
             for (ElementCarte elementCarte : elementCartes) {
                 res += afficherElement(elementCarte);
             }
