@@ -26,6 +26,8 @@ public class ControleurJungle extends Controleur {
                         String direction = ihm.demanderDirection();
                         partie.deplacerPersonnage(direction);
                         ihm.afficherMessage(partie.toString(carte));
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage("Deplacement effectue.");
                         break;
 
                     case 2:
@@ -39,13 +41,14 @@ public class ControleurJungle extends Controleur {
                         String objet = ihm.demanderObjetADeposer(personnage);
                         partie.deposerObjetPersonnage(positionDeposer, objet);
                         ihm.afficherMessage(partie.toString(carte));
-                        ihm.afficherMessage("Objet repose !");
+                        ihm.afficherMessage("Objet depose.");
                         break;
 
                     case 4:
                         String positionAnimal = ihm.demanderDirection();
                         partie.frapperAnimalPersonnage(positionAnimal);
-                        ihm.afficherMessage("Animal frappe !");
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage("Animal frappe.");
                         break;
 
                     default:

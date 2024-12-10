@@ -81,7 +81,7 @@ public abstract class Partie {
      * @return La carte en chaîne de caratères
      */
 
-    public String toString(Carte carte){
+    public String toString(){
         String res = "";
         for (ArrayList<ElementCarte> elementCartes : carte.getCarte()) {
             for (ElementCarte elementCarte : elementCartes) {
@@ -196,6 +196,8 @@ public abstract class Partie {
         if(personnage.getNbObjet(objet) >0 && carte.estCaseVide(coordonnees[0], coordonnees[1])){
             personnage.deposerObjet(objet);
             carte.getCase(coordonnees[0],coordonnees[1]).setApparence(objet);
+        }else{
+            throw new ActionImpossibleException("Action impossible");
         }
     }
 

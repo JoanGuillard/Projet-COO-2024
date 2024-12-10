@@ -17,8 +17,10 @@ public class ControleurForet extends Controleur {
         boolean continuerJeu = true;
 
         while (continuerJeu) {
+
             ihm.afficherMessage(partie.toString(Carte.getInstance()));
             ihm.afficherMessage("Voici une partie foret");
+
 
             int action = ihm.demanderActionJoueur();
 
@@ -27,7 +29,12 @@ public class ControleurForet extends Controleur {
                     case 1:
                         String direction = ihm.demanderDirection();
                         partie.deplacerPersonnage(direction);
+
                         ihm.afficherMessage(partie.toString(Carte.getInstance()));
+
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage("Deplacement effectue.");
+
                         break;
 
                     case 2:
@@ -40,14 +47,16 @@ public class ControleurForet extends Controleur {
                         String positionDeposer = ihm.demanderDirection();
                         String objet = ihm.demanderObjetADeposer(personnage);
                         partie.deposerObjetPersonnage(positionDeposer, objet);
-                        ihm.afficherMessage(partie.toString(carte));
-                        ihm.afficherMessage("Objet repose !");
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage("Objet depose.");
+
                         break;
 
                     case 4:
                         String positionAnimal = ihm.demanderDirection();
                         partie.frapperAnimalPersonnage(positionAnimal);
-                        ihm.afficherMessage("Animal frappe !");
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage("Animal frappe.");
                         break;
 
                     default:
