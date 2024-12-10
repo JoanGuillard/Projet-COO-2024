@@ -56,13 +56,13 @@ public abstract class Partie {
         }
     }
 
-    public Carte creerNouvelleCarte(int largeur, int hauteur) {
+    public Carte creerNouvelleCarte(String bordure,int hauteur, int largeur) {
         this.carte = new Carte();
         for (int i = 0; i < hauteur; i++) {
             ArrayList<ElementCarte> ligneCarte = new ArrayList<>();
             for (int j = 0; j < largeur; j++) {
                 if (i == 0 || i == hauteur - 1 || j == 0 || j == largeur - 1) {
-                    ligneCarte.add(ajouterElementCarte("A", j, i));
+                    ligneCarte.add(ajouterElementCarte(bordure, j, i));
                 } else {
                     ligneCarte.add(ajouterElementCarte(" ", j, i));
                 }
@@ -98,7 +98,7 @@ public abstract class Partie {
      */
     public abstract void remplirCarte(Carte carte,int hauteur,int largeur);
     protected abstract String genererElementAleatoire(Random random);
-    public abstract void initialiserCarte(int largeur, int hauteur);
+    public abstract void initialiserCarte(int hauteur, int largeur);
 
     /**
      * Crée un objet de type Element et lui définit une apparence selon le caractère rencontré

@@ -108,7 +108,7 @@ public class Ihm {
     public String demanderDirection() {
         boolean choixIncorrect = true;
         while (choixIncorrect) {
-            System.out.println("Dans quelle direction voulez vous se deplacer ?");
+            System.out.println("Dans quelle direction voulez vous effectuer votre action ?");
             System.out.println("H pour Haut");
             System.out.println("B pour Bas");
             System.out.println("G pour Gauche");

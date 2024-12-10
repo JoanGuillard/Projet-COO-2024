@@ -1,4 +1,4 @@
-package controleur;
+/*package controleur;
 
 import modele.Carte;
 import modele.Partie;
@@ -62,3 +62,4 @@ public class ControleurJungle extends Controleur {
         }
     }
 }
+*/

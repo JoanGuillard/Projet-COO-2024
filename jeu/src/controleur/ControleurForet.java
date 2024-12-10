@@ -1,4 +1,4 @@
-package controleur;
+/*package controleur;
 
 import modele.Carte;
 import modele.Partie;
@@ -15,13 +15,8 @@ public class ControleurForet extends Controleur {
 
     public void jouerTour(Partie partie) {
         boolean continuerJeu = true;
-
+        ihm.afficherMessage(partie.toString());
         while (continuerJeu) {
-
-            ihm.afficherMessage(partie.toString());
-            ihm.afficherMessage("Voici une partie foret");
-
-
             int action = ihm.demanderActionJoueur();
 
             try {
@@ -29,9 +24,6 @@ public class ControleurForet extends Controleur {
                     case 1:
                         String direction = ihm.demanderDirection();
                         partie.deplacerPersonnage(direction);
-
-                        ihm.afficherMessage(partie.toString());
-
                         ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage("Deplacement effectue.");
 
@@ -44,8 +36,8 @@ public class ControleurForet extends Controleur {
                         break;
 
                     case 3:
-                        String positionDeposer = ihm.demanderDirection();
                         String objet = ihm.demanderObjetADeposer(personnage);
+                        String positionDeposer = ihm.demanderDirection();
                         partie.deposerObjetPersonnage(positionDeposer, objet);
                         ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage("Objet depose.");
@@ -70,3 +62,4 @@ public class ControleurForet extends Controleur {
         }
     }
 }
+*/

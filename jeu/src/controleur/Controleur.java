@@ -10,31 +10,24 @@ import vue.Ihm;
 import java.util.Random;
 
 public class Controleur {
-    protected Ihm ihm;
-    protected Carte carte;
-    protected Personnage personnage;
+    private Ihm ihm;
+    private Partie partie;
 
     public Controleur(Ihm ihm) {
         this.ihm = ihm;
-        this.carte = Carte.getInstance();
-        this.personnage = new Personnage();
+
     }
 
     public void lancerPartie() {
         ihm.afficherMessage("Bienvenue dans le jeu !");
         int choixTheme = ihm.demanderTheme();
-
-        Controleur controleurSpecifique = null;
-        Partie partie;
         switch (choixTheme) {
             case 1:
-                partie = new SansDangerPartieForet(personnage);
-                controleurSpecifique = new ControleurForet(this,partie);
+                partie = new SansDangerPartieForet(new Personnage());
                 break;
 
             case 2:
-                partie = new SansDangerPartieJungle(personnage);
-                controleurSpecifique = new ControleurJungle( this,partie);
+                partie = new SansDangerPartieJungle(new Personnage());
                 break;
 
             default:
@@ -42,14 +35,14 @@ public class Controleur {
                 return;
         }
 
-        if (controleurSpecifique != null) {
-            if (controleurSpecifique.jouerPartie(partie)) {
-                controleurSpecifique.jouerTour(partie);
+
+            if(jouerPartie(partie)) {
+                jouerTour(partie);
             }else{
                 ihm.afficherMessage("le jeu se termine");
             }
         }
-    }
+
 
     public boolean jouerPartie(Partie partie) {
         ihm.afficherMessage("Configuration de la partie...");
@@ -74,6 +67,52 @@ public class Controleur {
 
     }
     public  void jouerTour(Partie partie){
+        boolean continuerJeu = true;
 
+        while (continuerJeu) {
+            ihm.afficherMessage(partie.toString());
+            ihm.afficherMessage("Voici une partie Jungle");
+            int action = ihm.demanderActionJoueur();
+
+            try {
+                switch (action) {
+                    case 1:
+                        String direction = ihm.demanderDirection();
+                        partie.deplacerPersonnage(direction);
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage("Deplacement effectue.");
+                        break;
+
+                    case 2:
+                        String positionObjet = ihm.demanderDirection();
+                        partie.ramasserObjetPersonnage(positionObjet);
+                        ihm.afficherMessage("Objet ramasse !");
+                        break;
+
+                    case 3:
+                        String objet = ihm.demanderObjetADeposer(partie.getPersonnage());
+                        String positionDeposer = ihm.demanderDirection();
+                        partie.deposerObjetPersonnage(positionDeposer, objet);
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage("Objet depose.");
+                        break;
+
+                    case 4:
+                        String positionAnimal = ihm.demanderDirection();
+                        partie.frapperAnimalPersonnage(positionAnimal);
+                        ihm.afficherMessage(partie.toString());
+                        ihm.afficherMessage("Animal frappe.");
+                        break;
+
+                    default:
+                        ihm.afficherMessage("Vous quittez la partie.");
+                        continuerJeu = false;
+                        break;
+                }
+            } catch (Exception e) {
+                ihm.afficherMessage("Erreur : " + e.getMessage());
+            }
+        }
     }
 }

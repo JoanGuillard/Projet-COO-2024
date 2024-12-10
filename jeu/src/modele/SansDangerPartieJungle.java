@@ -70,14 +70,14 @@ public class SansDangerPartieJungle extends Partie {
         int casesVidesCibles = totalCases / 2; // 50% des cases vides
         int casesRemplies = 0;
 
-        for (int i = 1; i < hauteur ; i++) {
-            for (int j = 1; j < largeur ; j++) {
+        for (int i = 1; i < hauteur -1; i++) {
+            for (int j = 1; j < largeur -1; j++) {
                 if (casesRemplies >= totalCases - casesVidesCibles) break;
 
                 String element = genererElementAleatoire(random);
                 if (!element.equals(" ")) casesRemplies++;
 
-                carte.setCase(i, j, ajouterElementCarte(element, j, i));
+                carte.setCase(j, i ,ajouterElementCarte(element, j, i));
             }
         }
 
@@ -87,15 +87,16 @@ public class SansDangerPartieJungle extends Partie {
     @Override
     protected String genererElementAleatoire(Random random) {
         int chance = random.nextInt(100);
-        if (chance < 50) return " ";  // 50% vide
-        else if (chance < 70) return "B"; // 20% nourriture
-        else if (chance < 80) return "R"; // 20% rochers
-        else if (chance < 90) return "C";
-        else return "T"; // 10% cocotiers
+        if (chance < 90) return " ";
+        else if (chance < 92) return "C";
+        else if (chance < 94) return "R";
+        else if (chance <96 ) return "S";
+        else if (chance < 97) return "T";
+        else return "B"; // 10% cocotiers
     }
     @Override
-    public void initialiserCarte(int largeur, int hauteur) {
-        Carte carte = creerNouvelleCarte(largeur, hauteur);
+    public void initialiserCarte(int hauteur, int largeur) {
+        Carte carte = creerNouvelleCarte("T",hauteur, largeur);
         remplirCarte(carte,hauteur,largeur);
         this.setCarte(carte);
     }
