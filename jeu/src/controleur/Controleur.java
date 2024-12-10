@@ -8,6 +8,7 @@ import modele.SansDangerPartieJungle;
 import vue.Ihm;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Controleur {
     private Ihm ihm;
@@ -36,12 +37,12 @@ public class Controleur {
         }
 
 
-            if(jouerPartie(partie)) {
-                jouerTour(partie);
-            }else{
-                ihm.afficherMessage("le jeu se termine");
-            }
+        if (jouerPartie(partie)) {
+            jouerTour(partie);
+        } else {
+            ihm.afficherMessage("le jeu se termine");
         }
+    }
 
 
     public boolean jouerPartie(Partie partie) {
@@ -50,14 +51,18 @@ public class Controleur {
 
         switch (choixCreation) {
             case 1:
-                 partie.initialiserCarte(
+                partie.initialiserCarte(
                         ihm.demanderCoordonnes("ordonnee"),
                         ihm.demanderCoordonnes("abscisse")
                 );
                 return true;
 
             case 2:
-                partie.chargerCarte(ihm.demanderFichier());
+                String chemin = ihm.demanderFichier();
+                if (chemin.equals("q")) {
+                    return false;
+                }
+                partie.chargerCarte(chemin);
                 return true;
 
             default:
@@ -66,53 +71,65 @@ public class Controleur {
         }
 
     }
-    public  void jouerTour(Partie partie){
+
+    public void jouerTour(Partie partie) {
         boolean continuerJeu = true;
+        ihm.afficherMessage(partie.toString());
 
         while (continuerJeu) {
-            ihm.afficherMessage(partie.toString());
-            ihm.afficherMessage("Voici une partie Jungle");
             int action = ihm.demanderActionJoueur();
 
-            try {
-                switch (action) {
-                    case 1:
+
+            switch (action) {
+                case 1:
+                    try {
                         String direction = ihm.demanderDirection();
                         partie.deplacerPersonnage(direction);
                         ihm.afficherMessage(partie.toString());
-                        ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage("Deplacement effectue.");
-                        break;
+                    } catch (Exception e) {
+                        ihm.afficherAvecSleep(e,partie);
+                    }
+                    break;
 
-                    case 2:
+                case 2:
+                    try {
                         String positionObjet = ihm.demanderDirection();
                         partie.ramasserObjetPersonnage(positionObjet);
                         ihm.afficherMessage("Objet ramasse !");
-                        break;
-
-                    case 3:
+                    } catch (Exception e) {
+                        ihm.afficherAvecSleep(e,partie);
+                    }
+                    break;
+                case 3:
+                    try {
                         String objet = ihm.demanderObjetADeposer(partie.getPersonnage());
                         String positionDeposer = ihm.demanderDirection();
                         partie.deposerObjetPersonnage(positionDeposer, objet);
                         ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage("Objet depose.");
-                        break;
+                    } catch (Exception e) {
+                        ihm.afficherAvecSleep(e,partie);
+                    }
+                    break;
 
-                    case 4:
+                case 4:
+                    try {
                         String positionAnimal = ihm.demanderDirection();
                         partie.frapperAnimalPersonnage(positionAnimal);
                         ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage("Animal frappe.");
-                        break;
+                    } catch (Exception e) {
+                        ihm.afficherAvecSleep(e,partie);
+                    }
+                    break;
 
-                    default:
-                        ihm.afficherMessage("Vous quittez la partie.");
-                        continuerJeu = false;
-                        break;
-                }
-            } catch (Exception e) {
-                ihm.afficherMessage("Erreur : " + e.getMessage());
+                default:
+                    ihm.afficherMessage("Vous quittez la partie.");
+                    continuerJeu = false;
+                    break;
             }
         }
     }
 }
+

@@ -1,11 +1,13 @@
 package vue;
 
 import modele.Carte;
+import modele.Partie;
 import modele.Personnage;
 
 import java.io.File;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Ihm {
 
@@ -30,10 +32,11 @@ public class Ihm {
             System.out.println("Choisir un theme:");
             System.out.println(" 1: theme foret");
             System.out.println(" 2: theme Jungle");
+            System.out.println(" 3: Quitter");
             System.out.println("Veuillez saisir le numero correspondant au theme:");
             if (scanner.hasNextInt()) {
                 choix = scanner.nextInt();
-                if (0 < choix && choix <= 2) {
+                if (0 < choix && choix <= 3) {
                     choixIncorrect = false;
                     return choix;
                 }
@@ -66,8 +69,10 @@ public class Ihm {
                     choixIncorrect = false;
                     return choix;
                 }
+            }else {
+                System.out.println("L'entier que vous avez saisit ne correspond a aucune action.Veuillez choisir un entier valide.");
+                scanner.nextLine();
             }
-            System.out.println("L'entier que vous avez saisit ne correspond a aucune action.Veuillez choisir un entier valide.");
             scanner.nextLine();
         }
         return -1;
@@ -124,7 +129,6 @@ public class Ihm {
                 }
             }
             System.out.println("Direction invalide.");
-            scanner.nextLine();//pour eviter une boucle infinie
         }
         return null;
     }
@@ -133,12 +137,20 @@ public class Ihm {
 
 
     public String demanderFichier() {
-        String cheminFichier;
+        String cheminFichier = "";
         boolean cheminValide = false;
+
+        /*
+         Si un residu de ligne existe dans le tampon avant l'appel à cette méthode, il sera consomme.
+          Cela evite que la boucle s'execute immédiatement sans attendre une nouvelle saisie.
+         */
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
 
         while (!cheminValide) {
             System.out.println("Veuillez saisir le chemin du fichier (ou 'q' pour quitter) :");
-            cheminFichier = scanner.nextLine().trim();  // Utilisation de nextLine() pour récupérer toute la ligne saisie
+            cheminFichier = scanner.nextLine().trim();
 
             if (cheminFichier.equalsIgnoreCase("q")) {
                 System.out.println("Vous avez choisi de quitter.");
@@ -148,7 +160,7 @@ public class Ihm {
             File fichier = new File(cheminFichier);
             if (fichier.exists() && fichier.isFile()) {
                 cheminValide = true;
-                return cheminFichier;// Si le fichier est valide, on quitte la boucle
+                return cheminFichier;
             } else {
                 System.out.println("Le fichier n'existe pas ou le chemin est incorrect. Veuillez réessayer.");
             }
@@ -204,6 +216,15 @@ public class Ihm {
             }
         }
         return "";
+    }
+    public void afficherAvecSleep(Exception e, Partie partie){
+        afficherMessage("Erreur : " + e.getMessage());
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException f){
+            System.out.println("le temps d'attente est interrompu");
+        }
+        afficherMessage(partie.toString());
     }
 
 }
