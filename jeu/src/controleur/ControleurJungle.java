@@ -16,7 +16,7 @@ public class ControleurJungle extends Controleur {
         boolean continuerJeu = true;
 
         while (continuerJeu) {
-            ihm.afficherMessage(partie.toString(Carte.getInstance()));
+            ihm.afficherMessage(partie.toString());
             ihm.afficherMessage("Voici une partie Jungle");
             int action = ihm.demanderActionJoueur();
 
@@ -25,7 +25,7 @@ public class ControleurJungle extends Controleur {
                     case 1:
                         String direction = ihm.demanderDirection();
                         partie.deplacerPersonnage(direction);
-                        ihm.afficherMessage(partie.toString(carte));
+                        ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage("Deplacement effectue.");
                         break;
@@ -37,10 +37,10 @@ public class ControleurJungle extends Controleur {
                         break;
 
                     case 3:
-                        String positionDeposer = ihm.demanderDirection();
                         String objet = ihm.demanderObjetADeposer(personnage);
+                        String positionDeposer = ihm.demanderDirection();
                         partie.deposerObjetPersonnage(positionDeposer, objet);
-                        ihm.afficherMessage(partie.toString(carte));
+                        ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage("Objet depose.");
                         break;
 

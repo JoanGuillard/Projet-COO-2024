@@ -16,10 +16,10 @@ import static modele.CouleursAffichage.ANSI_BLACK;
 public class Main {
     public static void main(String[] args) {
         Ihm ihm = new Ihm();
-        /*Controleur controleur = new Controleur(ihm);
-        controleur.lancerPartie();*/
-        Partie partie = new SansDangerPartieForet(new Personnage());
-        partie.initialiserCarte(40,40);
+        Controleur controleur = new Controleur(ihm);
+        controleur.lancerPartie();
+       // Partie partie = new SansDangerPartieForet(new Personnage());
+
 
 
         /*System.out.println("Bienvenue dans le jeu de gestion de carte !");

@@ -18,7 +18,7 @@ public class ControleurForet extends Controleur {
 
         while (continuerJeu) {
 
-            ihm.afficherMessage(partie.toString(Carte.getInstance()));
+            ihm.afficherMessage(partie.toString());
             ihm.afficherMessage("Voici une partie foret");
 
 
@@ -30,7 +30,7 @@ public class ControleurForet extends Controleur {
                         String direction = ihm.demanderDirection();
                         partie.deplacerPersonnage(direction);
 
-                        ihm.afficherMessage(partie.toString(Carte.getInstance()));
+                        ihm.afficherMessage(partie.toString());
 
                         ihm.afficherMessage(partie.toString());
                         ihm.afficherMessage("Deplacement effectue.");
