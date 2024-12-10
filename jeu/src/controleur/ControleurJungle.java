@@ -1,31 +1,23 @@
 package controleur;
 
+import modele.Carte;
 import modele.Partie;
-import modele.Personnage;
 import modele.SansDangerPartieJungle;
-import vue.Ihm;
 
 public class ControleurJungle extends Controleur {
-
     private Partie partie;
-
-    public ControleurJungle() {
-        super();
-        this.partie = new SansDangerPartieJungle(personnage);
+    public ControleurJungle(Controleur controleurPrincipal,Partie partie) {
+        super(controleurPrincipal.ihm);
+        this.partie=partie;
+        this.personnage = controleurPrincipal.personnage;
     }
 
-    @Override
-    public Partie creerPartie() {
-        return new SansDangerPartieJungle(personnage);
-    }
-
-    @Override
     public void jouerTour(Partie partie) {
         boolean continuerJeu = true;
 
         while (continuerJeu) {
-            ihm.afficherMessage(partie.toString(carte));
-            ihm.afficherMessage("Bonjour");
+            ihm.afficherMessage(partie.toString(Carte.getInstance()));
+            ihm.afficherMessage("Voici une partie Jungle");
             int action = ihm.demanderActionJoueur();
 
             try {
@@ -33,15 +25,13 @@ public class ControleurJungle extends Controleur {
                     case 1:
                         String direction = ihm.demanderDirection();
                         partie.deplacerPersonnage(direction);
-                        partie.toString(carte);
                         ihm.afficherMessage(partie.toString(carte));
-                        ihm.afficherMessage("Deplacement effectue.");
                         break;
 
                     case 2:
                         String positionObjet = ihm.demanderDirection();
                         partie.ramasserObjetPersonnage(positionObjet);
-                        ihm.afficherMessage("Objet ramasse.");
+                        ihm.afficherMessage("Objet ramasse !");
                         break;
 
                     case 3:
@@ -49,21 +39,19 @@ public class ControleurJungle extends Controleur {
                         String objet = ihm.demanderObjetADeposer(personnage);
                         partie.deposerObjetPersonnage(positionDeposer, objet);
                         ihm.afficherMessage(partie.toString(carte));
-                        ihm.afficherMessage("Objet depose.");
+                        ihm.afficherMessage("Objet repose !");
                         break;
 
                     case 4:
                         String positionAnimal = ihm.demanderDirection();
                         partie.frapperAnimalPersonnage(positionAnimal);
-                        ihm.afficherMessage(partie.toString(carte));
-                        ihm.afficherMessage("Animal frappe.");
+                        ihm.afficherMessage("Animal frappe !");
                         break;
 
                     default:
                         ihm.afficherMessage("Vous quittez la partie.");
                         continuerJeu = false;
                         break;
-
                 }
             } catch (Exception e) {
                 ihm.afficherMessage("Erreur : " + e.getMessage());

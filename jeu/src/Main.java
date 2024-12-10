@@ -15,32 +15,18 @@ import static modele.CouleursAffichage.ANSI_BLACK;
 
 public class Main {
     public static void main(String[] args) {
-        /*Controleur controleur = new Controleur();
-
-        // Lancer le jeu
-        System.out.println("Bienvenue dans le jeu de gestion de carte !");
-        System.out.println("Vous pouvez choisir de créer une carte ou d'en charger une existante.");
-        System.out.println("Saisissez les dimensions ou un fichier pour commencer. Tapez 0 pour quitter à tout moment.");
-
-        controleur.jouerPartie();
-
-        System.out.println("Merci d'avoir joué ! À bientôt.");*/
         Ihm ihm = new Ihm();
-        /*Controleur controleur = new Controleur() {
-            @Override
-            public Partie creerPartie() {
-                return null;  // Vous ne créez pas de partie ici, car c'est géré dans les sous-contrôleurs
-            }
+        /*Controleur controleur = new Controleur(ihm);
+        controleur.lancerPartie();*/
+        Partie partie = new SansDangerPartieForet(new Personnage());
+        partie.initialiserCarte(40,40);
 
-            @Override
-            public void jouerTour(Partie partie) {
-                // Implémentation spécifique à chaque sous-contrôleur
-            }
-        };*/
-        //Controleur controleur = new ControleurJungle();
 
-        // Lancez le jeu
-        Partie p = new SansDangerPartieForet(new Personnage());
+        /*System.out.println("Bienvenue dans le jeu de gestion de carte !");
+        controleur.lancerPartie();*/
+
+
+        /*Partie p = new SansDangerPartieForet(new Personnage());
         p.chargerCarte("jeu/src/cartesForet/carte.txt");
         System.out.println(p.toString());
         for(int i =0; i<50; i++){
@@ -91,6 +77,6 @@ public class Main {
             catch (Exception e){
                 System.out.println(e.getMessage());
             }
-        }
+        }*/
     }
 }

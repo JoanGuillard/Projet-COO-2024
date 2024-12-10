@@ -62,17 +62,16 @@ public class SansDangerPartieJungle extends Partie {
         }
     }
     @Override
-    public void remplirCarte(Carte carte) {
+    public void remplirCarte(Carte carte,int hauteur,int largeur) {
         Random random = new Random();
-        int hauteur = carte.getHauteur();
-        int largeur = carte.getLargeur();
+
 
         int totalCases = (hauteur - 2) * (largeur - 2); // pour etre loin de la bordure
         int casesVidesCibles = totalCases / 2; // 50% des cases vides
         int casesRemplies = 0;
 
-        for (int i = 1; i < hauteur - 1; i++) {
-            for (int j = 1; j < largeur - 1; j++) {
+        for (int i = 1; i < hauteur ; i++) {
+            for (int j = 1; j < largeur ; j++) {
                 if (casesRemplies >= totalCases - casesVidesCibles) break;
 
                 String element = genererElementAleatoire(random);
@@ -97,7 +96,7 @@ public class SansDangerPartieJungle extends Partie {
     @Override
     public void initialiserCarte(int largeur, int hauteur) {
         Carte carte = creerNouvelleCarte(largeur, hauteur);
-        remplirCarte(carte);
+        remplirCarte(carte,hauteur,largeur);
         this.setCarte(carte);
     }
 }

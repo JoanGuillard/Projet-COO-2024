@@ -133,27 +133,28 @@ public class Ihm {
 
 
     public String demanderFichier() {
-        String cheminFichier = "";
+        String cheminFichier;
         boolean cheminValide = false;
 
         while (!cheminValide) {
             System.out.println("Veuillez saisir le chemin du fichier (ou 'q' pour quitter) :");
-            scanner.nextLine();
             cheminFichier = scanner.nextLine().trim();  // Utilisation de nextLine() pour récupérer toute la ligne saisie
+
             if (cheminFichier.equalsIgnoreCase("q")) {
                 System.out.println("Vous avez choisi de quitter.");
-                return cheminFichier;
+                return cheminFichier;  // Si l'utilisateur veut quitter
             }
+
             File fichier = new File(cheminFichier);
             if (fichier.exists() && fichier.isFile()) {
                 cheminValide = true;
-                break;
+                return cheminFichier;// Si le fichier est valide, on quitte la boucle
             } else {
                 System.out.println("Le fichier n'existe pas ou le chemin est incorrect. Veuillez réessayer.");
             }
         }
 
-        return cheminFichier;
+        return "q";
     }
 
 

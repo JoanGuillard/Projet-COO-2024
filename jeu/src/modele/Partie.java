@@ -57,7 +57,7 @@ public abstract class Partie {
     }
 
     public Carte creerNouvelleCarte(int largeur, int hauteur) {
-        Carte nouvelleCarte = new Carte();
+        this.carte = new Carte();
         for (int i = 0; i < hauteur; i++) {
             ArrayList<ElementCarte> ligneCarte = new ArrayList<>();
             for (int j = 0; j < largeur; j++) {
@@ -67,10 +67,10 @@ public abstract class Partie {
                     ligneCarte.add(ajouterElementCarte(" ", j, i));
                 }
             }
-            nouvelleCarte.ajouterLigne(ligneCarte);
+            carte.ajouterLigne(ligneCarte);
         }
-        nouvelleCarte.setDimensions();
-        return nouvelleCarte;
+        carte.setDimensions();
+        return carte;
     }
 
 
@@ -96,7 +96,7 @@ public abstract class Partie {
      * remplie la carte selon le theme choisi
      * @param carte
      */
-    public abstract void remplirCarte(Carte carte);
+    public abstract void remplirCarte(Carte carte,int hauteur,int largeur);
     protected abstract String genererElementAleatoire(Random random);
     public abstract void initialiserCarte(int largeur, int hauteur);
 
@@ -223,10 +223,10 @@ public abstract class Partie {
             int y = random.nextInt(hauteur - 2) + 1;
 
             if (carte.getCase(x, y).getApparence().equals(" ") &&
-                    carte.getCase(x - 1, y).getApparence().matches("[ABTR]") &&
-                    carte.getCase(x + 1, y).getApparence().matches("[ABTR]") &&
-                    carte.getCase(x, y - 1).getApparence().matches("[ABTR]") &&
-                    carte.getCase(x, y + 1).getApparence().matches("[ABTR]")) {
+                    (carte.getCase(x - 1, y).getApparence().matches("[ABTR]") ||
+                    carte.getCase(x + 1, y).getApparence().matches("[ABTR]") ||
+                    carte.getCase(x, y - 1).getApparence().matches("[ABTR]") ||
+                    carte.getCase(x, y + 1).getApparence().matches("[ABTR]"))) {
 
                 carte.setCase(x, y, getPersonnage());
                 getPersonnage().nouvellePosition(x, y);

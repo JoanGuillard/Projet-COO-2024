@@ -10,7 +10,26 @@ public class SansDangerPartieForet extends Partie{
     }
 
     @Override
-    public void remplirCarte(Carte carte) {
+    public void remplirCarte(Carte carte,int hauteur,int largeur) {
+        Random random = new Random();
+
+
+        int totalCases = (hauteur - 2) * (largeur - 2); // pour etre loin de la bordure
+        int casesVidesCibles = totalCases / 2; // 50% des cases vides
+        int casesRemplies = 0;
+
+        for (int i = 1; i < hauteur ; i++) {
+            for (int j = 1; j < largeur ; j++) {
+                if (casesRemplies >= totalCases - casesVidesCibles) break;
+
+                String element = genererElementAleatoire(random);
+                if (!element.equals(" ")) casesRemplies++;
+
+                carte.setCase(i, j, ajouterElementCarte(element, j, i));
+
+            }
+        }
+        ajouterPersonnageDansZoneProtegee(carte, random);
     }
 
     @Override
@@ -66,7 +85,7 @@ public class SansDangerPartieForet extends Partie{
     @Override
     public void initialiserCarte(int largeur, int hauteur) {
         Carte carte = creerNouvelleCarte(largeur, hauteur);
-        remplirCarte(carte);
+        remplirCarte(carte, hauteur, largeur);
         this.setCarte(carte);
     }
 

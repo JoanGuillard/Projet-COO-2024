@@ -1,61 +1,79 @@
 package controleur;
 
-import modele.*;
+import modele.Carte;
+import modele.Partie;
+import modele.Personnage;
+import modele.SansDangerPartieForet;
+import modele.SansDangerPartieJungle;
 import vue.Ihm;
 
-public abstract class Controleur {
-    protected Ihm ihm;
-    protected Personnage personnage;
-    protected Carte carte;
+import java.util.Random;
 
-    public Controleur() {
-        this.ihm = new Ihm();
-        this.personnage = new Personnage();
+public class Controleur {
+    protected Ihm ihm;
+    protected Carte carte;
+    protected Personnage personnage;
+
+    public Controleur(Ihm ihm) {
+        this.ihm = ihm;
         this.carte = Carte.getInstance();
+        this.personnage = new Personnage();
     }
 
     public void lancerPartie() {
+        ihm.afficherMessage("Bienvenue dans le jeu !");
+        int choixTheme = ihm.demanderTheme();
 
-            int choixTheme = ihm.demanderTheme();
-            Partie partie;
-            Controleur controleur;
+        Controleur controleurSpecifique = null;
+        Partie partie;
+        switch (choixTheme) {
+            case 1:
+                partie = new SansDangerPartieForet(personnage);
+                controleurSpecifique = new ControleurForet(this,partie);
+                break;
 
-            switch (choixTheme) {
-                case 1:
-                    controleur = new ControleurForet();
-                    partie = controleur.creerPartie();
-                    controleur.jouerPartie(partie,controleur);
-                    break;
-                case 2:
-                    controleur = new ControleurJungle();
-                    partie = controleur.creerPartie();
-                    controleur.jouerPartie(partie,controleur);
-                    break;
-                default:
-                    ihm.afficherMessage("Le jeu est fini.");
-                    break;
+            case 2:
+                partie = new SansDangerPartieJungle(personnage);
+                controleurSpecifique = new ControleurJungle( this,partie);
+                break;
 
+            default:
+                ihm.afficherMessage("Le jeu est termine.");
+                return;
         }
-    }
 
-    public abstract Partie creerPartie();
-    public abstract void jouerTour(Partie partie);
-
-    public void jouerPartie(Partie partie,Controleur controleur) {
-
-            int choixCreation = ihm.demanderCreationCarte();
-            switch (choixCreation) {
-                case 1:
-                    partie.creerNouvelleCarte(ihm.demanderCoordonnes("abscisse"), ihm.demanderCoordonnes("ordonnee"));
-                    controleur.jouerTour(partie);
-                    break;
-                case 2:
-                    partie.chargerCarte(ihm.demanderFichier());
-                    controleur.jouerTour(partie);
-                    break;
-                default:
-                    break;
+        if (controleurSpecifique != null) {
+            if (controleurSpecifique.jouerPartie(partie)) {
+                controleurSpecifique.jouerTour(partie);
+            }else{
+                ihm.afficherMessage("le jeu se termine");
             }
         }
     }
 
+    public boolean jouerPartie(Partie partie) {
+        ihm.afficherMessage("Configuration de la partie...");
+        int choixCreation = ihm.demanderCreationCarte();
+
+        switch (choixCreation) {
+            case 1:
+                 partie.initialiserCarte(
+                        ihm.demanderCoordonnes("ordonnee"),
+                        ihm.demanderCoordonnes("abscisse")
+                );
+                return true;
+
+            case 2:
+                partie.chargerCarte(ihm.demanderFichier());
+                return true;
+
+            default:
+                return false;
+
+        }
+
+    }
+    public  void jouerTour(Partie partie){
+
+    }
+}
