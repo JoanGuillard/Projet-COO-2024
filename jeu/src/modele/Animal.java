@@ -11,7 +11,6 @@ public abstract class Animal extends ElementCarte{
     private int cptNourritureAmi;
     private ArrayList<String> regimeAlimentaire;
     private Etat etat;
-    private String apparence;
 
     public Animal(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger){
         this.nbNourritureAmi = nbNourritureAmi;

@@ -9,8 +9,7 @@ import static modele.CouleursAffichage.*;
 public class Personnage extends ElementCarte{
 
 
-    private String nom;
-    private String apparence;
+
     private Map<String,Integer> inventaire;
 
     public Personnage(){
