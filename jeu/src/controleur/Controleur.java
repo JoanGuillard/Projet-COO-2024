@@ -129,6 +129,9 @@ public class Controleur {
                     continuerJeu = false;
                     break;
             }
+            partie.passerTourAnimaux();
+            ihm.afficherMessage(partie.toString());
+
         }
     }
 }
