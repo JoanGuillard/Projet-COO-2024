@@ -92,15 +92,17 @@ public class Ihm {
             System.out.println("2 : charger une carte via un fichier .txt");
             System.out.println("3 : quitter le jeu");
             System.out.println("Veuillez saisir l'entier qui correspond a votre choix.");
+
+            scanner.nextLine();
             if (scanner.hasNextInt()) {
                 choix = scanner.nextInt();
                 if (0 <= choix && choix <= 3) {
                     choixIncorrect = true;
                     return choix;
                 }
+            } else {
+                System.out.println("L'entier que vous avez choisi ne correspond a aucun choix.Veuillez saisir un entier valide.");
             }
-            System.out.println("L'entier que vous avez choisi ne correspond a aucun choix.Veuillez saisir un entier valide.");
-            scanner.nextLine();
         }
         return choix;
     }
@@ -176,6 +178,7 @@ public class Ihm {
         int coordonne = 0;
         while (!choixCorrecte) {
             System.out.println("Veuillez saisir la " + message + " souhaitee pour la carte (un entier positif ou 0 pour quitter) :");
+            scanner.nextLine();
             if (scanner.hasNextInt()) {
                 coordonne = scanner.nextInt();
                 if (coordonne > 0) {
@@ -188,7 +191,6 @@ public class Ihm {
                 }
             } else {
                 System.out.println("Entrée invalide. Veuillez saisir un entier positif ou 0 pour quitter.");
-                scanner.nextLine();
             }
         }
         return coordonne;
