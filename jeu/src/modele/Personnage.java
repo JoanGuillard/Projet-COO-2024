@@ -14,7 +14,7 @@ public class Personnage extends ElementCarte{
     private Map<String,Integer> inventaire;
 
     public Personnage(){
-        super(ANSI_WHITE_BACKGROUND + ANSI_BLACK + "@" + ANSI_RESET);
+        super(ANSI_BLUE_BACKGROUND + ANSI_RED + "@" + ANSI_RESET);
         this.inventaire = new HashMap<String,Integer>();
     }
 
@@ -32,5 +32,13 @@ public class Personnage extends ElementCarte{
 
     public void ajouterDansInventaire(String element){
         this.inventaire.put(element,inventaire.get(element)+1);
+    }
+
+    public Map<String,Integer> getInventaire(){
+        return inventaire;
+    }
+
+    public boolean isInInventaire(String element){
+        return inventaire.containsKey(element);
     }
 }
