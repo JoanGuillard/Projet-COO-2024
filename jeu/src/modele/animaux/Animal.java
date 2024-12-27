@@ -1,8 +1,14 @@
-package modele;
+package modele.animaux;
+
+import modele.*;
+import modele.etats.Etat;
+import modele.etats.EtatRassasie;
 
 import java.util.ArrayList;
+import static modele.CouleursAffichage.*;
 
-public abstract class Animal extends ElementCarte{
+
+public abstract class Animal extends ElementCarte {
     private boolean ami;
 
     private int nbTourSansManger;
@@ -10,8 +16,11 @@ public abstract class Animal extends ElementCarte{
     private int nbNourritureAmi;
     private int cptNourritureAmi;
     private ArrayList<String> regimeAlimentaire;
+    private int nbTourCache;
     private Etat etat;
-
+    private boolean estCache;
+    private String cachette;
+    private int nbTourJunkie;
     public Animal(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger){
         this.nbNourritureAmi = nbNourritureAmi;
         this.nbTourSansManger = nbTourSansManger;
@@ -21,6 +30,7 @@ public abstract class Animal extends ElementCarte{
         this.etat = EtatRassasie.getInstance();
         this.nouvellePosition(abscisse,ordonnee);
         this.regimeAlimentaire = new ArrayList<String>();
+        this.estCache = false;
     }
 
     public void seNourrir(boolean estNourriParAmi){
@@ -65,9 +75,13 @@ public abstract class Animal extends ElementCarte{
 
     public void seDeplacer(Carte carte, Personnage personnage){
         etat.seDeplacer(this,carte,personnage);
+        carte.setCase(getAbscisse(), getOrdonnee(), this);
     }
 
     public String toString(){
+        if(estCache){
+            return ANSI_BLACK_BACKGROUND + ANSI_GREEN + getApparence() + ANSI_RESET;
+        }
         return etat.toString(this);
     }
 
@@ -85,5 +99,33 @@ public abstract class Animal extends ElementCarte{
 
     public boolean isAmi() {
         return ami;
+    }
+
+    public int getNbTourJunkie() {
+        return nbTourJunkie;
+    }
+
+    public void setNbTourJunkie(int nbTourJunkie) {
+        this.nbTourJunkie = nbTourJunkie;
+    }
+
+    public int getNbTourCache() {
+        return nbTourCache;
+    }
+
+    public void setNbTourCache(int nbTourCache) {
+        this.nbTourCache = nbTourCache;
+    }
+
+    public boolean isEstCache() {
+        return estCache;
+    }
+
+    public String getCachette() {
+        return cachette;
+    }
+
+    public void setEstCache(boolean estCache) {
+        this.estCache = estCache;
     }
 }

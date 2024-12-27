@@ -1,9 +1,9 @@
-package modele;
+package modele.etats;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import modele.Carte;
+import modele.ElementCarte;
+import modele.Personnage;
+import modele.animaux.Animal;
 
 import static modele.CouleursAffichage.*;
 
@@ -21,6 +21,7 @@ public class EtatAffame extends Etat{
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         int abscisseAnimal = animal.getAbscisse();
         int ordonneeAnimal = animal.getOrdonnee();
+        carte.setCase(animal.getAbscisse(), animal.getOrdonnee(),new ElementCarte(animal.getCachette()));
         for(String nourriture : animal.getRegimeAlimentaire()){
             if( carte.verifierCase(abscisseAnimal, ordonneeAnimal-1, nourriture) ){
                 animal.nouvellePosition(abscisseAnimal,ordonneeAnimal-1);

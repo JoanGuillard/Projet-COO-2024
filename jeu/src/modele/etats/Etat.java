@@ -1,6 +1,9 @@
-package modele;
+package modele.etats;
 
-import java.util.ArrayList;
+import modele.Carte;
+import modele.Personnage;
+import modele.animaux.Animal;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

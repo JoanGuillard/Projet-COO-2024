@@ -1,5 +1,5 @@
-package modele;
-import static modele.CouleursAffichage.*;
+package modele.animaux;
+
 public class Ecureuil extends Animal{
 
 
@@ -7,7 +7,11 @@ public class Ecureuil extends Animal{
         super(abscisse, ordonnee, nbNourritureAmi, nbTourSansManger);
         setApparence("E");
         this.getRegimeAlimentaire().add("C");
+        this.getRegimeAlimentaire().add("M");
         this.getRegimeAlimentaire().add("G");
-
+        this.setNbTourJunkie(5);
+        this.setNbTourCache(3);
     }
+
+
 }

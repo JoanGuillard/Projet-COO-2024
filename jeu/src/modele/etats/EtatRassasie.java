@@ -1,6 +1,10 @@
-package modele;
+package modele.etats;
 
-import java.util.ArrayList;
+import modele.Carte;
+import modele.ElementCarte;
+import modele.Personnage;
+import modele.animaux.Animal;
+
 import static modele.CouleursAffichage.*;
 
 public class EtatRassasie extends Etat{
@@ -18,6 +22,7 @@ public class EtatRassasie extends Etat{
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         int abscisse = animal.getAbscisse();
         int ordonnee = animal.getOrdonnee();
+        carte.setCase(animal.getAbscisse(), animal.getOrdonnee(),new ElementCarte(animal.getCachette()));
         deplacementAleatoire(carte, abscisse, ordonnee, animal);
         animal.augmenterCptSansManger();
         if(animal.getNbTourSansManger() == animal.getCptTourSansManger()){

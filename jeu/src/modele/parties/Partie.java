@@ -1,10 +1,13 @@
-package modele;
+package modele.parties;
 
 import exceptions.ActionImpossibleException;
-import exceptions.CommandeInconnueException;
 import exceptions.DeplacementImpossibleException;
 import exceptions.ObjetNonRamassableException;
-import static modele.CouleursAffichage.*;
+import modele.Carte;
+import modele.ElementCarte;
+import modele.Personnage;
+import modele.animaux.Animal;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -96,7 +99,27 @@ public abstract class Partie {
      * remplie la carte selon le theme choisi
      * @param carte
      */
-    public abstract void remplirCarte(Carte carte,int hauteur,int largeur);
+    public void remplirCarte(Carte carte,int hauteur,int largeur){
+        Random random = new Random();
+
+
+        int totalCases = (hauteur - 2) * (largeur - 2); // pour etre loin de la bordure
+        int casesVidesCibles = totalCases / 2; // 50% des cases vides
+        int casesRemplies = 0;
+
+        for (int i = 1; i < hauteur-1 ; i++) {
+            for (int j = 1; j < largeur-1 ; j++) {
+                if (casesRemplies >= totalCases - casesVidesCibles) break;
+
+                String element = genererElementAleatoire(random);
+                if (!element.equals(" ")) casesRemplies++;
+
+                carte.setCase(j,i,ajouterElementCarte(element,j,i));
+
+            }
+        }
+        ajouterPersonnageDansZoneProtegee(carte, random);
+    }
     protected abstract String genererElementAleatoire(Random random);
     public abstract void initialiserCarte(int hauteur, int largeur);
 
@@ -136,9 +159,7 @@ public abstract class Partie {
      */
     public void passerTourAnimaux() {
         for (Animal animal : lesAnimaux) {
-            carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(" "));
             animal.seDeplacer(carte, personnage);
-            carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
         }
     }
 

@@ -1,7 +1,7 @@
 package vue;
 
 import modele.Carte;
-import modele.Partie;
+import modele.parties.Partie;
 import modele.Personnage;
 
 import java.io.File;

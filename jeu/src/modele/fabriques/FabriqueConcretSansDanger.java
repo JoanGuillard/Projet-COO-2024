@@ -1,4 +1,9 @@
-package modele;
+package modele.fabriques;
+
+import modele.Personnage;
+import modele.parties.Partie;
+import modele.parties.SansDangerPartieForet;
+import modele.parties.SansDangerPartieJungle;
 
 public class FabriqueConcretSansDanger extends FabriqueAbstraitePartie{
     public FabriqueConcretSansDanger(Personnage personnage){

@@ -1,4 +1,7 @@
-package modele;
+package modele.fabriques;
+
+import modele.Personnage;
+import modele.parties.Partie;
 
 public abstract class FabriqueAbstraitePartie {
     private Personnage personnage;

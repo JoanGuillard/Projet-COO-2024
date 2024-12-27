@@ -1,14 +1,10 @@
 package controleur;
 
-import modele.Carte;
-import modele.Partie;
+import modele.parties.Partie;
 import modele.Personnage;
-import modele.SansDangerPartieForet;
-import modele.SansDangerPartieJungle;
+import modele.parties.SansDangerPartieForet;
+import modele.parties.SansDangerPartieJungle;
 import vue.Ihm;
-
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Controleur {
     private Ihm ihm;

@@ -1,4 +1,9 @@
-package modele;
+package modele.parties;
+import modele.Carte;
+import modele.ElementCarte;
+import modele.Personnage;
+import modele.animaux.Singe;
+
 import java.util.Random;
 
 import static modele.CouleursAffichage.*;
@@ -61,29 +66,7 @@ public class SansDangerPartieJungle extends Partie {
                 return false;
         }
     }
-    @Override
-    public void remplirCarte(Carte carte,int hauteur,int largeur) {
-        Random random = new Random();
 
-
-        int totalCases = (hauteur - 2) * (largeur - 2); // pour etre loin de la bordure
-        int casesVidesCibles = totalCases / 2; // 50% des cases vides
-        int casesRemplies = 0;
-
-        for (int i = 1; i < hauteur -1; i++) {
-            for (int j = 1; j < largeur -1; j++) {
-                if (casesRemplies >= totalCases - casesVidesCibles) break;
-
-                String element = genererElementAleatoire(random);
-                if (!element.equals(" ")) casesRemplies++;
-
-                carte.setCase(j, i ,ajouterElementCarte(element, j, i));
-            }
-        }
-
-        // Ajouter le personnage dans une zone protégée
-        ajouterPersonnageDansZoneProtegee(carte, random);
-    }
     @Override
     protected String genererElementAleatoire(Random random) {
         int chance = random.nextInt(100);

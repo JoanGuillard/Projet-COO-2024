@@ -1,5 +1,9 @@
-package modele;
-import java.util.ArrayList;
+package modele.parties;
+import modele.Carte;
+import modele.ElementCarte;
+import modele.Personnage;
+import modele.animaux.Ecureuil;
+
 import java.util.Random;
 
 import static modele.CouleursAffichage.*;
@@ -10,28 +14,7 @@ public class SansDangerPartieForet extends Partie{
         getPersonnage().setInventaire("G");
     }
 
-    @Override
-    public void remplirCarte(Carte carte,int hauteur,int largeur) {
-        Random random = new Random();
 
-
-        int totalCases = (hauteur - 2) * (largeur - 2); // pour etre loin de la bordure
-        int casesVidesCibles = totalCases / 2; // 50% des cases vides
-        int casesRemplies = 0;
-
-        for (int i = 1; i < hauteur-1 ; i++) {
-            for (int j = 1; j < largeur-1 ; j++) {
-                if (casesRemplies >= totalCases - casesVidesCibles) break;
-
-                String element = genererElementAleatoire(random);
-                if (!element.equals(" ")) casesRemplies++;
-
-                carte.setCase(j,i,ajouterElementCarte(element,j,i));
-
-            }
-        }
-        ajouterPersonnageDansZoneProtegee(carte, random);
-    }
 
     @Override
     public String afficherElement(ElementCarte e) {
@@ -78,7 +61,7 @@ public class SansDangerPartieForet extends Partie{
     @Override
     protected String genererElementAleatoire(Random random) {
         int chance = random.nextInt(100);
-        if (chance < 90) return " ";  // 50% vide
+        if (chance < 90) return " ";
         else if (chance < 92) return "C";
         else if (chance < 94) return "B";
         else if (chance < 96) return "E";
