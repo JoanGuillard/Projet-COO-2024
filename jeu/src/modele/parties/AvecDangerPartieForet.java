@@ -3,12 +3,17 @@ package modele.parties;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.animaux.Ecureuil;
+import modele.predateurs.Predateur;
+import modele.predateurs.Renard;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static modele.CouleursAffichage.*;
 
 public class AvecDangerPartieForet extends Partie{
+
+
     public AvecDangerPartieForet(Personnage personnage) {
         super(personnage);
         getPersonnage().setInventaire("C");
@@ -64,7 +69,7 @@ public class AvecDangerPartieForet extends Partie{
                 getLesAnimaux().add(e);
                 return e;
             case "R":
-
+                Renard r = new Renard("R",abscisse,ordonnee);
             default:
                 return new ElementCarte(element);
         }

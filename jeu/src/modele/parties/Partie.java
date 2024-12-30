@@ -7,6 +7,7 @@ import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.animaux.Animal;
+import modele.predateurs.Predateur;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,11 +18,13 @@ import java.util.Scanner;
 public abstract class Partie {
     private Personnage personnage;
     private ArrayList<Animal> lesAnimaux;
+    private ArrayList<Predateur> lesPredateurs;
     private Carte carte;
 
     public Partie(Personnage personnage){
         this.personnage = personnage;
         this.lesAnimaux = new ArrayList<Animal>();
+        this.lesPredateurs = new ArrayList<Predateur>();
     }
 
 
@@ -158,8 +161,15 @@ public abstract class Partie {
      * Permet de déplacer les animaux présents sur la carte
      */
     public void passerTourAnimaux() {
-        for (Animal animal : lesAnimaux) {
-            animal.seDeplacer(carte, personnage);
+        for (Animal animal : lesAnimaux){
+            if(animal.isEstMort()){
+                tuerAnimal(animal);
+            }else{
+                animal.seDeplacer(carte, personnage);
+            }
+        }
+        for (Predateur predateur : lesPredateurs){
+            predateur.seDeplacer(carte);
         }
     }
 
@@ -260,5 +270,9 @@ public abstract class Partie {
 
     public void setCarte(Carte carte) {
         this.carte = carte;
+    }
+
+    public void tuerAnimal(Animal animal){
+        lesAnimaux.remove(animal);
     }
 }

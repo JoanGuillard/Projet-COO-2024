@@ -25,19 +25,19 @@ public class EtatAffame extends Etat{
         for(String nourriture : animal.getRegimeAlimentaire()){
             if( carte.verifierCase(abscisseAnimal, ordonneeAnimal-1, nourriture) ){
                 animal.nouvellePosition(abscisseAnimal,ordonneeAnimal-1);
-                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal,ordonneeAnimal-1, personnage.getApparence()));
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal,ordonneeAnimal-1, personnage.getApparence()),nourriture);
                 return;
             } else if ( carte.verifierCase(abscisseAnimal, ordonneeAnimal+1, nourriture) ) {
                 animal.nouvellePosition(abscisseAnimal,ordonneeAnimal+1);
-                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal,ordonneeAnimal+1, personnage.getApparence()));
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal,ordonneeAnimal+1, personnage.getApparence()),nourriture);
                 return;
             } else if ( carte.verifierCase(abscisseAnimal-1, ordonneeAnimal, nourriture) ) {
                 animal.nouvellePosition(abscisseAnimal-1,ordonneeAnimal);
-                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal-1,ordonneeAnimal, personnage.getApparence()));
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal-1,ordonneeAnimal, personnage.getApparence()),nourriture);
                 return;
             } else if ( carte.verifierCase(abscisseAnimal+1, ordonneeAnimal,nourriture) ) {
                 animal.nouvellePosition(abscisseAnimal+1,ordonneeAnimal);
-                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal+1,ordonneeAnimal, personnage.getApparence()));
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal+1,ordonneeAnimal, personnage.getApparence()),nourriture);
                 return;
             }
         }

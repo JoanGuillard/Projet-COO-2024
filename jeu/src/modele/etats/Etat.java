@@ -39,6 +39,9 @@ public abstract class Etat {
         Random random = new Random();
         int numCase =  random.nextInt((nbCaseVide - 1) + 1) + 1;
         animal.nouvellePosition(abscissesVides.get(numCase),ordonneesVides.get(numCase));
+        animal.setCachette(" ");
     }
+
+
 
 }

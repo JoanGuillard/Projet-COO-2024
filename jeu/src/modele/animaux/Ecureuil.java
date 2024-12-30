@@ -1,5 +1,8 @@
 package modele.animaux;
 
+import modele.Carte;
+import modele.etats.EtatEffraye;
+
 public class Ecureuil extends Animal{
 
 
@@ -11,6 +14,14 @@ public class Ecureuil extends Animal{
         this.getRegimeAlimentaire().add("G");
         this.setNbTourJunkie(5);
         this.setNbTourCache(3);
+    }
+
+
+
+
+    @Override
+    public boolean estComestible(String aliment) {
+        return !aliment.equals("M");
     }
 
 
