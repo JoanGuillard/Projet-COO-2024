@@ -6,16 +6,18 @@ import modele.parties.SansDangerPartieForet;
 import modele.parties.SansDangerPartieJungle;
 
 public class FabriqueConcretSansDanger extends FabriqueAbstraitePartie{
+
     public FabriqueConcretSansDanger(Personnage personnage){
         super(personnage);
     }
+
     @Override
-    public Partie creerPartieForet(Personnage personnage) {
-        return  new SansDangerPartieForet(personnage);
+    public Partie creerPartieForet() {
+        return  new SansDangerPartieForet(this.personnage);
     }
 
     @Override
-    public Partie creerPartieJungle(Personnage personnage) {
-        return new SansDangerPartieJungle(personnage);
+    public Partie creerPartieJungle() {
+        return new SansDangerPartieJungle(this.personnage);
     }
 }
