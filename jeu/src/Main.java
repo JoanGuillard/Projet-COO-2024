@@ -18,6 +18,8 @@ public class Main {
         Ihm ihm = new Ihm();
         Controleur controleur = new Controleur(ihm);
         controleur.lancerPartie();
+
+
        // Partie partie = new SansDangerPartieForet(new Personnage());
 
 

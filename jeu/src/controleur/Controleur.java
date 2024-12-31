@@ -1,5 +1,8 @@
 package controleur;
 
+import modele.fabriques.FabriqueAbstraitePartie;
+import modele.fabriques.FabriqueConcretAvecDanger;
+import modele.fabriques.FabriqueConcretSansDanger;
 import modele.parties.Partie;
 import modele.Personnage;
 import modele.parties.SansDangerPartieForet;
@@ -8,7 +11,7 @@ import vue.Ihm;
 
 public class Controleur {
     private Ihm ihm;
-    private Partie partie;
+    private FabriqueAbstraitePartie fabriquePartie;
 
     public Controleur(Ihm ihm) {
         this.ihm = ihm;
@@ -16,15 +19,27 @@ public class Controleur {
     }
 
     public void lancerPartie() {
+        Partie partie;
         ihm.afficherMessage("Bienvenue dans le jeu !");
         int choixTheme = ihm.demanderTheme();
         switch (choixTheme) {
             case 1:
-                partie = new SansDangerPartieForet(new Personnage());
+                fabriquePartie = new FabriqueConcretSansDanger(new Personnage());
+                partie = fabriquePartie.creerPartieForet();
                 break;
 
             case 2:
-                partie = new SansDangerPartieJungle(new Personnage());
+                fabriquePartie = new FabriqueConcretSansDanger(new Personnage());
+                  partie= fabriquePartie.creerPartieJungle();
+                break;
+            case 3:
+                fabriquePartie = new FabriqueConcretAvecDanger(new Personnage());
+                partie = fabriquePartie.creerPartieForet();
+                break;
+
+            case 4:
+                fabriquePartie = new FabriqueConcretAvecDanger(new Personnage());
+                partie= fabriquePartie.creerPartieJungle();
                 break;
 
             default:
