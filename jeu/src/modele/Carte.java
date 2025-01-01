@@ -2,6 +2,7 @@ package modele;
 
 import exceptions.CommandeInconnueException;
 import exceptions.DeplacementImpossibleException;
+import modele.predateurs.Predateur;
 
 import javax.swing.text.Element;
 import java.io.File;
@@ -129,6 +130,10 @@ public class Carte {
 
     public boolean verifierCase(int abscisse, int ordonnee , String element){
         return ordonnee < hauteur && ordonnee >= 0 && abscisse >= 0 && abscisse < largeur && getCase(abscisse,ordonnee).getApparence().equals(element);
+    }
+
+    public boolean verifierPredateur(int abscisse, int ordonnee){
+        return ordonnee < hauteur && ordonnee >= 0 && abscisse >= 0 && abscisse < largeur && getCase(abscisse,ordonnee) instanceof Predateur;
     }
 
     public boolean estCaseAdjacente(int abscisse, int ordonnee, String element){

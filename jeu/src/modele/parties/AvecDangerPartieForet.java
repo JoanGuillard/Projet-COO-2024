@@ -19,6 +19,7 @@ public class AvecDangerPartieForet extends Partie{
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("G");
         getPersonnage().setInventaire("M");
+        this.setBordure("A");
     }
 
     @Override
@@ -40,7 +41,6 @@ public class AvecDangerPartieForet extends Partie{
                 return ANSI_BLACK_BACKGROUND + ANSI_RED + e.getApparence() + ANSI_RESET;
             case "H":
                 return ANSI_PURPLE_BACKGROUND + ANSI_BLACK + e.getApparence() + ANSI_RESET;
-
             default:
                 return ANSI_GREEN_BACKGROUND + e.getApparence() + ANSI_RESET;
         }
@@ -50,13 +50,17 @@ public class AvecDangerPartieForet extends Partie{
 
     @Override
     protected String genererElementAleatoire(Random random) {
-        return null;
+        int chance = random.nextInt(100);
+        if (chance < 90) return " ";
+        else if (chance < 92) return "C";
+        else if (chance < 94) return "B";
+        else if (chance < 95) return "R";
+        else if (chance < 96) return "E";
+        else if (chance < 97) return "A";
+        else   return "G";
     }
 
-    @Override
-    public void initialiserCarte(int hauteur, int largeur) {
 
-    }
 
     @Override
     public ElementCarte ajouterElementCarte(String element, int abscisse, int ordonnee) {
@@ -70,6 +74,8 @@ public class AvecDangerPartieForet extends Partie{
                 return e;
             case "R":
                 Renard r = new Renard("R",abscisse,ordonnee);
+                getLesPredateurs().add(r);
+                return r;
             default:
                 return new ElementCarte(element);
         }
@@ -77,6 +83,11 @@ public class AvecDangerPartieForet extends Partie{
 
     @Override
     public boolean estNourriture(String element) {
-        return false;
+        switch (element){
+            case "C", "M", "G":
+                return true;
+            default :
+                return false;
+        }
     }
 }

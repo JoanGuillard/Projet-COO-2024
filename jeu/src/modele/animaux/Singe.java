@@ -1,6 +1,7 @@
 package modele.animaux;
 
 import modele.Carte;
+import modele.Personnage;
 
 public class Singe extends Animal{
     public Singe(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger) {
@@ -11,6 +12,15 @@ public class Singe extends Animal{
         this.getRegimeAlimentaire().add("B");
     }
 
+    @Override
+    public void intoxication() {
+
+    }
+
+    @Override
+    public void fuir(Carte carte, Personnage personnage, int nvAbscisse, int nvOrdonnee) {
+
+    }
 
 
     @Override

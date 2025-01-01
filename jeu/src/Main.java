@@ -1,6 +1,8 @@
 
 import modele.*;
 import controleur.Controleur;
+import modele.parties.AvecDangerPartieForet;
+import modele.parties.Partie;
 import vue.Ihm;
 
 import java.io.File;
@@ -15,7 +17,15 @@ import static modele.CouleursAffichage.ANSI_BLACK;
 
 public class Main {
     public static void main(String[] args) {
-        Ihm ihm = new Ihm();
+        Partie partie =new AvecDangerPartieForet(new Personnage());
+        partie.initialiserCarte(35,100,"A");
+       for(int i =0; i < 40; i++){
+           System.out.println(partie.toString());
+           partie.passerTourAnimaux();
+       }
+        System.out.println(partie.toString());
+
+        /*Ihm ihm = new Ihm();
         Controleur controleur = new Controleur(ihm);
         controleur.lancerPartie();
        // Partie partie = new SansDangerPartieForet(new Personnage());

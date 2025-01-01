@@ -14,6 +14,25 @@ public abstract class Etat {
     public abstract String toString(Animal animal);
 
 
+    public boolean verifierDanger(Carte carte, int abscisseAnimal, int ordonneeAnimal,Animal animal,Personnage personnage){
+        for(int i =1; i< 5; i++){
+            if(carte.verifierPredateur(abscisseAnimal+i,ordonneeAnimal)){
+                animal.fuir(carte,personnage,abscisseAnimal-1,ordonneeAnimal);
+                return true;
+            }else if(carte.verifierPredateur(abscisseAnimal-i,ordonneeAnimal)){
+                animal.fuir(carte,personnage,abscisseAnimal+1,ordonneeAnimal);
+                return true;
+            }else if(carte.verifierPredateur(abscisseAnimal,ordonneeAnimal+i)){
+                animal.fuir(carte,personnage,abscisseAnimal,ordonneeAnimal-1);
+                return true;
+            }else if(carte.verifierPredateur(abscisseAnimal,ordonneeAnimal-i)){
+                animal.fuir(carte,personnage,abscisseAnimal,ordonneeAnimal+1);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public void deplacementAleatoire(Carte carte, int abscisseAnimal, int ordonneeAnimal,Animal animal){
         Map<Integer, Integer> abscissesVides = new HashMap<Integer,Integer>();

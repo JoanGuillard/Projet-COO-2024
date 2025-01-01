@@ -51,10 +51,12 @@ public abstract class Animal extends ElementCarte {
             }
             this.changerEtat(EtatRassasie.getInstance());
         }else{
-            changerEtat(EtatJunkie.getInstance());
+            intoxication();
         }
 
     }
+
+    public abstract void intoxication();
 
     public void setEstMort(boolean estMort) {
         this.estMort = estMort;
@@ -153,43 +155,49 @@ public abstract class Animal extends ElementCarte {
         this.estCache = estCache;
     }
 
-    public boolean seCacher(Carte carte,String cachette1, String cachette2){
+    public boolean seCacher(Carte carte,String cachette){
         int abscisseAnimal = getAbscisse();
         int ordonneeAnimal = getOrdonnee();
-        if(carte.verifierCase(abscisseAnimal-1,ordonneeAnimal,cachette1) || carte.verifierCase(abscisseAnimal-1,ordonneeAnimal,cachette2)){
-        this.setCachette(carte.getCase(abscisseAnimal,ordonneeAnimal).getApparence());
+        if(carte.verifierCase(abscisseAnimal-1,ordonneeAnimal,cachette)){
+
         this.setEstCache(true);
+        carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
+        this.setCachette(cachette);
         this.nouvellePosition(abscisseAnimal-1,ordonneeAnimal);
-        this.changerEtat(EtatEffraye.getInstance());
         return true;
     }
-        else if(carte.verifierCase(abscisseAnimal+1,ordonneeAnimal,cachette1) || carte.verifierCase(abscisseAnimal-1,ordonneeAnimal,cachette2)){
-        this.setCachette(carte.getCase(abscisseAnimal,ordonneeAnimal).getApparence());
+        else if(carte.verifierCase(abscisseAnimal+1,ordonneeAnimal,cachette)){
         this.setEstCache(true);
+        carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
+        this.setCachette(cachette);
+
         this.nouvellePosition(abscisseAnimal+1,ordonneeAnimal);
-        this.changerEtat(EtatEffraye.getInstance());
+
 
         return true;
     }
-        else if(carte.verifierCase(abscisseAnimal,ordonneeAnimal-1,cachette1) || carte.verifierCase(abscisseAnimal-1,ordonneeAnimal,cachette2)){
-        this.setCachette(carte.getCase(abscisseAnimal,ordonneeAnimal).getApparence());
+        else if(carte.verifierCase(abscisseAnimal,ordonneeAnimal-1,cachette) ){
         this.setEstCache(true);
+        carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
+        this.setCachette(cachette);
+
         this.nouvellePosition(abscisseAnimal,ordonneeAnimal-1);
-        this.changerEtat(EtatEffraye.getInstance());
 
         return true;
     }
-        else if(carte.verifierCase(abscisseAnimal,ordonneeAnimal+1,cachette1) || carte.verifierCase(abscisseAnimal-1,ordonneeAnimal,cachette2)){
-        this.setCachette(carte.getCase(abscisseAnimal,ordonneeAnimal).getApparence());
+        else if(carte.verifierCase(abscisseAnimal,ordonneeAnimal+1,cachette)){
         this.setEstCache(true);
+        carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
+        this.setCachette(cachette);
         this.nouvellePosition(abscisseAnimal,ordonneeAnimal+1);
-        this.changerEtat(EtatEffraye.getInstance());
 
         return true;
     }else{
         return false;
     }
 }
+
+    public abstract void fuir(Carte carte, Personnage personnage, int nvAbscisse, int nvOrdonnee);
 
     public abstract boolean estComestible(String aliment);
 }

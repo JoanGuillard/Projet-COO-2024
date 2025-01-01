@@ -1,5 +1,8 @@
 package modele;
 
+import modele.animaux.Animal;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +14,7 @@ public class Personnage extends ElementCarte{
 
 
     private Map<String,Integer> inventaire;
+    private ArrayList<Animal> lesAmisCaches;
 
     public Personnage(){
         super(ANSI_BLUE_BACKGROUND + ANSI_RED + "@" + ANSI_RESET);
@@ -39,5 +43,13 @@ public class Personnage extends ElementCarte{
 
     public boolean isInInventaire(String element){
         return inventaire.containsKey(element);
+    }
+
+    public ArrayList<Animal> getLesAmisCaches() {
+        return lesAmisCaches;
+    }
+
+    public void ajouterAmiCache(Animal animal) {
+        this.lesAmisCaches.add(animal);
     }
 }

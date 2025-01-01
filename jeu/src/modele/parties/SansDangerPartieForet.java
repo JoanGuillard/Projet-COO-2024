@@ -12,6 +12,7 @@ public class SansDangerPartieForet extends Partie{
         super(personnage);
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("G");
+        this.setBordure("A");
     }
 
 
@@ -68,12 +69,6 @@ public class SansDangerPartieForet extends Partie{
         else if (chance < 97) return "A";
         else   return "G";
 
-    }
-    @Override
-    public void initialiserCarte(int hauteur, int largeur) {
-        Carte carte = creerNouvelleCarte("A",hauteur, largeur);
-        remplirCarte(carte, hauteur, largeur);
-        this.setCarte(carte);
     }
 
 

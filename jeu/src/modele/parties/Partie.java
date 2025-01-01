@@ -21,12 +21,21 @@ public abstract class Partie {
     private ArrayList<Predateur> lesPredateurs;
     private Carte carte;
 
+    private String bordure;
+
     public Partie(Personnage personnage){
         this.personnage = personnage;
         this.lesAnimaux = new ArrayList<Animal>();
         this.lesPredateurs = new ArrayList<Predateur>();
     }
 
+    public String getBordure() {
+        return bordure;
+    }
+
+    public void setBordure(String bordure) {
+        this.bordure = bordure;
+    }
 
     /**
      * Permet de charger une carte à partir d'un fichier .txt
@@ -124,7 +133,11 @@ public abstract class Partie {
         ajouterPersonnageDansZoneProtegee(carte, random);
     }
     protected abstract String genererElementAleatoire(Random random);
-    public abstract void initialiserCarte(int hauteur, int largeur);
+    public void initialiserCarte(int hauteur, int largeur, String bordure){
+        Carte carte = creerNouvelleCarte(bordure,hauteur, largeur);
+        remplirCarte(carte, hauteur, largeur);
+        this.setCarte(carte);
+    }
 
     /**
      * Crée un objet de type Element et lui définit une apparence selon le caractère rencontré
@@ -134,6 +147,10 @@ public abstract class Partie {
      * @return un objet de type ElementCarte
      */
     public abstract ElementCarte ajouterElementCarte(String element,int abscisse,int ordonnee);
+
+    public ArrayList<Predateur> getLesPredateurs() {
+        return lesPredateurs;
+    }
 
     /**
      * Permet d'afficher l'apparence de l'animal sur la carte en fonction du type de la partie et de l'animal
@@ -162,9 +179,7 @@ public abstract class Partie {
      */
     public void passerTourAnimaux() {
         for (Animal animal : lesAnimaux){
-            if(animal.isEstMort()){
-                tuerAnimal(animal);
-            }else{
+            if(!animal.isEstMort()){
                 animal.seDeplacer(carte, personnage);
             }
         }
@@ -272,7 +287,5 @@ public abstract class Partie {
         this.carte = carte;
     }
 
-    public void tuerAnimal(Animal animal){
-        lesAnimaux.remove(animal);
-    }
+
 }

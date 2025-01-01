@@ -14,6 +14,7 @@ public class SansDangerPartieJungle extends Partie {
         super(personnage);
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("B");
+        this.setBordure("T");
     }
 
     @Override
@@ -77,10 +78,5 @@ public class SansDangerPartieJungle extends Partie {
         else if (chance < 97) return "T";
         else return "B"; // 10% cocotiers
     }
-    @Override
-    public void initialiserCarte(int hauteur, int largeur) {
-        Carte carte = creerNouvelleCarte("T",hauteur, largeur);
-        remplirCarte(carte,hauteur,largeur);
-        this.setCarte(carte);
-    }
+
 }

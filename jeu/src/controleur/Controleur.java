@@ -49,7 +49,8 @@ public class Controleur {
             case 1:
                 partie.initialiserCarte(
                         ihm.demanderCoordonnes("ordonnee"),
-                        ihm.demanderCoordonnes("abscisse")
+                        ihm.demanderCoordonnes("abscisse"),
+                        partie.getBordure()
                 );
                 return true;
 
