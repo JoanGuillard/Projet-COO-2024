@@ -90,10 +90,9 @@ public class AvecDangerPartieJungle extends Partie{
             case "@":
                 getPersonnage().nouvellePosition(abscisse, ordonnee);
                 return getPersonnage();
-            default:
-                return null;
-        }
 
+        }
+        return new ElementCarte(element);
     }
 
         @Override
