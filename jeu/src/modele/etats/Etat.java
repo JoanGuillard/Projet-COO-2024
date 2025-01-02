@@ -56,7 +56,7 @@ public abstract class Etat {
             ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal);
         }
         Random random = new Random();
-        int numCase =  random.nextInt((nbCaseVide - 1) + 1) + 1;
+        int numCase =  random.nextInt(nbCaseVide)+1;
         animal.nouvellePosition(abscissesVides.get(numCase),ordonneesVides.get(numCase));
         animal.setCachette(" ");
     }

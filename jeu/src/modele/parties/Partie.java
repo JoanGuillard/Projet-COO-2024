@@ -178,13 +178,13 @@ public abstract class Partie {
      * Permet de déplacer les animaux présents sur la carte
      */
     public void passerTourAnimaux() {
+        for (Predateur predateur : lesPredateurs){
+            predateur.seDeplacer(carte);
+        }
         for (Animal animal : lesAnimaux){
             if(!animal.isEstMort()){
                 animal.seDeplacer(carte, personnage);
             }
-        }
-        for (Predateur predateur : lesPredateurs){
-            predateur.seDeplacer(carte);
         }
     }
 
