@@ -71,12 +71,12 @@ public class Ihm {
                     choixIncorrect = false;
                     return choix;
                 }
-            }else {
+            }
                 System.out.println("L'entier que vous avez saisit ne correspond a aucune action.Veuillez choisir un entier valide.");
                 scanner.nextLine();
             }
-            scanner.nextLine();
-        }
+
+
         return -1;
     }
 

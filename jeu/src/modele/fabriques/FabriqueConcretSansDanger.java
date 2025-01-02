@@ -13,11 +13,11 @@ public class FabriqueConcretSansDanger extends FabriqueAbstraitePartie{
 
     @Override
     public Partie creerPartieForet() {
-        return  new SansDangerPartieForet(this.personnage);
+        return  new SansDangerPartieForet(this.personnage,"A");
     }
 
     @Override
     public Partie creerPartieJungle() {
-        return new SansDangerPartieJungle(this.personnage);
+        return new SansDangerPartieJungle(this.personnage,"T");
     }
 }

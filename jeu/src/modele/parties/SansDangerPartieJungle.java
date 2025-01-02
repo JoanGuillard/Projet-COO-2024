@@ -10,8 +10,8 @@ import static modele.CouleursAffichage.*;
 
 public class SansDangerPartieJungle extends Partie {
 
-    public SansDangerPartieJungle(Personnage personnage) {
-        super(personnage);
+    public SansDangerPartieJungle(Personnage personnage,String bordure) {
+        super(personnage,bordure);
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("B");
     }
@@ -77,10 +77,5 @@ public class SansDangerPartieJungle extends Partie {
         else if (chance < 97) return "T";
         else return "B"; // 10% cocotiers
     }
-    @Override
-    public void initialiserCarte(int hauteur, int largeur) {
-        Carte carte = creerNouvelleCarte("T",hauteur, largeur);
-        remplirCarte(carte,hauteur,largeur);
-        this.setCarte(carte);
-    }
+
 }

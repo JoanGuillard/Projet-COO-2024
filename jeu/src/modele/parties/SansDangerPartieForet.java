@@ -8,8 +8,8 @@ import java.util.Random;
 
 import static modele.CouleursAffichage.*;
 public class SansDangerPartieForet extends Partie{
-    public SansDangerPartieForet(Personnage personnage) {
-        super(personnage);
+    public SansDangerPartieForet(Personnage personnage,String bordure) {
+        super(personnage,bordure);
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("G");
     }
@@ -69,12 +69,8 @@ public class SansDangerPartieForet extends Partie{
         else   return "G";
 
     }
-    @Override
-    public void initialiserCarte(int hauteur, int largeur) {
-        Carte carte = creerNouvelleCarte("A",hauteur, largeur);
-        remplirCarte(carte, hauteur, largeur);
-        this.setCarte(carte);
-    }
+
+
 
 
 

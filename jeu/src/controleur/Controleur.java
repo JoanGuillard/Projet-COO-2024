@@ -62,7 +62,7 @@ public class Controleur {
 
         switch (choixCreation) {
             case 1:
-                partie.initialiserCarte(
+                partie.initialiserCarte(partie.getBordure(),
                         ihm.demanderCoordonnes("ordonnee"),
                         ihm.demanderCoordonnes("abscisse")
                 );

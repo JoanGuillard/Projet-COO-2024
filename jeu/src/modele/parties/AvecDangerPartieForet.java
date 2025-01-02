@@ -14,8 +14,8 @@ import static modele.CouleursAffichage.*;
 public class AvecDangerPartieForet extends Partie{
 
 
-    public AvecDangerPartieForet(Personnage personnage) {
-        super(personnage);
+    public AvecDangerPartieForet(Personnage personnage,String bordure) {
+        super(personnage,bordure);
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("G");
         getPersonnage().setInventaire("M");
@@ -53,10 +53,7 @@ public class AvecDangerPartieForet extends Partie{
         return null;
     }
 
-    @Override
-    public void initialiserCarte(int hauteur, int largeur) {
 
-    }
 
     @Override
     public ElementCarte ajouterElementCarte(String element, int abscisse, int ordonnee) {

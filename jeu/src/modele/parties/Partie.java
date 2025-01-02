@@ -12,6 +12,7 @@ import modele.predateurs.Predateur;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -19,12 +20,14 @@ public abstract class Partie {
     private Personnage personnage;
     private ArrayList<Animal> lesAnimaux;
     private ArrayList<Predateur> lesPredateurs;
+    private String bordure;
     private Carte carte;
 
-    public Partie(Personnage personnage){
+    public Partie(Personnage personnage,String bordure){
         this.personnage = personnage;
         this.lesAnimaux = new ArrayList<Animal>();
         this.lesPredateurs = new ArrayList<Predateur>();
+        this.bordure=bordure;
     }
 
 
@@ -124,7 +127,13 @@ public abstract class Partie {
         ajouterPersonnageDansZoneProtegee(carte, random);
     }
     protected abstract String genererElementAleatoire(Random random);
-    public abstract void initialiserCarte(int hauteur, int largeur);
+    public  void initialiserCarte(String bordure,int hauteur, int largeur){
+        Carte carte = creerNouvelleCarte("T",hauteur, largeur);
+        remplirCarte(carte,hauteur,largeur);
+        this.setCarte(carte);
+        toString();
+
+    }
 
     /**
      * Crée un objet de type Element et lui définit une apparence selon le caractère rencontré
@@ -161,14 +170,17 @@ public abstract class Partie {
      * Permet de déplacer les animaux présents sur la carte
      */
     public void passerTourAnimaux() {
-        for (Animal animal : lesAnimaux){
-            if(animal.isEstMort()){
-                tuerAnimal(animal);
-            }else{
+        Iterator<Animal> iteratorAnimaux = lesAnimaux.iterator();
+        while (iteratorAnimaux.hasNext()) {
+            Animal animal = iteratorAnimaux.next();
+            if (animal.isEstMort()) {
+                iteratorAnimaux.remove();
+            } else {
                 animal.seDeplacer(carte, personnage);
             }
         }
-        for (Predateur predateur : lesPredateurs){
+
+        for (Predateur predateur : lesPredateurs) {
             predateur.seDeplacer(carte);
         }
     }
@@ -274,5 +286,13 @@ public abstract class Partie {
 
     public void tuerAnimal(Animal animal){
         lesAnimaux.remove(animal);
+    }
+
+    public ArrayList<Predateur> getLesPredateurs() {
+        return lesPredateurs;
+    }
+
+    public String getBordure() {
+        return bordure;
     }
 }

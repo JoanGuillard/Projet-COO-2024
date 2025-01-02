@@ -1,6 +1,8 @@
 
 import modele.*;
 import controleur.Controleur;
+import modele.parties.AvecDangerPartieJungle;
+import modele.parties.Partie;
 import vue.Ihm;
 
 import java.io.File;
@@ -17,10 +19,11 @@ public class Main {
     public static void main(String[] args) {
         Ihm ihm = new Ihm();
         Controleur controleur = new Controleur(ihm);
+
         controleur.lancerPartie();
 
 
-       // Partie partie = new SansDangerPartieForet(new Personnage());
+        // Partie partie = new SansDangerPartieForet(new Personnage());
 
 
 
