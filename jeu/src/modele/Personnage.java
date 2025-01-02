@@ -49,6 +49,11 @@ public class Personnage extends ElementCarte{
         return lesAmisCaches;
     }
 
+
+    public void supprimerAmiCache(Animal animal){
+        lesAmisCaches.remove(animal);
+    }
+
     public void ajouterAmiCache(Animal animal) {
         this.lesAmisCaches.add(animal);
     }

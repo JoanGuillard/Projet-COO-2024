@@ -200,4 +200,8 @@ public abstract class Animal extends ElementCarte {
     public abstract void fuir(Carte carte, Personnage personnage, int nvAbscisse, int nvOrdonnee);
 
     public abstract boolean estComestible(String aliment);
+
+    public boolean estCacheAvecAmi(Personnage p){
+        return p.getLesAmisCaches().contains(this);
+    }
 }

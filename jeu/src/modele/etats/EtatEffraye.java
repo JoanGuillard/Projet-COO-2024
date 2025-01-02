@@ -9,6 +9,7 @@ public class EtatEffraye extends Etat{
     private int nbTourEffraye;
     private static EtatEffraye instance;
 
+
     public EtatEffraye() {
         this.nbTourEffraye = 0;
     }
@@ -24,6 +25,13 @@ public class EtatEffraye extends Etat{
         if(++nbTourEffraye == animal.getNbTourCache()){
             animal.changerEtat(EtatAffame.getInstance());
             animal.setEstCache(false);
+            if(animal.estCacheAvecAmi(personnage)){
+                personnage.supprimerAmiCache(animal);
+            }
+        }else{
+            if(animal.estCacheAvecAmi(personnage)){
+                animal.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
+            }
         }
     }
 
