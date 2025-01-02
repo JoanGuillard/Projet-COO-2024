@@ -10,11 +10,15 @@ public class FabriqueConcretAvecDanger extends FabriqueAbstraitePartie{
 
     @Override
     public Partie creerPartieForet() {
+
         return  new AvecDangerPartieForet(this.personnage,"A");
+
     }
 
     @Override
     public Partie creerPartieJungle() {
+
         return new AvecDangerPartieJungle(this.personnage,"T");
+
     }
 }
