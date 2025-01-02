@@ -25,7 +25,7 @@ public class EtatRassasie extends Etat{
         if(!verifierDanger(carte,abscisse,ordonnee,animal,personnage)) {
             animal.setEstCache(false);
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
-            deplacementAleatoire(carte, abscisse, ordonnee, animal);
+            deplacementAleatoire(carte, abscisse, ordonnee, animal,1);
             animal.augmenterCptSansManger();
             if (animal.getNbTourSansManger() == animal.getCptTourSansManger()) {
                 animal.changerEtat(EtatAffame.getInstance());

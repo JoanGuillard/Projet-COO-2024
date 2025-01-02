@@ -23,6 +23,7 @@ public abstract class Animal extends ElementCarte {
     private String cachette;
     private int nbTourJunkie;
 
+    private int cptTourJunkie;
     private boolean estMort;
 
 
@@ -203,5 +204,13 @@ public abstract class Animal extends ElementCarte {
 
     public boolean estCacheAvecAmi(Personnage p){
         return p.getLesAmisCaches().contains(this);
+    }
+
+    public int getCptTourJunkie() {
+        return cptTourJunkie;
+    }
+
+    public void augmenterCptTourJunkie(){
+        cptTourJunkie++;
     }
 }

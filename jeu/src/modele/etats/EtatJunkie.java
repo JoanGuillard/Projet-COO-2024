@@ -9,10 +9,9 @@ import static modele.CouleursAffichage.*;
 public class EtatJunkie extends Etat{
 
     private static EtatJunkie instance;
-    private int nbTourJunkie;
+
 
     public EtatJunkie() {
-        this.nbTourJunkie = 0;
     }
 
     public static synchronized EtatJunkie getInstance(){
@@ -23,14 +22,15 @@ public class EtatJunkie extends Etat{
     }
     @Override
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
+        if(animal.getCptTourJunkie() == animal.getNbTourJunkie()){
+            animal.changerEtat(EtatAffame.getInstance());
+            return;
+        }
         int abscisseAnimal = animal.getAbscisse();
         int ordonneeAnimal = animal.getOrdonnee();
         carte.setCase(animal.getAbscisse(), animal.getOrdonnee(),new ElementCarte(animal.getCachette()));
-        deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal);
-        deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal);
-        if(++nbTourJunkie == animal.getNbTourJunkie()){
-            animal.changerEtat(EtatAffame.getInstance());
-        }
+        deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal,2);
+        animal.augmenterCptTourJunkie();
     }
 
     @Override

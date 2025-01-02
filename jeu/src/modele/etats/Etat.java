@@ -34,31 +34,34 @@ public abstract class Etat {
     }
 
 
-    public void deplacementAleatoire(Carte carte, int abscisseAnimal, int ordonneeAnimal,Animal animal){
+    public void deplacementAleatoire(Carte carte, int abscisseAnimal, int ordonneeAnimal,Animal animal, int nbCase){
         Map<Integer, Integer> abscissesVides = new HashMap<Integer,Integer>();
         Map<Integer, Integer> ordonneesVides = new HashMap<Integer,Integer>();
         int nbCaseVide = 0;
-        if(carte.verifierCase(abscisseAnimal,ordonneeAnimal-1," ")){
+        if(carte.verifierCase(abscisseAnimal,ordonneeAnimal-nbCase," ")){
             nbCaseVide++;
             abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal);
-            ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal-1);
-        }if (carte.verifierCase(abscisseAnimal,ordonneeAnimal+1, " ")){
+            ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal-nbCase);
+        }if (carte.verifierCase(abscisseAnimal,ordonneeAnimal+nbCase, " ")){
             nbCaseVide++;
             abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal);
-            ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal+1);
-        }if (carte.verifierCase(abscisseAnimal-1,ordonneeAnimal," ")){
+            ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal+nbCase);
+        }if (carte.verifierCase(abscisseAnimal-nbCase,ordonneeAnimal," ")){
             nbCaseVide++;
-            abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal-1);
+            abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal-nbCase);
             ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal);
-        }if(carte.verifierCase(abscisseAnimal+1,ordonneeAnimal," ")){
+        }if(carte.verifierCase(abscisseAnimal+nbCase,ordonneeAnimal," ")){
             nbCaseVide++;
-            abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal+1);
+            abscissesVides.putIfAbsent(nbCaseVide,abscisseAnimal+nbCase);
             ordonneesVides.putIfAbsent(nbCaseVide,ordonneeAnimal);
         }
         Random random = new Random();
-        int numCase =  random.nextInt(nbCaseVide)+1;
-        animal.nouvellePosition(abscissesVides.get(numCase),ordonneesVides.get(numCase));
-        animal.setCachette(" ");
+        if(nbCaseVide >0){
+            int numCase =  random.nextInt(nbCaseVide)+1;
+            animal.nouvellePosition(abscissesVides.get(numCase),ordonneesVides.get(numCase));
+            animal.setCachette(" ");
+        }
+
     }
 
 

@@ -19,6 +19,7 @@ public class Renard extends Predateur {
         int ordonneeRenard = this.getOrdonnee();
         Ecureuil e = null;
         carte.setCase(abscisseRenard,ordonneeRenard,new ElementCarte(" "));
+
         if(carte.verifierCase(abscisseRenard-1,ordonneeRenard,"E")){
              e = (Ecureuil) carte.getCase(abscisseRenard-1,ordonneeRenard);
         }else if(carte.verifierCase(abscisseRenard+1,ordonneeRenard,"E")){
@@ -39,7 +40,7 @@ public class Renard extends Predateur {
                     e.changerEtat(EtatEffraye.getInstance());
                 }
             }else{
-                deplacementAleatoire(carte);
+                deplacementAleatoire(carte,1);
             }
         }
         carte.setCase(getAbscisse(),getOrdonnee(),this);

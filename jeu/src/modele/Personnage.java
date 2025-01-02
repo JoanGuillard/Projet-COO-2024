@@ -19,6 +19,7 @@ public class Personnage extends ElementCarte{
     public Personnage(){
         super(ANSI_BLUE_BACKGROUND + ANSI_RED + "@" + ANSI_RESET);
         this.inventaire = new HashMap<String,Integer>();
+        this.lesAmisCaches = new ArrayList<Animal>();
     }
 
     public void setInventaire(String element){

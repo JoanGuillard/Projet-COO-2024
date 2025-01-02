@@ -8,6 +8,7 @@ import modele.etats.EtatJunkie;
 
 public class Ecureuil extends Animal{
 
+    private int nbTourJunkie;
 
     public Ecureuil(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger) {
         super(abscisse, ordonnee, nbNourritureAmi, nbTourSansManger);
@@ -26,19 +27,20 @@ public class Ecureuil extends Animal{
 
     @Override
     public void fuir(Carte carte, Personnage personnage, int nvAbscisse, int nvOrdonnee) {
-        if(isAmi() && carte.estCaseAdjacente(getAbscisse(),getOrdonnee(), personnage.getApparence())){
-            personnage.ajouterAmiCache(this);
-            this.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
-            this.changerEtat(EtatEffraye.getInstance());
-            this.setEstCache(true);
-        } else if (seCacher(carte,"A")) {
-            return;
-        }else if (seCacher(carte, "B")){
-            return;
-        }else{
-            carte.setCase(getAbscisse(),getOrdonnee(),new ElementCarte(getCachette()));
-            this.nouvellePosition(nvAbscisse,nvOrdonnee);
-            this.setEstCache(false);
+        if(!isEstCache()) {
+            if (isAmi() && carte.estCaseAdjacente(getAbscisse(), getOrdonnee(), personnage.getApparence())) {
+                personnage.ajouterAmiCache(this);
+                this.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
+                this.changerEtat(EtatEffraye.getInstance());
+                this.setEstCache(true);
+            } else if (seCacher(carte, "A")) {
+                return;
+            } else if (seCacher(carte, "B")) {
+                return;
+            } else {
+                carte.setCase(getAbscisse(), getOrdonnee(), new ElementCarte(getCachette()));
+                this.nouvellePosition(nvAbscisse, nvOrdonnee);
+            }
         }
     }
 

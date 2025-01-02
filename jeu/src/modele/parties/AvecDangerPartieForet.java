@@ -3,6 +3,7 @@ package modele.parties;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.animaux.Ecureuil;
+import modele.predateurs.Hiboux;
 import modele.predateurs.Predateur;
 import modele.predateurs.Renard;
 
@@ -40,7 +41,7 @@ public class AvecDangerPartieForet extends Partie{
             case "R":
                 return ANSI_BLACK_BACKGROUND + ANSI_RED + e.getApparence() + ANSI_RESET;
             case "H":
-                return ANSI_PURPLE_BACKGROUND + ANSI_BLACK + e.getApparence() + ANSI_RESET;
+                return e.toString();
             default:
                 return ANSI_GREEN_BACKGROUND + e.getApparence() + ANSI_RESET;
         }
@@ -53,10 +54,12 @@ public class AvecDangerPartieForet extends Partie{
         int chance = random.nextInt(100);
         if (chance < 90) return " ";
         else if (chance < 92) return "C";
+        else if (chance < 93) return "H";
         else if (chance < 94) return "B";
         else if (chance < 95) return "R";
         else if (chance < 96) return "E";
         else if (chance < 97) return "A";
+        else if (chance < 98) return "M";
         else   return "G";
     }
 
@@ -76,6 +79,10 @@ public class AvecDangerPartieForet extends Partie{
                 Renard r = new Renard("R",abscisse,ordonnee);
                 getLesPredateurs().add(r);
                 return r;
+            case "H":
+                Hiboux h = new Hiboux("H",abscisse,ordonnee);
+                getLesPredateurs().add(h);
+                return h;
             default:
                 return new ElementCarte(element);
         }

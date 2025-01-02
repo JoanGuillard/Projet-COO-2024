@@ -43,7 +43,7 @@ public class EtatAffame extends Etat{
                     return;
                 }
             }
-            deplacementAleatoire(carte, abscisseAnimal, ordonneeAnimal, animal);
+            deplacementAleatoire(carte, abscisseAnimal, ordonneeAnimal, animal,1);
         }
     }
 
