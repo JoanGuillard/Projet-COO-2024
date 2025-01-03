@@ -26,7 +26,7 @@ public class Main {
         System.out.println(partie.toString());
 
         /*Ihm ihm = new Ihm();
-        Controleur controleur = new Controleur(ihm);
+        Controleur controlur = new Controleur(ihm);
         controleur.lancerPartie();
        // Partie partie = new SansDangerPartieForet(new Personnage());
 

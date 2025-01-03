@@ -41,8 +41,10 @@ public abstract class Predateur extends ElementCarte {
             ordonneesVides.putIfAbsent(nbCaseVide,ordonnee);
         }
         Random random = new Random();
-        int numCase =  random.nextInt(nbCaseVide) + 1;
-        this.nouvellePosition(abscissesVides.get(numCase),ordonneesVides.get(numCase));
+        if(nbCaseVide >0){
+            int numCase =  random.nextInt(nbCaseVide)+1;
+            this.nouvellePosition(abscissesVides.get(numCase),ordonneesVides.get(numCase));
+        }
     }
 
     public abstract void seDeplacer( Carte carte);
