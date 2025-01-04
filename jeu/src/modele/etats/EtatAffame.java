@@ -21,29 +21,34 @@ public class EtatAffame extends Etat{
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         int abscisseAnimal = animal.getAbscisse();
         int ordonneeAnimal = animal.getOrdonnee();
-        if(!verifierDanger(carte,abscisseAnimal,ordonneeAnimal,animal,personnage)) {
-            animal.setEstCache(false);
-            carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
-            for (String nourriture : animal.getRegimeAlimentaire()) {
-                if (carte.verifierCase(abscisseAnimal, ordonneeAnimal - 1, nourriture)) {
-                    animal.nouvellePosition(abscisseAnimal, ordonneeAnimal - 1);
-                    animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal, ordonneeAnimal - 1, personnage.getApparence()), nourriture);
-                    return;
-                } else if (carte.verifierCase(abscisseAnimal, ordonneeAnimal + 1, nourriture)) {
-                    animal.nouvellePosition(abscisseAnimal, ordonneeAnimal + 1);
-                    animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal, ordonneeAnimal + 1, personnage.getApparence()), nourriture);
-                    return;
-                } else if (carte.verifierCase(abscisseAnimal - 1, ordonneeAnimal, nourriture)) {
-                    animal.nouvellePosition(abscisseAnimal - 1, ordonneeAnimal);
-                    animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal - 1, ordonneeAnimal, personnage.getApparence()), nourriture);
-                    return;
-                } else if (carte.verifierCase(abscisseAnimal + 1, ordonneeAnimal, nourriture)) {
-                    animal.nouvellePosition(abscisseAnimal + 1, ordonneeAnimal);
-                    animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal + 1, ordonneeAnimal, personnage.getApparence()), nourriture);
-                    return;
-                }
+
+        animal.setEstCache(false);
+        carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
+        for (String nourriture : animal.getRegimeAlimentaire()) {
+            if (carte.verifierCase(abscisseAnimal, ordonneeAnimal - 1, nourriture)) {
+                animal.nouvellePosition(abscisseAnimal, ordonneeAnimal - 1);
+                carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal, ordonneeAnimal - 1, personnage.getApparence()), nourriture, personnage);
+                return;
+            } else if (carte.verifierCase(abscisseAnimal, ordonneeAnimal + 1, nourriture)) {
+                animal.nouvellePosition(abscisseAnimal, ordonneeAnimal + 1);
+                carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal, ordonneeAnimal + 1, personnage.getApparence()), nourriture,personnage);
+                return;
+            } else if (carte.verifierCase(abscisseAnimal - 1, ordonneeAnimal, nourriture)) {
+                animal.nouvellePosition(abscisseAnimal - 1, ordonneeAnimal);
+                carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal - 1, ordonneeAnimal, personnage.getApparence()), nourriture,personnage);
+
+                return;
+            } else if (carte.verifierCase(abscisseAnimal + 1, ordonneeAnimal, nourriture)) {
+                animal.nouvellePosition(abscisseAnimal + 1, ordonneeAnimal);
+                carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
+                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal + 1, ordonneeAnimal, personnage.getApparence()), nourriture,personnage);
+                return;
             }
-            deplacementAleatoire(carte, abscisseAnimal, ordonneeAnimal, animal,1);
+        }if(!verifierDanger(carte,abscisseAnimal,ordonneeAnimal,animal,personnage)) {
+            deplacementAleatoire(carte, abscisseAnimal, ordonneeAnimal, animal, 1);
         }
     }
 

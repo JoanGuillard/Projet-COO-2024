@@ -24,6 +24,7 @@ public class EtatEffraye extends Etat{
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         if(++nbTourEffraye == animal.getNbTourCache()){
             animal.changerEtat(EtatAffame.getInstance());
+            animal.getEtat().seDeplacer(animal,carte,personnage);
             animal.setEstCache(false);
             if(animal.estCacheAvecAmi(personnage)){
                 personnage.supprimerAmiCache(animal);

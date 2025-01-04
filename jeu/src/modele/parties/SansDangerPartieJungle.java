@@ -10,8 +10,8 @@ import static modele.CouleursAffichage.*;
 
 public class SansDangerPartieJungle extends Partie {
 
-    public SansDangerPartieJungle(Personnage personnage) {
-        super(personnage);
+    public SansDangerPartieJungle(Personnage personnage,String bordure) {
+        super(personnage,bordure);
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("B");
         this.setBordure("T");

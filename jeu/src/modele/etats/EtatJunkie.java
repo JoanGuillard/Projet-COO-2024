@@ -24,6 +24,7 @@ public class EtatJunkie extends Etat{
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         if(animal.getCptTourJunkie() == animal.getNbTourJunkie()){
             animal.changerEtat(EtatAffame.getInstance());
+            animal.setCptTourJunkie(0);
             return;
         }
         int abscisseAnimal = animal.getAbscisse();

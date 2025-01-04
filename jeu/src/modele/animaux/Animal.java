@@ -41,20 +41,25 @@ public abstract class Animal extends ElementCarte {
         this.estMort = false;
     }
 
-    public void seNourrir(boolean estNourriParAmi,String aliment){
+    public void seNourrir(boolean estNourriParAmi,String aliment,Personnage personnage){
         this.cptTourSansManger =0;
         if(estComestible(aliment)){
+            this.changerEtat(EtatRassasie.getInstance());
             if (estNourriParAmi){
                 cptNourritureAmi++;
                 if(cptNourritureAmi == nbNourritureAmi){
-                    devenirAmi();
+                    devenirAmi(personnage);
                 }
             }
-            this.changerEtat(EtatRassasie.getInstance());
+
         }else{
             intoxication();
         }
 
+    }
+
+    public void setCptTourJunkie(int cptTourJunkie) {
+        this.cptTourJunkie = cptTourJunkie;
     }
 
     public abstract void intoxication();
@@ -67,10 +72,11 @@ public abstract class Animal extends ElementCarte {
         return estMort;
     }
 
-    public void devenirAmi(){
-        this.ami = true;
-    }
+    public abstract void devenirAmi(Personnage personnage);
 
+    public void setAmi(boolean ami) {
+        this.ami = ami;
+    }
 
     public int getNbTourSansManger() {
         return nbTourSansManger;
@@ -96,10 +102,7 @@ public abstract class Animal extends ElementCarte {
         this.ami = false;
     }
 
-    public void seDeplacer(Carte carte, Personnage personnage){
-        etat.seDeplacer(this,carte,personnage);
-        carte.setCase(getAbscisse(), getOrdonnee(), this);
-    }
+    public abstract void seDeplacer(Carte carte, Personnage personnage);
 
     public String toString(){
         if(estCache){
@@ -108,6 +111,9 @@ public abstract class Animal extends ElementCarte {
         return etat.toString(this);
     }
 
+    public Etat getEtat() {
+        return etat;
+    }
 
     public void augmenterCptSansManger(){
         this.cptTourSansManger++;

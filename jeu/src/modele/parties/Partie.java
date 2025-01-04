@@ -12,6 +12,7 @@ import modele.predateurs.Predateur;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -19,14 +20,17 @@ public abstract class Partie {
     private Personnage personnage;
     private ArrayList<Animal> lesAnimaux;
     private ArrayList<Predateur> lesPredateurs;
+    private String bordure;
     private Carte carte;
 
-    private String bordure;
 
-    public Partie(Personnage personnage){
+
+    public Partie(Personnage personnage,String bordure){
+
         this.personnage = personnage;
         this.lesAnimaux = new ArrayList<Animal>();
         this.lesPredateurs = new ArrayList<Predateur>();
+        this.bordure=bordure;
     }
 
     public String getBordure() {
@@ -133,6 +137,7 @@ public abstract class Partie {
         ajouterPersonnageDansZoneProtegee(carte, random);
     }
     protected abstract String genererElementAleatoire(Random random);
+
     public void initialiserCarte(int hauteur, int largeur, String bordure){
         Carte carte = creerNouvelleCarte(bordure,hauteur, largeur);
         remplirCarte(carte, hauteur, largeur);
@@ -148,9 +153,7 @@ public abstract class Partie {
      */
     public abstract ElementCarte ajouterElementCarte(String element,int abscisse,int ordonnee);
 
-    public ArrayList<Predateur> getLesPredateurs() {
-        return lesPredateurs;
-    }
+
 
     /**
      * Permet d'afficher l'apparence de l'animal sur la carte en fonction du type de la partie et de l'animal
@@ -285,6 +288,11 @@ public abstract class Partie {
 
     public void setCarte(Carte carte) {
         this.carte = carte;
+    }
+
+
+    public ArrayList<Predateur> getLesPredateurs() {
+        return lesPredateurs;
     }
 
 

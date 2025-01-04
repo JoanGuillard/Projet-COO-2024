@@ -11,11 +11,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Ihm {
 
-    private final Scanner scanner;
 
-    public Ihm() {
-        this.scanner = new Scanner(System.in);
-    }
+
+
     Carte carte = Carte.getInstance();
 
 
@@ -25,18 +23,20 @@ public class Ihm {
      * @return l'entier correpondant au  choix fait par le joueur, -1 si rien
      */
     public int demanderTheme() {
-
+        Scanner scanner = new Scanner(System.in);
         boolean choixIncorrect = true;
         int choix = -1;
         while (choixIncorrect) {
             System.out.println("Choisir un theme:");
-            System.out.println(" 1: theme foret");
-            System.out.println(" 2: theme Jungle");
-            System.out.println(" 3: Quitter");
+            System.out.println(" 1:  foret sans danger");
+            System.out.println(" 2:  jungle sans danger");
+            System.out.println(" 3:  foret avec danger");
+            System.out.println(" 4:  jungle avec danger");
+            System.out.println(" 5: Quitter");
             System.out.println("Veuillez saisir le numero correspondant au theme:");
             if (scanner.hasNextInt()) {
                 choix = scanner.nextInt();
-                if (0 < choix && choix <= 3) {
+                if (0 < choix && choix <= 5) {
                     choixIncorrect = false;
                     return choix;
                 }
@@ -53,6 +53,8 @@ public class Ihm {
      * @return l'entier qui correspond a l'action demandee par le joueur -1 si rien
      */
     public int demanderActionJoueur() {
+        Scanner scanner = new Scanner(System.in);
+
         boolean choixIncorrect = true;
         int choix = -1;
         while (choixIncorrect) {
@@ -69,12 +71,12 @@ public class Ihm {
                     choixIncorrect = false;
                     return choix;
                 }
-            }else {
+            }
                 System.out.println("L'entier que vous avez saisit ne correspond a aucune action.Veuillez choisir un entier valide.");
                 scanner.nextLine();
             }
-            scanner.nextLine();
-        }
+
+
         return -1;
     }
 
@@ -84,27 +86,35 @@ public class Ihm {
      * @return l'entier correspondant au choix,-1 pour quitter ou aucun choix
      */
     public int demanderCreationCarte() {
-        boolean choixIncorrect = false;
-        int choix = 0;
-        while (!choixIncorrect) {
-            System.out.println("Pour demarrer une partie,voulez vous:");
+
+        Scanner scanner = new Scanner(System.in);
+        boolean choixIncorrect = true;
+        int choix = -1;
+
+        while (choixIncorrect) {
+            System.out.println("Pour demarrer une partie, voulez-vous :");
             System.out.println("1 : creer une nouvelle carte");
             System.out.println("2 : charger une carte via un fichier .txt");
             System.out.println("3 : quitter le jeu");
             System.out.println("Veuillez saisir l'entier qui correspond a votre choix.");
 
-            scanner.nextLine();
             if (scanner.hasNextInt()) {
                 choix = scanner.nextInt();
-                if (0 <= choix && choix <= 3) {
-                    choixIncorrect = true;
-                    return choix;
+                if (choix >= 1 && choix <= 3) {
+                    choixIncorrect = false; // Sort de la boucle si le choix est valide
+                } else {
+                    System.out.println("Le choix saisi n'est pas dans la plage attendue (1, 2 ou 3). Veuillez reessayer.");
                 }
             } else {
-                System.out.println("L'entier que vous avez choisi ne correspond a aucun choix.Veuillez saisir un entier valide.");
+                // Gestion des entrées non valides
+                System.out.println("L'element saisi n'est pas un entier. Veuillez saisir un entier valide.");
+                scanner.nextLine(); // Vider complètement la ligne du buffer
             }
         }
+
+
         return choix;
+
     }
 
     /**
@@ -113,6 +123,8 @@ public class Ihm {
      * @return la chaîne de caractères représentant la direction
      */
     public String demanderDirection() {
+        Scanner scanner = new Scanner(System.in);
+
         boolean choixIncorrect = true;
         while (choixIncorrect) {
             System.out.println("Dans quelle direction voulez vous effectuer votre action ?");
@@ -131,6 +143,8 @@ public class Ihm {
                 }
             }
             System.out.println("Direction invalide.");
+            scanner.nextLine();
+
         }
         return null;
     }
@@ -139,6 +153,8 @@ public class Ihm {
 
 
     public String demanderFichier() {
+        Scanner scanner = new Scanner(System.in);
+
         String cheminFichier = "";
         boolean cheminValide = false;
 
@@ -174,11 +190,12 @@ public class Ihm {
 
 
     public int demanderCoordonnes(String message) {
+        Scanner scanner = new Scanner(System.in);
+
         boolean choixCorrecte = false;
         int coordonne = 0;
         while (!choixCorrecte) {
             System.out.println("Veuillez saisir la " + message + " souhaitee pour la carte (un entier positif ou 0 pour quitter) :");
-            scanner.nextLine();
             if (scanner.hasNextInt()) {
                 coordonne = scanner.nextInt();
                 if (coordonne > 0) {
@@ -200,6 +217,8 @@ public class Ihm {
     }
 
     public String demanderObjetADeposer(Personnage p){
+        Scanner scanner = new Scanner(System.in);
+
         boolean choixIncorrect = true;
         String res = "";
         for(String item : p.getInventaire().keySet()){
@@ -227,6 +246,31 @@ public class Ihm {
             System.out.println("le temps d'attente est interrompu");
         }
         afficherMessage(partie.toString());
+    }
+    public int demanderChoixDanger(){
+        Scanner scanner = new Scanner(System.in);
+        boolean choixIncorrect = false;
+        int choix = 0;
+        while (!choixIncorrect) {
+            System.out.println("Voulez vous jouer avec ou sans danger?");
+            System.out.println("1 : Avec danger");
+            System.out.println("2 : Sans danger");
+            System.out.println("3 : Quitter le jeu");
+            System.out.println("Veuillez saisir l'entier qui correspond a votre choix.");
+
+            if (scanner.hasNextInt()) {
+                choix = scanner.nextInt();
+                if (0 <= choix && choix <= 3) {
+                    choixIncorrect = true;
+                    return choix;
+                }
+            }
+                System.out.println("L'entier que vous avez choisi ne correspond a aucun choix.Veuillez saisir un entier valide.");
+                scanner.nextLine();
+
+
+        }
+        return choix;
     }
 
 }

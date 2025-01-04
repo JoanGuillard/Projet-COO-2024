@@ -18,31 +18,32 @@ public class Renard extends Predateur {
         int abscisseRenard = this.getAbscisse();
         int ordonneeRenard = this.getOrdonnee();
         Ecureuil e = null;
-        carte.setCase(abscisseRenard,ordonneeRenard,new ElementCarte(" "));
+        carte.setCase(abscisseRenard, ordonneeRenard, new ElementCarte(" "));
 
-        if(carte.verifierCase(abscisseRenard-1,ordonneeRenard,"E")){
-             e = (Ecureuil) carte.getCase(abscisseRenard-1,ordonneeRenard);
-        }else if(carte.verifierCase(abscisseRenard+1,ordonneeRenard,"E")){
-             e = (Ecureuil) carte.getCase(abscisseRenard+1,ordonneeRenard);
+        if (carte.verifierCase(abscisseRenard - 1, ordonneeRenard, "E")) {
+            e = (Ecureuil) carte.getCase(abscisseRenard - 1, ordonneeRenard);
+        } else if (carte.verifierCase(abscisseRenard + 1, ordonneeRenard, "E")) {
+            e = (Ecureuil) carte.getCase(abscisseRenard + 1, ordonneeRenard);
 
-        }else if(carte.verifierCase(abscisseRenard,ordonneeRenard-1,"E")){
-             e = (Ecureuil) carte.getCase(abscisseRenard,ordonneeRenard-1);
+        } else if (carte.verifierCase(abscisseRenard, ordonneeRenard - 1, "E")) {
+            e = (Ecureuil) carte.getCase(abscisseRenard, ordonneeRenard - 1);
 
-        } else if(carte.verifierCase(abscisseRenard,ordonneeRenard+1,"E")){
-             e = (Ecureuil) carte.getCase(abscisseRenard,ordonneeRenard+1);
+        } else if (carte.verifierCase(abscisseRenard, ordonneeRenard + 1, "E")) {
+            e = (Ecureuil) carte.getCase(abscisseRenard, ordonneeRenard + 1);
 
-        }else{
-            if(e != null){
-                if(!e.seCacher(carte,"A")){
-                    this.nouvellePosition(e.getAbscisse(),e.getOrdonnee());
-                    e.setEstMort(true);
-                }else{
-                    e.changerEtat(EtatEffraye.getInstance());
-                }
-            }else{
-                deplacementAleatoire(carte,1);
-            }
         }
-        carte.setCase(getAbscisse(),getOrdonnee(),this);
+        if (e != null && !e.isEstCache()) {
+            if (!e.seCacher(carte, "A")) {
+                this.nouvellePosition(e.getAbscisse(), e.getOrdonnee());
+                e.setEstMort(true);
+            } else {
+                e.changerEtat(EtatEffraye.getInstance());
+            }
+        } else {
+            deplacementAleatoire(carte, 1);
+        }
+
+        carte.setCase(getAbscisse(), getOrdonnee(), this);
     }
+
 }

@@ -26,6 +26,17 @@ public class Ecureuil extends Animal{
     }
 
     @Override
+    public void devenirAmi(Personnage personnage) {
+        this.setAmi(true);
+    }
+
+    @Override
+    public void seDeplacer(Carte carte, Personnage personnage) {
+        getEtat().seDeplacer(this,carte,personnage);
+        carte.setCase(getAbscisse(), getOrdonnee(), this);
+    }
+
+    @Override
     public void fuir(Carte carte, Personnage personnage, int nvAbscisse, int nvOrdonnee) {
         if(!isEstCache()) {
             if (isAmi() && carte.estCaseAdjacente(getAbscisse(), getOrdonnee(), personnage.getApparence())) {

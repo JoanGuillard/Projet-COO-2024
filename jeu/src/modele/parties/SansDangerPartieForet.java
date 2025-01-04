@@ -8,8 +8,8 @@ import java.util.Random;
 
 import static modele.CouleursAffichage.*;
 public class SansDangerPartieForet extends Partie{
-    public SansDangerPartieForet(Personnage personnage) {
-        super(personnage);
+    public SansDangerPartieForet(Personnage personnage,String bordure) {
+        super(personnage,bordure);
         getPersonnage().setInventaire("C");
         getPersonnage().setInventaire("G");
         this.setBordure("A");
@@ -70,6 +70,7 @@ public class SansDangerPartieForet extends Partie{
         else   return "G";
 
     }
+
 
 
 
