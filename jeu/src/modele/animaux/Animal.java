@@ -219,4 +219,8 @@ public abstract class Animal extends ElementCarte {
     public void augmenterCptTourJunkie(){
         cptTourJunkie++;
     }
+
+    public void augmenterNbTourCache(){
+        nbTourCache++;
+    }
 }

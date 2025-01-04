@@ -17,11 +17,11 @@ public class Singe extends Animal{
     public Singe(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger) {
         super(abscisse, ordonnee, nbNourritureAmi, nbTourSansManger);
         setApparence("S");
+        this.getRegimeAlimentaire().add("B");
         this.getRegimeAlimentaire().add("C");
         this.getRegimeAlimentaire().add("H");
-        this.getRegimeAlimentaire().add("B");
         this.setNbTourJunkie(3);
-        this.setNbTourCache(3);
+        this.setNbTourCache(0);
     }
 
 
@@ -29,6 +29,7 @@ public class Singe extends Animal{
     @Override
     public void intoxication() {
         estInconscient=true;
+        this.changerEtat(EtatRassasie.getInstance());
     }
 
     @Override
@@ -47,11 +48,12 @@ public class Singe extends Animal{
             augmenterCptTourJunkie();
             if(getNbTourJunkie() == getCptTourJunkie()){
                 estInconscient = false;
+                this.changerEtat(EtatAffame.getInstance());
                 setCptTourJunkie(0);
-
             }
-        }else {
-            if (nbTourSurAmi > 0) {
+        }
+        else {
+            if (getNbTourCache() > 0) {
                 nbTourSurAmi--;
                 if (getEtat().verifierDanger(carte, getAbscisse(), getOrdonnee(), this, personnage)) {
                     System.out.println("OUHOUH AHAH !");
@@ -62,8 +64,14 @@ public class Singe extends Animal{
                     personnage.supprimerAmiCache(this);
                 }
             } else {
-                if (!getEtat().verifierDanger(carte, getAbscisse(), getOrdonnee(), this, personnage)) {
+                // si le singe est rassasié
+                if(getCptTourSansManger() < getNbTourSansManger()) {
                     getEtat().seDeplacer(this, carte, personnage);
+                } else if(!getEtat().verifierDanger(carte, getAbscisse(), getOrdonnee(), this, personnage)) {
+                    getEtat().seDeplacer(this, carte, personnage);
+                    if(getCptTourSansManger() >= getNbTourSansManger()){
+                        getEtat().deplacementAleatoire(carte,getAbscisse(),getOrdonnee(),this,1);
+                    }
                 }
                 if (nbTourSurAmi == 0) {
                     carte.setCase(getAbscisse(), getOrdonnee(), this);

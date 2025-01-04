@@ -94,45 +94,57 @@ public class Controleur {
 
             switch (action) {
                 case 1:
-                    try {
-                        String direction = ihm.demanderDirection();
-                        partie.deplacerPersonnage(direction);
-                        ihm.afficherMessage(partie.toString());
-                        ihm.afficherMessage("Deplacement effectue.");
-                    } catch (Exception e) {
-                        ihm.afficherAvecSleep(e,partie);
+                    while(true) {
+                        try {
+                            String direction = ihm.demanderDirection();
+                            partie.deplacerPersonnage(direction);
+                            ihm.afficherMessage(partie.toString());
+                            ihm.afficherMessage("Deplacement effectue.");
+                            break;
+                        } catch (Exception e) {
+                            ihm.afficherAvecSleep(e, partie);
+                        }
+                    }
+                    break;
+                case 2:
+                    while(true) {
+                        try {
+                            String positionObjet = ihm.demanderDirection();
+                            partie.ramasserObjetPersonnage(positionObjet);
+                            ihm.afficherMessage("Objet ramasse !");
+                            break;
+                        } catch (Exception e) {
+                            ihm.afficherAvecSleep(e, partie);
+                        }
                     }
                     break;
 
-                case 2:
-                    try {
-                        String positionObjet = ihm.demanderDirection();
-                        partie.ramasserObjetPersonnage(positionObjet);
-                        ihm.afficherMessage("Objet ramasse !");
-                    } catch (Exception e) {
-                        ihm.afficherAvecSleep(e,partie);
-                    }
-                    break;
                 case 3:
-                    try {
-                        String objet = ihm.demanderObjetADeposer(partie.getPersonnage());
-                        String positionDeposer = ihm.demanderDirection();
-                        partie.deposerObjetPersonnage(positionDeposer, objet);
-                        ihm.afficherMessage(partie.toString());
-                        ihm.afficherMessage("Objet depose.");
-                    } catch (Exception e) {
-                        ihm.afficherAvecSleep(e,partie);
+                    while(true) {
+                        try {
+                            String objet = ihm.demanderObjetADeposer(partie.getPersonnage());
+                            String positionDeposer = ihm.demanderDirection();
+                            partie.deposerObjetPersonnage(positionDeposer, objet);
+                            ihm.afficherMessage(partie.toString());
+                            ihm.afficherMessage("Objet depose.");
+                            break;
+                        } catch (Exception e) {
+                            ihm.afficherAvecSleep(e, partie);
+                        }
                     }
                     break;
 
                 case 4:
-                    try {
-                        String positionAnimal = ihm.demanderDirection();
-                        partie.frapperAnimalPersonnage(positionAnimal);
-                        ihm.afficherMessage(partie.toString());
-                        ihm.afficherMessage("Animal frappe.");
-                    } catch (Exception e) {
-                        ihm.afficherAvecSleep(e,partie);
+                    while(true) {
+                        try {
+                            String positionAnimal = ihm.demanderDirection();
+                            partie.frapperAnimalPersonnage(positionAnimal);
+                            ihm.afficherMessage(partie.toString());
+                            ihm.afficherMessage("Animal frappe.");
+                            break;
+                        } catch (Exception e) {
+                            ihm.afficherAvecSleep(e, partie);
+                        }
                     }
                     break;
 

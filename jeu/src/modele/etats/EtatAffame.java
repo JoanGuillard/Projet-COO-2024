@@ -47,9 +47,8 @@ public class EtatAffame extends Etat{
                 animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal + 1, ordonneeAnimal, personnage.getApparence()), nourriture,personnage);
                 return;
             }
-        }if(!verifierDanger(carte,abscisseAnimal,ordonneeAnimal,animal,personnage)) {
-            deplacementAleatoire(carte, abscisseAnimal, ordonneeAnimal, animal, 1);
         }
+        animal.augmenterCptSansManger();
     }
 
 

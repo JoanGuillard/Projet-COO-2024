@@ -132,8 +132,7 @@ public class Ihm {
             System.out.println("B pour Bas");
             System.out.println("G pour Gauche");
             System.out.println("D pour Droite");
-            System.out.println("Q pour Quitter le jeu");
-            System.out.println("Entrez une direction (H/B/G/D/Q) :");
+            System.out.println("Entrez une direction (H/B/G/D) :");
             String direction = null;
             if (scanner.hasNext()) {
                 direction = scanner.next().toUpperCase();

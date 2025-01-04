@@ -52,14 +52,14 @@ public class AvecDangerPartieForet extends Partie{
     @Override
     protected String genererElementAleatoire(Random random) {
         int chance = random.nextInt(100);
-        if (chance < 90) return " ";
-        else if (chance < 92) return "C";
-        else if (chance < 93) return "H";
-        else if (chance < 94) return "B";
-        else if (chance < 95) return "R";
-        else if (chance < 96) return "E";
-        else if (chance < 97) return "A";
-        else if (chance < 98) return "M";
+        if (chance < 87) return " ";
+        else if (chance < 89) return "E";
+        else if (chance < 91) return "C";
+        else if (chance < 92) return "R";
+        else if (chance < 94) return "A";
+        else if (chance < 95) return "M";
+        else if (chance < 96) return "H";
+        else if (chance < 97) return "B";
         else   return "G";
     }
 

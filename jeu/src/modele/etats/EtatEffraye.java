@@ -6,12 +6,12 @@ import modele.animaux.Animal;
 import static modele.CouleursAffichage.*;
 
 public class EtatEffraye extends Etat{
-    private int nbTourEffraye;
+
     private static EtatEffraye instance;
 
 
     public EtatEffraye() {
-        this.nbTourEffraye = 0;
+
     }
 
     public static synchronized EtatEffraye getInstance(){
@@ -22,17 +22,19 @@ public class EtatEffraye extends Etat{
     }
     @Override
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
-        if(++nbTourEffraye == animal.getNbTourCache()){
+        if(animal.getNbTourCache() == 3){
             animal.changerEtat(EtatAffame.getInstance());
-            animal.getEtat().seDeplacer(animal,carte,personnage);
             animal.setEstCache(false);
             if(animal.estCacheAvecAmi(personnage)){
                 personnage.supprimerAmiCache(animal);
             }
+            animal.seDeplacer(carte,personnage);
+
         }else{
             if(animal.estCacheAvecAmi(personnage)){
                 animal.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
             }
+            animal.augmenterNbTourCache();
         }
     }
 
