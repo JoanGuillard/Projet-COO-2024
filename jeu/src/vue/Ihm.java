@@ -132,11 +132,12 @@ public class Ihm {
             System.out.println("B pour Bas");
             System.out.println("G pour Gauche");
             System.out.println("D pour Droite");
-            System.out.println("Entrez une direction (H/B/G/D) :");
+            System.out.println("R pour Revenir en arriere");
+            System.out.println("Entrez une direction (H/B/G/D/R) :");
             String direction = null;
             if (scanner.hasNext()) {
                 direction = scanner.next().toUpperCase();
-                if (direction.matches("[HBGD]")) {
+                if (direction.matches("[HBGDR]")) {
                     choixIncorrect = false;
                     return direction;
                 }
@@ -222,10 +223,14 @@ public class Ihm {
         for(String item : p.getInventaire().keySet()){
             res += item + " en poche : " + p.getInventaire().get(item) + '\n';
         }
+        res+= "\nR pour revenir en arriere";
         System.out.println(res);
         while(choixIncorrect) {
             if (scanner.hasNext()) {
                 String reponse = scanner.next().toUpperCase();
+                if (reponse.equals("R")){
+                    return "R";
+                }
                 if(p.isInInventaire(reponse)){
                     choixIncorrect = false;
                     return reponse;

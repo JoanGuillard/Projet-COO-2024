@@ -2,6 +2,7 @@ package modele.parties;
 
 import modele.ElementCarte;
 import modele.Personnage;
+import modele.PierrePrecieuse;
 import modele.animaux.Singe;
 import modele.predateurs.Predateur;
 import modele.predateurs.Scorpion;
@@ -99,6 +100,12 @@ public class AvecDangerPartieJungle extends Partie{
                 getPersonnage().nouvellePosition(abscisse, ordonnee);
                 enregistrerPosition(getPersonnage());
                 return getPersonnage();
+            case "2":
+                PierrePrecieuse p2 = new PierrePrecieuse(2);
+                return p2;
+            case "3":
+                PierrePrecieuse p3 = new PierrePrecieuse(3);
+                return p3;
 
         }
         return new ElementCarte(element);

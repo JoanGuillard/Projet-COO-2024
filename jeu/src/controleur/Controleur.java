@@ -97,25 +97,38 @@ public class Controleur {
                     while(true) {
                         try {
                             String direction = ihm.demanderDirection();
+                            if (direction.equals("R")){
+                                break;
+                            }
                             partie.deplacerPersonnage(direction);
+                            partie.passerTourAnimaux();
                             ihm.afficherMessage(partie.toString());
                             ihm.afficherMessage("Deplacement effectue.");
                             break;
                         } catch (Exception e) {
                             ihm.afficherAvecSleep(e, partie);
                         }
+                        break;
                     }
                     break;
                 case 2:
                     while(true) {
                         try {
                             String positionObjet = ihm.demanderDirection();
-                            partie.ramasserObjetPersonnage(positionObjet);
+                            if (positionObjet.equals("R")){
+                                break;
+                            }
+                            boolean passerTour=partie.ramasserObjetPersonnage(positionObjet);
+                            if(passerTour){
+                                partie.passerTourAnimaux();
+                            }
+                            ihm.afficherMessage(partie.toString());
                             ihm.afficherMessage("Objet ramasse !");
                             break;
                         } catch (Exception e) {
                             ihm.afficherAvecSleep(e, partie);
                         }
+                        break;
                     }
                     break;
 
@@ -123,14 +136,19 @@ public class Controleur {
                     while(true) {
                         try {
                             String objet = ihm.demanderObjetADeposer(partie.getPersonnage());
+                            if (objet.equals("R")){
+                                break;
+                            }
                             String positionDeposer = ihm.demanderDirection();
                             partie.deposerObjetPersonnage(positionDeposer, objet);
+                            partie.passerTourAnimaux();
                             ihm.afficherMessage(partie.toString());
                             ihm.afficherMessage("Objet depose.");
                             break;
                         } catch (Exception e) {
                             ihm.afficherAvecSleep(e, partie);
                         }
+                        break;
                     }
                     break;
 
@@ -138,6 +156,10 @@ public class Controleur {
                     while(true) {
                         try {
                             String positionAnimal = ihm.demanderDirection();
+                            if (positionAnimal.equals("R")){
+                                break;
+                            }
+                            partie.passerTourAnimaux();
                             partie.frapperAnimalPersonnage(positionAnimal);
                             ihm.afficherMessage(partie.toString());
                             ihm.afficherMessage("Animal frappe.");
@@ -145,6 +167,7 @@ public class Controleur {
                         } catch (Exception e) {
                             ihm.afficherAvecSleep(e, partie);
                         }
+                        break;
                     }
                     break;
 
@@ -153,8 +176,8 @@ public class Controleur {
                     continuerJeu = false;
                     break;
             }
-            partie.passerTourAnimaux();
-            ihm.afficherMessage(partie.toString());
+            /*partie.passerTourAnimaux();
+            ihm.afficherMessage(partie.toString());*/
 
         }
     }

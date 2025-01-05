@@ -6,6 +6,7 @@ import exceptions.ObjetNonRamassableException;
 import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
+import modele.PierrePrecieuse;
 import modele.animaux.Animal;
 import modele.predateurs.Predateur;
 
@@ -138,7 +139,6 @@ public abstract class Partie {
         }
         ajouterPersonnageDansZoneProtegee(carte, random);
     }
-
     protected abstract String genererElementAleatoire(Random random);
 
     public void initialiserCarte(int hauteur, int largeur, String bordure) {
@@ -198,10 +198,7 @@ public abstract class Partie {
                 enregistrerPosition(animal);
             }
         }
-        for (Predateur predateur : lesPredateurs){
-            predateur.seDeplacer(carte);
-            enregistrerPosition(predateur);
-        }
+
 
     }
 
@@ -226,6 +223,7 @@ public abstract class Partie {
         } else {
             throw new DeplacementImpossibleException("Deplacement impossible !");
         }
+        enregistrerPosition(personnage);
 
     }
 
@@ -235,18 +233,24 @@ public abstract class Partie {
      * @param positionObjet la position de l'objet à ajouter
      * @throws Exception se lève si la case où doit se trouver l'objet est vide
      */
-    public void ramasserObjetPersonnage(String positionObjet) throws Exception {
+    public boolean ramasserObjetPersonnage(String positionObjet) throws Exception {
         int[] coordonneesObjet = carte.getCoordonnees(positionObjet, personnage.getAbscisse(), personnage.getOrdonnee());
         int nvAbscisse = coordonneesObjet[0];
         int nvOrdonnee = coordonneesObjet[1];
 
-        if (estNourriture(carte.getCase(nvAbscisse, nvOrdonnee).getApparence()) || estPrecieus(carte.getCase(nvAbscisse,nvOrdonnee))) {
+        if (estNourriture(carte.getCase(nvAbscisse, nvOrdonnee).getApparence())) {
             personnage.ajouterDansInventaire(carte.setCaseString(new ElementCarte(" "), positionObjet, personnage.getAbscisse(), personnage.getOrdonnee()));
-
-        } else {
+        }else if ( carte.getCase(nvAbscisse,nvOrdonnee) instanceof PierrePrecieuse){
+            PierrePrecieuse p = (PierrePrecieuse) carte.getCase(nvAbscisse,nvOrdonnee);
+            personnage.ajouterDansInventaire(carte.setCaseString(new ElementCarte(" "), positionObjet, personnage.getAbscisse(), personnage.getOrdonnee()));
+            reculer(p.getNbTours());
+            return false;
+        }
+        else {
             throw new ObjetNonRamassableException("Cette case est vide ou l'objet ne peut pas être ramassé !");
         }
-        reculer(carte.getCase(nvAbscisse,nvOrdonnee));
+
+    return true;
     }
 
     public void frapperAnimalPersonnage(String positionAnimal) throws Exception {
@@ -318,57 +322,56 @@ public abstract class Partie {
     }
 
 
-    public void reculer(ElementCarte elementCarte) {
-        int nbTours;
+    public void reculer(int nbTours) {
+        for (Map.Entry<ElementCarte, Queue<int[]>> entry : historiquePositions.entrySet()) {
+            ElementCarte elementCarte = entry.getKey();
+            Queue<int[]> historique = entry.getValue();
 
-        // Détermine le nombre de tours à reculer en fonction de l'apparence
-        if (elementCarte.getApparence().equals("2")) {
-            nbTours = 2;
-        } else if (elementCarte.getApparence().equals("3")) {
-            nbTours = 3;
-        } else {
-            nbTours = 0;
-        }
+            System.out.println("Tentative de recul de " + elementCarte + " de " + nbTours + " tours.");
 
-        Queue<int[]> historique = historiquePositions.get(elementCarte);
+            if (historique != null && historique.size() >= nbTours) {
+                int[] positionCible = null;
 
-        if (historique != null && historique.size() >= nbTours) {
-            int[] positionCible = null;
+                for (int i = 0; i < nbTours; i++) {
+                    positionCible = historique.poll();
+                }
 
-            // Revenir en arrière de 'nbTours' positions
-            for (int i = 0; i < nbTours; i++) {
-                positionCible = historique.poll();
+                if (positionCible != null) {
+                    System.out.println(elementCarte.getApparence() + " position actuelle: " + elementCarte.getAbscisse() + "," + elementCarte.getOrdonnee());
+
+                    if (elementCarte == personnage) {
+                        System.out.println("Personnage reculé à la position " + positionCible[0] + "," + positionCible[1]);
+                        carte.setCase(elementCarte.getAbscisse(), elementCarte.getOrdonnee(), new ElementCarte(" "));
+                        personnage.nouvellePosition(positionCible[0], positionCible[1]);
+                        carte.setCase(positionCible[0], positionCible[1], personnage);
+                    } else {
+                        carte.setCase(elementCarte.getAbscisse(), elementCarte.getOrdonnee(), new ElementCarte(" "));
+                        elementCarte.nouvellePosition(positionCible[0], positionCible[1]);
+                        carte.setCase(positionCible[0], positionCible[1], elementCarte);
+                    }
+                    System.out.println(elementCarte.getApparence() + " reculé à la position " + positionCible[0] + "," + positionCible[1]);
+                }
+            } else {
+                System.out.println("Impossible de reculer " + elementCarte.getApparence() + " : historique vide.");
             }
-
-            if (positionCible != null) {
-                elementCarte.nouvellePosition(positionCible[0], positionCible[1]);
-                System.out.println(elementCarte + " reculé à " + positionCible[0] + "," + positionCible[1]);
-            }
-        } else {
-            System.out.println("Impossible de reculer : historique insuffisant.");
         }
     }
-
 
     public void enregistrerPosition(ElementCarte element) {
         historiquePositions.putIfAbsent(element, new LinkedList<>());
         Queue<int[]> historique = historiquePositions.get(element);
 
         int[] currentPosition = new int[]{element.getAbscisse(), element.getOrdonnee()};
+        System.out.println(element.getApparence() + "  position de debut: " + element.getAbscisse() + "," + element.getOrdonnee());
 
-        // Ajoute la nouvelle position uniquement si elle diffère de la dernière position enregistrée
         if (historique.isEmpty() || !Arrays.equals(historique.peek(), currentPosition)) {
             historique.offer(currentPosition);
-            System.out.println(element + " " + element.getAbscisse() + "," + element.getOrdonnee() + " ajouté");
         }
 
-        // Limite la taille de la queue à 3 positions
         while (historique.size() > 3) {
             historique.poll();
         }
     }
-    public boolean estPrecieus(ElementCarte elementCarte){
-        return  (elementCarte.getApparence().equals("2") || elementCarte.getApparence().equals("3"));
-    }
+
 
 }

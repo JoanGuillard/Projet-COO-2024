@@ -2,6 +2,7 @@ package modele.parties;
 
 import modele.ElementCarte;
 import modele.Personnage;
+import modele.PierrePrecieuse;
 import modele.animaux.Ecureuil;
 import modele.predateurs.Hiboux;
 import modele.predateurs.Predateur;
@@ -91,6 +92,12 @@ public class AvecDangerPartieForet extends Partie{
                 getLesPredateurs().add(h);
                 enregistrerPosition(h);
                 return h;
+            case "2":
+                PierrePrecieuse p2 = new PierrePrecieuse(2);
+                return p2;
+            case "3":
+                PierrePrecieuse p3 = new PierrePrecieuse(3);
+                return p3;
             default:
                 return new ElementCarte(element);
         }

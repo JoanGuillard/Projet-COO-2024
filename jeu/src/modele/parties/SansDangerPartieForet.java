@@ -2,6 +2,7 @@ package modele.parties;
 import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
+import modele.PierrePrecieuse;
 import modele.animaux.Ecureuil;
 
 import java.util.Random;
@@ -47,6 +48,12 @@ public class SansDangerPartieForet extends Partie{
                 getLesAnimaux().add(e);
                 enregistrerPosition(e);
                 return e;
+            case "2":
+                PierrePrecieuse p2 = new PierrePrecieuse(2);
+                return p2;
+            case "3":
+                PierrePrecieuse p3 = new PierrePrecieuse(3);
+                return p3;
             default:
                 return new ElementCarte(element);
         }
