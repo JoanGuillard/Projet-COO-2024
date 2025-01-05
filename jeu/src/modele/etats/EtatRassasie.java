@@ -32,8 +32,12 @@ public class EtatRassasie extends Etat{
             animal.setEstCache(false);
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
             deplacementAleatoire(carte, abscisse, ordonnee, animal,1);
+<<<<<<< HEAD
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
             animal.setCachette(" ");
+=======
+
+>>>>>>> e0a382d (pierres precieuses v1)
         }
     }
 

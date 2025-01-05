@@ -84,10 +84,12 @@ public class AvecDangerPartieForet extends Partie{
             case "R":
                 Renard r = new Renard("R",abscisse,ordonnee);
                 getLesPredateurs().add(r);
+                enregistrerPosition(r);
                 return r;
             case "H":
                 Hiboux h = new Hiboux("H",abscisse,ordonnee);
                 getLesPredateurs().add(h);
+                enregistrerPosition(h);
                 return h;
             default:
                 return new ElementCarte(element);

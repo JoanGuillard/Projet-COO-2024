@@ -66,9 +66,11 @@ public class SansDangerPartieForet extends Partie{
         int chance = random.nextInt(100);
         if (chance < 90) return " ";
         else if (chance < 92) return "C";
-        else if (chance < 94) return "B";
-        else if (chance < 96) return "E";
-        else if (chance < 97) return "A";
+        else if (chance < 93) return "B";
+        else if (chance < 94) return "E";
+        else if (chance < 95) return "A";
+        else if (chance < 96) return "2";
+        else if (chance < 97) return "3";
         else   return "G";
 
     }

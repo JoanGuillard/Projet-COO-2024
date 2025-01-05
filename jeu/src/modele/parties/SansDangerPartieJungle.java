@@ -74,11 +74,13 @@ public class SansDangerPartieJungle extends Partie {
     protected String genererElementAleatoire(Random random) {
         int chance = random.nextInt(100);
         if (chance < 90) return " ";
-        else if (chance < 92) return "C";
-        else if (chance < 94) return "R";
-        else if (chance <96 ) return "S";
-        else if (chance < 97) return "T";
-        else return "B"; // 10% cocotiers
+        else if (chance < 91) return "C";
+        else if (chance < 93) return "R";
+        else if (chance <94 ) return "S";
+        else if (chance < 95) return "T";
+        else if (chance < 96) return "2";
+        else if (chance < 97) return "3";
+        else return "B";
     }
 
 }

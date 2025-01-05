@@ -29,6 +29,8 @@ public abstract class Partie {
         this.lesAnimaux = new ArrayList<Animal>();
         this.lesPredateurs = new ArrayList<Predateur>();
         this.bordure = bordure;
+        this.personnage.setInventaire("2");
+        this.personnage.setInventaire("3");
 
     }
 
@@ -180,14 +182,25 @@ public abstract class Partie {
         return element instanceof Animal;
     }
 
+
     /**
      * Permet de déplacer les animaux présents sur la carte
      */
     public void passerTourAnimaux() {
+<<<<<<< HEAD
 
         for (Animal animal : lesAnimaux){
             if(!animal.isEstMort()){
                 animal.seDeplacer(carte, personnage);
+=======
+        for (Predateur predateur : lesPredateurs) {
+            predateur.seDeplacer(carte);
+            enregistrerPosition(predateur);
+        }
+        for (Animal animal : lesAnimaux) {
+            if (!animal.isEstMort()) {
+                animal.seDeplacer(carte, personnage, this);
+>>>>>>> e0a382d (pierres precieuses v1)
                 enregistrerPosition(animal);
             }
         }
@@ -214,6 +227,7 @@ public abstract class Partie {
             carte.setCase(nvAbscisse, nvOrdonnee, personnage);
             carte.getCase(nvAbscisse, nvOrdonnee).nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
             personnage.nouvellePosition(nvAbscisse, nvOrdonnee);
+           enregistrerPosition(personnage);
         } else {
             throw new DeplacementImpossibleException("Deplacement impossible !");
         }
@@ -230,20 +244,14 @@ public abstract class Partie {
         int[] coordonneesObjet = carte.getCoordonnees(positionObjet, personnage.getAbscisse(), personnage.getOrdonnee());
         int nvAbscisse = coordonneesObjet[0];
         int nvOrdonnee = coordonneesObjet[1];
-        if ((carte.getCase(nvAbscisse, nvOrdonnee).getApparence()).equals("2")) {
-            //personnage.ajouterDansInventaire(carte.setCaseString(new ElementCarte(" "), positionObjet, personnage.getAbscisse(), personnage.getOrdonnee()));
-            reculer(2);
 
-        }
-        if ((carte.getCase(nvAbscisse, nvOrdonnee).getApparence()).equals("3")) {
-            reculer(3);
-        }
-        if (estNourriture(carte.getCase(nvAbscisse, nvOrdonnee).getApparence())) {
+        if (estNourriture(carte.getCase(nvAbscisse, nvOrdonnee).getApparence()) || estPrecieus(carte.getCase(nvAbscisse,nvOrdonnee))) {
             personnage.ajouterDansInventaire(carte.setCaseString(new ElementCarte(" "), positionObjet, personnage.getAbscisse(), personnage.getOrdonnee()));
 
         } else {
             throw new ObjetNonRamassableException("Cette case est vide ou l'objet ne peut pas être ramassé !");
         }
+        reculer(carte.getCase(nvAbscisse,nvOrdonnee));
     }
 
     public void frapperAnimalPersonnage(String positionAnimal) throws Exception {
@@ -315,42 +323,57 @@ public abstract class Partie {
     }
 
 
-    public void reculer(int nbTours) {
-        for (Map.Entry<ElementCarte, Queue<int[]>> entry : historiquePositions.entrySet()) {
-            Queue<int[]> historique = entry.getValue();
-            ElementCarte element = entry.getKey();
-            if (!historique.isEmpty() && (historique.size() >= nbTours)) {
+    public void reculer(ElementCarte elementCarte) {
+        int nbTours;
 
-                int[] positionCible = null;
-                for (int i = 0; i < nbTours; i++) {
-                    positionCible = historique.poll();
-                }
-                if (positionCible != null) {
-                    element.nouvellePosition(positionCible[0], positionCible[1]);
-                }
+        // Détermine le nombre de tours à reculer en fonction de l'apparence
+        if (elementCarte.getApparence().equals("2")) {
+            nbTours = 2;
+        } else if (elementCarte.getApparence().equals("3")) {
+            nbTours = 3;
+        } else {
+            nbTours = 0;
+        }
+
+        Queue<int[]> historique = historiquePositions.get(elementCarte);
+
+        if (historique != null && historique.size() >= nbTours) {
+            int[] positionCible = null;
+
+            // Revenir en arrière de 'nbTours' positions
+            for (int i = 0; i < nbTours; i++) {
+                positionCible = historique.poll();
             }
 
-
+            if (positionCible != null) {
+                elementCarte.nouvellePosition(positionCible[0], positionCible[1]);
+                System.out.println(elementCarte + " reculé à " + positionCible[0] + "," + positionCible[1]);
+            }
+        } else {
+            System.out.println("Impossible de reculer : historique insuffisant.");
         }
     }
 
 
     public void enregistrerPosition(ElementCarte element) {
-        if (!historiquePositions.containsKey(element)) {
-            historiquePositions.put(element, new LinkedList<>());
-        }
-
+        historiquePositions.putIfAbsent(element, new LinkedList<>());
         Queue<int[]> historique = historiquePositions.get(element);
+
         int[] currentPosition = new int[]{element.getAbscisse(), element.getOrdonnee()};
 
+        // Ajoute la nouvelle position uniquement si elle diffère de la dernière position enregistrée
         if (historique.isEmpty() || !Arrays.equals(historique.peek(), currentPosition)) {
-            historique.add(currentPosition);
+            historique.offer(currentPosition);
+            System.out.println(element + " " + element.getAbscisse() + "," + element.getOrdonnee() + " ajouté");
+        }
 
-            if (historique.size() > 3) {
-                historique.poll();
-            }
+        // Limite la taille de la queue à 3 positions
+        while (historique.size() > 3) {
+            historique.poll();
         }
     }
-
+    public boolean estPrecieus(ElementCarte elementCarte){
+        return  (elementCarte.getApparence().equals("2") || elementCarte.getApparence().equals("3"));
+    }
 
 }

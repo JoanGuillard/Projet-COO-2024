@@ -30,12 +30,17 @@ public class EtatJunkie extends Etat{
         }
         int abscisseAnimal = animal.getAbscisse();
         int ordonneeAnimal = animal.getOrdonnee();
+<<<<<<< HEAD
 
         if(!verifierDanger(carte,abscisseAnimal,ordonneeAnimal,animal,personnage,2)){
             animal.setEstCache(false);
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(),new ElementCarte(animal.getCachette()));
             deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal,2);
         }
+=======
+        carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
+        deplacementAleatoire(carte, abscisseAnimal, ordonneeAnimal, animal, 2);
+>>>>>>> e0a382d (pierres precieuses v1)
         animal.augmenterCptTourJunkie();
         carte.setCase(animal.getAbscisse(),animal.getOrdonnee(),animal);
     }
