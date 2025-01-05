@@ -22,18 +22,12 @@ public class EtatEffraye extends Etat{
     }
     @Override
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
+        animal.setEstCache(true);
         if(animal.getNbTourCache() == 3){
             animal.changerEtat(EtatAffame.getInstance());
             animal.setEstCache(false);
-            if(animal.estCacheAvecAmi(personnage)){
-                personnage.supprimerAmiCache(animal);
-            }
             animal.seDeplacer(carte,personnage);
-
         }else{
-            if(animal.estCacheAvecAmi(personnage)){
-                animal.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
-            }
             animal.augmenterNbTourCache();
         }
     }

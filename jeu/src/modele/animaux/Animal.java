@@ -5,6 +5,7 @@ import modele.etats.Etat;
 import modele.etats.EtatEffraye;
 import modele.etats.EtatJunkie;
 import modele.etats.EtatRassasie;
+import modele.strategies.IStrategieDeplacementAffame;
 
 import java.util.ArrayList;
 import static modele.CouleursAffichage.*;
@@ -26,6 +27,8 @@ public abstract class Animal extends ElementCarte {
     private int cptTourJunkie;
     private boolean estMort;
 
+    private IStrategieDeplacementAffame strategieAffame;
+
 
     public Animal(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger){
         this.nbNourritureAmi = nbNourritureAmi;
@@ -41,14 +44,16 @@ public abstract class Animal extends ElementCarte {
         this.estMort = false;
     }
 
-    public void seNourrir(boolean estNourriParAmi,String aliment,Personnage personnage){
+    public void seNourrir(boolean estNourriParAmi,String aliment,Personnage personnage,Carte carte){
         this.cptTourSansManger =0;
+        this.setCachette(" ");
+        this.setEstCache(false);
         if(estComestible(aliment)){
             this.changerEtat(EtatRassasie.getInstance());
             if (estNourriParAmi){
                 cptNourritureAmi++;
                 if(cptNourritureAmi == nbNourritureAmi){
-                    devenirAmi(personnage);
+                    devenirAmi(personnage,carte);
                 }
             }
 
@@ -72,7 +77,7 @@ public abstract class Animal extends ElementCarte {
         return estMort;
     }
 
-    public abstract void devenirAmi(Personnage personnage);
+    public abstract void devenirAmi(Personnage personnage, Carte carte);
 
     public void setAmi(boolean ami) {
         this.ami = ami;
@@ -102,7 +107,9 @@ public abstract class Animal extends ElementCarte {
         this.ami = false;
     }
 
-    public abstract void seDeplacer(Carte carte, Personnage personnage);
+    public void seDeplacer(Carte carte, Personnage personnage){
+        etat.seDeplacer(this,carte,personnage);
+    }
 
     public String toString(){
         if(estCache){
@@ -166,39 +173,33 @@ public abstract class Animal extends ElementCarte {
         int abscisseAnimal = getAbscisse();
         int ordonneeAnimal = getOrdonnee();
         if(carte.verifierCase(abscisseAnimal-1,ordonneeAnimal,cachette)){
-
-        this.setEstCache(true);
-        carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
-        this.setCachette(cachette);
-        this.nouvellePosition(abscisseAnimal-1,ordonneeAnimal);
-        return true;
-    }
-        else if(carte.verifierCase(abscisseAnimal+1,ordonneeAnimal,cachette)){
-        this.setEstCache(true);
-        carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
-        this.setCachette(cachette);
-
-        this.nouvellePosition(abscisseAnimal+1,ordonneeAnimal);
-
-
-        return true;
-    }
-        else if(carte.verifierCase(abscisseAnimal,ordonneeAnimal-1,cachette) ){
-        this.setEstCache(true);
-        carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
-        this.setCachette(cachette);
-
-        this.nouvellePosition(abscisseAnimal,ordonneeAnimal-1);
-
-        return true;
-    }
-        else if(carte.verifierCase(abscisseAnimal,ordonneeAnimal+1,cachette)){
-        this.setEstCache(true);
-        carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
-        this.setCachette(cachette);
-        this.nouvellePosition(abscisseAnimal,ordonneeAnimal+1);
-
-        return true;
+            this.setEstCache(true);
+            carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
+            this.setCachette(cachette);
+            this.nouvellePosition(abscisseAnimal-1,ordonneeAnimal);
+            carte.setCase(getAbscisse(),getOrdonnee(),this);
+            return true;
+        } else if(carte.verifierCase(abscisseAnimal+1,ordonneeAnimal,cachette)){
+            this.setEstCache(true);
+            carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
+            this.setCachette(cachette);
+            this.nouvellePosition(abscisseAnimal+1,ordonneeAnimal);
+            carte.setCase(getAbscisse(),getOrdonnee(),this);
+            return true;
+        } else if(carte.verifierCase(abscisseAnimal,ordonneeAnimal-1,cachette) ){
+            this.setEstCache(true);
+            carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
+            this.setCachette(cachette);
+            this.nouvellePosition(abscisseAnimal,ordonneeAnimal-1);
+            carte.setCase(getAbscisse(),getOrdonnee(),this);
+            return true;
+        } else if(carte.verifierCase(abscisseAnimal,ordonneeAnimal+1,cachette)){
+            this.setEstCache(true);
+            carte.setCase(abscisseAnimal,ordonneeAnimal,new ElementCarte(getCachette()));
+            this.setCachette(cachette);
+            this.nouvellePosition(abscisseAnimal,ordonneeAnimal+1);
+            carte.setCase(getAbscisse(),getOrdonnee(),this);
+            return true;
     }else{
         return false;
     }
@@ -222,5 +223,13 @@ public abstract class Animal extends ElementCarte {
 
     public void augmenterNbTourCache(){
         nbTourCache++;
+    }
+
+    public IStrategieDeplacementAffame getStrategieAffame() {
+        return strategieAffame;
+    }
+
+    public void setStrategieAffame(IStrategieDeplacementAffame strategieAffame) {
+        this.strategieAffame = strategieAffame;
     }
 }

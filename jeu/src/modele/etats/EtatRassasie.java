@@ -22,14 +22,16 @@ public class EtatRassasie extends Etat{
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         int abscisse = animal.getAbscisse();
         int ordonnee = animal.getOrdonnee();
-        animal.setEstCache(false);
         animal.augmenterCptSansManger();
         if (animal.getNbTourSansManger() == animal.getCptTourSansManger()) {
             animal.changerEtat(EtatAffame.getInstance());
         }
-        if(!verifierDanger(carte,abscisse,ordonnee,animal,personnage)) {
+        if(!verifierDanger(carte,abscisse,ordonnee,animal,personnage,1)) {
+            animal.setEstCache(false);
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
             deplacementAleatoire(carte, abscisse, ordonnee, animal,1);
+            carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
+            animal.setCachette(" ");
         }
 
     }

@@ -5,6 +5,8 @@ import modele.ElementCarte;
 import modele.Personnage;
 import modele.etats.EtatEffraye;
 import modele.etats.EtatJunkie;
+import modele.etats.EtatSurAmi;
+import modele.strategies.StrategieAffameEcureuil;
 
 public class Ecureuil extends Animal{
 
@@ -18,6 +20,7 @@ public class Ecureuil extends Animal{
         this.getRegimeAlimentaire().add("M");
         this.setNbTourJunkie(5);
         this.setNbTourCache(0);
+        this.setStrategieAffame(StrategieAffameEcureuil.getInstance());
     }
 
     @Override
@@ -26,28 +29,12 @@ public class Ecureuil extends Animal{
     }
 
     @Override
-    public void devenirAmi(Personnage personnage) {
+    public void devenirAmi(Personnage personnage,Carte carte) {
         this.setAmi(true);
     }
 
-    @Override
-    public void seDeplacer(Carte carte, Personnage personnage) {
-        if(!estCacheAvecAmi(personnage)){
-            carte.setCase(getAbscisse(), getOrdonnee(), new ElementCarte(getCachette()));
-        }
-        getEtat().seDeplacer(this,carte,personnage);
-        //si l'ecureuil est affamé, c'est qu'il ne s'est pas déplacé juste avant
-        if(getCptTourSansManger() > getNbTourSansManger()){
-            if(!getEtat().verifierDanger(carte,getAbscisse(),getOrdonnee(),this,personnage)) {
-                getEtat().deplacementAleatoire(carte, getAbscisse(), getOrdonnee(), this, 1);
-                setEstCache(false);
-            }
-        }
-        if(!estCacheAvecAmi(personnage)){
-            carte.setCase(getAbscisse(), getOrdonnee(), this);
-        }
 
-    }
+
 
     @Override
     public void fuir(Carte carte, Personnage personnage, int nvAbscisse, int nvOrdonnee) {
@@ -56,15 +43,18 @@ public class Ecureuil extends Animal{
                 personnage.ajouterAmiCache(this);
                 carte.setCase(getAbscisse(),getOrdonnee(),new ElementCarte(getCachette()));
                 this.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
-                this.changerEtat(EtatEffraye.getInstance());
+                this.changerEtat(EtatSurAmi.getInstance());
+                this.setCachette(" ");
                 this.setEstCache(true);
-            } else if (seCacher(carte, "A")) {
+            } else if (seCacher(carte, "A")){
                 return;
-            } else if (seCacher(carte, "B")) {
+            } else if (seCacher(carte, "B")){
                 return;
-            } else {
+            } else if(carte.verifierCase(nvAbscisse,nvOrdonnee," ")){
+                this.setEstCache(false);
                 carte.setCase(getAbscisse(), getOrdonnee(), new ElementCarte(getCachette()));
                 this.nouvellePosition(nvAbscisse, nvOrdonnee);
+                carte.setCase(getAbscisse(), getOrdonnee(), this);
             }
         }
     }

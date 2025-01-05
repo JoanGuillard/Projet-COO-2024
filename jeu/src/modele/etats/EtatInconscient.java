@@ -4,21 +4,18 @@ import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.animaux.Animal;
-import modele.animaux.Ecureuil;
-import modele.animaux.Singe;
 
 import static modele.CouleursAffichage.*;
-public class EtatJunkie extends Etat{
 
-    private static EtatJunkie instance;
+public class EtatInconscient extends Etat{
+    private static EtatInconscient instance;
 
-
-    public EtatJunkie() {
+    public EtatInconscient() {
     }
 
-    public static synchronized EtatJunkie getInstance(){
-        if(instance == null){
-            instance = new EtatJunkie();
+    public static synchronized EtatInconscient getInstance() {
+        if (instance == null) {
+            instance = new EtatInconscient();
         }
         return instance;
     }
@@ -31,15 +28,12 @@ public class EtatJunkie extends Etat{
         }
         int abscisseAnimal = animal.getAbscisse();
         int ordonneeAnimal = animal.getOrdonnee();
-        if(!verifierDanger(carte,abscisseAnimal,ordonneeAnimal,animal,personnage,2)){
-            animal.setEstCache(false);
-            carte.setCase(animal.getAbscisse(), animal.getOrdonnee(),new ElementCarte(animal.getCachette()));
-            deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal,2);
-        }
+        animal.setEstCache(false);
+        carte.setCase(animal.getAbscisse(), animal.getOrdonnee(),new ElementCarte(animal.getCachette()));
+        deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal,1);
         animal.augmenterCptTourJunkie();
         carte.setCase(animal.getAbscisse(),animal.getOrdonnee(),animal);
     }
-
 
     @Override
     public String toString(Animal animal) {
