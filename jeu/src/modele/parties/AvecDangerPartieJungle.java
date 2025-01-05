@@ -61,15 +61,18 @@ public class AvecDangerPartieJungle extends Partie{
     protected String genererElementAleatoire(Random random) {
 
         int chance = random.nextInt(100);
-        if (chance < 87) return " ";
-        else if (chance <89) return  "S";//Singe
-        else if (chance < 91) return "C"; //champignon normale
-        else if (chance <92 ) return "E"; //serpent
-        else if (chance < 94) return "T"; //cocotier
-        else if (chance < 95) return "H"; //champignon hallu
-        else if (chance < 96) return "O"; //scorpion
-        else if (chance < 97) return "R"; //petit rocher
-        else return "B"; //banane
+        if (chance < 88) return " ";
+        else if (chance < 90) return "S";
+        else if (chance < 91) return "C";
+        else if (chance < 92) return "E";
+        else if (chance < 93) return "T";
+        else if (chance < 94) return "H";
+        else if (chance < 95) return "O";
+        else if (chance < 96) return "R";
+        else if (chance < 97) return "2";
+        else if (chance < 98) return "3";
+
+        else return "B";//banane
     }
 
 
@@ -80,17 +83,21 @@ public class AvecDangerPartieJungle extends Partie{
             case "S":
                 Singe s = new Singe(abscisse, ordonnee, 2, 3);
                 getLesAnimaux().add(s);
+                enregistrerPosition(s);
                 return s;
             case "O":
                 Predateur o = new Scorpion("O", abscisse, ordonnee);
                 getLesPredateurs().add(o);
+                enregistrerPosition(o);
                 return o;
             case "E":
                 Predateur e = new Serpent("E", abscisse, ordonnee);
                 getLesPredateurs().add(e);
+                enregistrerPosition(e);
                 return e;
             case "@":
                 getPersonnage().nouvellePosition(abscisse, ordonnee);
+                enregistrerPosition(getPersonnage());
                 return getPersonnage();
 
         }

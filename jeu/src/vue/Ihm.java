@@ -203,10 +203,9 @@ public class Ihm {
                     System.out.println("Vous avez choisi de quitter.");
                     return coordonne;
                 } else {
-                    System.out.println("La " + message + " doit être strictement positive.");
+                    System.out.println("Entrée invalide. Veuillez saisir un entier positif ou 0 pour quitter.");
+                    scanner.nextLine();
                 }
-            } else {
-                System.out.println("Entrée invalide. Veuillez saisir un entier positif ou 0 pour quitter.");
             }
         }
         return coordonne;

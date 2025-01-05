@@ -4,10 +4,9 @@ import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.animaux.Animal;
-import modele.animaux.Ecureuil;
-import modele.animaux.Singe;
 
 import static modele.CouleursAffichage.*;
+
 
 public class EtatAffame extends Etat{
     private static EtatAffame instance;
@@ -36,12 +35,14 @@ public class EtatAffame extends Etat{
                 carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
                 animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal, ordonneeAnimal - 1, personnage.getApparence()), nourriture, personnage,carte);
                 return true;
+
             } else if (carte.verifierCase(abscisseAnimal, ordonneeAnimal + 1, nourriture)) {
                 carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
                 animal.nouvellePosition(abscisseAnimal, ordonneeAnimal + 1);
                 carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
                 animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal, ordonneeAnimal + 1, personnage.getApparence()), nourriture,personnage,carte);
                 return true;
+
             } else if (carte.verifierCase(abscisseAnimal - 1, ordonneeAnimal, nourriture)) {
                 carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
                 animal.nouvellePosition(abscisseAnimal - 1, ordonneeAnimal);
@@ -57,10 +58,8 @@ public class EtatAffame extends Etat{
             }
         }
         return false;
+
     }
-
-
-
 
     @Override
     public String toString(Animal animal) {

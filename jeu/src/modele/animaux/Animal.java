@@ -7,6 +7,7 @@ import modele.etats.EtatJunkie;
 import modele.etats.EtatRassasie;
 import modele.strategies.IStrategieDeplacementAffame;
 
+
 import java.util.ArrayList;
 import static modele.CouleursAffichage.*;
 
@@ -107,9 +108,11 @@ public abstract class Animal extends ElementCarte {
         this.ami = false;
     }
 
+
     public void seDeplacer(Carte carte, Personnage personnage){
         etat.seDeplacer(this,carte,personnage);
     }
+
 
     public String toString(){
         if(estCache){

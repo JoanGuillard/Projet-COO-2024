@@ -4,6 +4,8 @@ import modele.Carte;
 import modele.ElementCarte;
 import modele.animaux.Ecureuil;
 import modele.etats.EtatEffraye;
+import modele.parties.Partie;
+
 import static modele.CouleursAffichage.*;
 public class Hiboux extends Predateur{
     private int nbTourAuSol;

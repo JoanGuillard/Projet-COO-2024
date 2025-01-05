@@ -4,6 +4,7 @@ import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.animaux.Animal;
+import modele.parties.Partie;
 
 import javax.swing.*;
 import java.util.HashMap;

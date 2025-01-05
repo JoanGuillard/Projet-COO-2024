@@ -2,6 +2,7 @@ package modele.etats;
 import modele.Carte;
 import modele.Personnage;
 import modele.animaux.Animal;
+import modele.parties.Partie;
 
 import static modele.CouleursAffichage.*;
 
@@ -21,6 +22,7 @@ public class EtatEffraye extends Etat{
         return instance;
     }
     @Override
+
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         animal.setEstCache(true);
         if(animal.getNbTourCache() == 3){

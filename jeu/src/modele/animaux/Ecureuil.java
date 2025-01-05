@@ -8,6 +8,7 @@ import modele.etats.EtatJunkie;
 import modele.etats.EtatSurAmi;
 import modele.strategies.StrategieAffameEcureuil;
 
+
 public class Ecureuil extends Animal{
 
     private int nbTourJunkie;
@@ -33,8 +34,11 @@ public class Ecureuil extends Animal{
         this.setAmi(true);
     }
 
-
-
+    @Override
+    public void seDeplacer(Carte carte, Personnage personnage) {
+        getEtat().seDeplacer(this,carte,personnage);
+        carte.setCase(getAbscisse(), getOrdonnee(), this);
+    }
 
     @Override
     public void fuir(Carte carte, Personnage personnage, int nvAbscisse, int nvOrdonnee) {

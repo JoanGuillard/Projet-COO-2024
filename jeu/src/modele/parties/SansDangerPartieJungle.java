@@ -49,9 +49,11 @@ public class SansDangerPartieJungle extends Partie {
             case "S":
                 Singe s = new Singe(abscisse, ordonnee, 2, 3);
                 getLesAnimaux().add(s);
+                enregistrerPosition(s);
                 return s;
             case "@":
                 getPersonnage().nouvellePosition(abscisse, ordonnee);
+                enregistrerPosition(getPersonnage());
                 return getPersonnage();
             default:
                 return new ElementCarte(element);

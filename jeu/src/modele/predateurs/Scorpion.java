@@ -3,6 +3,7 @@ package modele.predateurs;
 import modele.Carte;
 import modele.ElementCarte;
 import modele.animaux.Singe;
+import modele.parties.Partie;
 import modele.predateurs.Predateur;
 
 import static modele.CouleursAffichage.*;
@@ -14,6 +15,7 @@ public class Scorpion extends Predateur {
 
     private int tourApresMeurtre = 0;
     private boolean estCache = false;
+
 
     public Scorpion(String apparence, int abscisse, int ordonnee) {
         super(apparence, abscisse, ordonnee);
@@ -54,6 +56,7 @@ public class Scorpion extends Predateur {
         }
 
         carte.setCase(getAbscisse(), getOrdonnee(), this);
+
     }
 
 
