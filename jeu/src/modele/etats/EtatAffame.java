@@ -22,37 +22,6 @@ public class EtatAffame extends Etat{
     @Override
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage){
         animal.getStrategieAffame().seDeplacer(this,animal,carte,personnage);
-
-<<<<<<< HEAD
-=======
-        animal.setEstCache(false);
-        carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
-        for (String nourriture : animal.getRegimeAlimentaire()) {
-            if (carte.verifierCase(abscisseAnimal, ordonneeAnimal - 1, nourriture)) {
-                animal.nouvellePosition(abscisseAnimal, ordonneeAnimal - 1);
-                carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
-                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal, ordonneeAnimal - 1, personnage.getApparence()), nourriture, personnage);
-                return;
-            } else if (carte.verifierCase(abscisseAnimal, ordonneeAnimal + 1, nourriture)) {
-                animal.nouvellePosition(abscisseAnimal, ordonneeAnimal + 1);
-                carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
-                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal, ordonneeAnimal + 1, personnage.getApparence()), nourriture,personnage);
-                return;
-            } else if (carte.verifierCase(abscisseAnimal - 1, ordonneeAnimal, nourriture)) {
-                animal.nouvellePosition(abscisseAnimal - 1, ordonneeAnimal);
-                carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
-                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal - 1, ordonneeAnimal, personnage.getApparence()), nourriture,personnage);
-
-                return;
-            } else if (carte.verifierCase(abscisseAnimal + 1, ordonneeAnimal, nourriture)) {
-                animal.nouvellePosition(abscisseAnimal + 1, ordonneeAnimal);
-                carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), new ElementCarte(animal.getCachette()));
-                animal.seNourrir(carte.estCaseAdjacente(abscisseAnimal + 1, ordonneeAnimal, personnage.getApparence()), nourriture,personnage);
-                return;
-            }
-        }
-        animal.augmenterCptSansManger();
->>>>>>> e0a382d (pierres precieuses v1)
     }
 
 

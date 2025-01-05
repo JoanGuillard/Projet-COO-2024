@@ -187,20 +187,14 @@ public abstract class Partie {
      * Permet de déplacer les animaux présents sur la carte
      */
     public void passerTourAnimaux() {
-<<<<<<< HEAD
 
-        for (Animal animal : lesAnimaux){
-            if(!animal.isEstMort()){
-                animal.seDeplacer(carte, personnage);
-=======
         for (Predateur predateur : lesPredateurs) {
             predateur.seDeplacer(carte);
             enregistrerPosition(predateur);
         }
         for (Animal animal : lesAnimaux) {
             if (!animal.isEstMort()) {
-                animal.seDeplacer(carte, personnage, this);
->>>>>>> e0a382d (pierres precieuses v1)
+                animal.seDeplacer(carte, personnage);
                 enregistrerPosition(animal);
             }
         }
@@ -210,6 +204,7 @@ public abstract class Partie {
         }
 
     }
+
 
     /**
      * Permet de déplacer le personnage selon la direction qu'il a choisi
