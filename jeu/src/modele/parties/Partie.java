@@ -191,6 +191,8 @@ public abstract class Partie {
         for (Predateur predateur : lesPredateurs) {
             predateur.seDeplacer(carte);
             enregistrerPosition(predateur);
+
+
         }
         for (Animal animal : lesAnimaux) {
             if (!animal.isEstMort()) {
@@ -219,7 +221,6 @@ public abstract class Partie {
             carte.setCase(nvAbscisse, nvOrdonnee, personnage);
             carte.getCase(nvAbscisse, nvOrdonnee).nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
             personnage.nouvellePosition(nvAbscisse, nvOrdonnee);
-           enregistrerPosition(personnage);
         } else {
             throw new DeplacementImpossibleException("Deplacement impossible !");
         }
@@ -332,7 +333,7 @@ public abstract class Partie {
             if (historique != null && historique.size() >= nbTours) {
                 int[] positionCible = null;
 
-                for (int i = 0; i < nbTours; i++) {
+                for (int i = 1; i < nbTours; i++) {
                     positionCible = historique.poll();
                 }
 
@@ -368,7 +369,7 @@ public abstract class Partie {
             historique.offer(currentPosition);
         }
 
-        while (historique.size() > 3) {
+        while (historique.size() >4) {
             historique.poll();
         }
     }
