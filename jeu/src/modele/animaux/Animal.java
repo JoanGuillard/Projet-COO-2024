@@ -1,11 +1,8 @@
 package modele.animaux;
 
 import modele.*;
-import modele.etats.Etat;
-import modele.etats.EtatEffraye;
-import modele.etats.EtatJunkie;
-import modele.etats.EtatRassasie;
-import modele.strategies.IStrategieDeplacementAffame;
+import modele.etats.*;
+import modele.strategies.IStrategieDeplacementAnimal;
 
 import java.util.ArrayList;
 import static modele.CouleursAffichage.*;
@@ -27,7 +24,7 @@ public abstract class Animal extends ElementCarte {
     private int cptTourJunkie;
     private boolean estMort;
 
-    private IStrategieDeplacementAffame strategieAffame;
+    private IStrategieDeplacementAnimal strategieAffame;
 
 
     public Animal(int abscisse, int ordonnee, int nbNourritureAmi, int nbTourSansManger){
@@ -221,15 +218,31 @@ public abstract class Animal extends ElementCarte {
         cptTourJunkie++;
     }
 
+    public void seCacherSurAmi(Personnage personnage, Carte carte){
+        personnage.ajouterAmiCache(this);
+        carte.setCase(getAbscisse(),getOrdonnee(),new ElementCarte(getCachette()));
+        this.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
+        this.changerEtat(EtatSurAmi.getInstance());
+        this.setCachette(" ");
+        this.setEstCache(true);
+    }
+
     public void augmenterNbTourCache(){
         nbTourCache++;
     }
 
-    public IStrategieDeplacementAffame getStrategieAffame() {
+    public IStrategieDeplacementAnimal getStrategieAffame() {
         return strategieAffame;
     }
 
-    public void setStrategieAffame(IStrategieDeplacementAffame strategieAffame) {
+    public void setStrategieAffame(IStrategieDeplacementAnimal strategieAffame) {
         this.strategieAffame = strategieAffame;
+    }
+
+    public void fuirPredateur(Carte carte, Personnage personnage, int nvAbscisse, int nvOrdonnee){
+        this.setEstCache(false);
+        carte.setCase(getAbscisse(), getOrdonnee(), new ElementCarte(getCachette()));
+        this.nouvellePosition(nvAbscisse, nvOrdonnee);
+        carte.setCase(getAbscisse(), getOrdonnee(), this);
     }
 }

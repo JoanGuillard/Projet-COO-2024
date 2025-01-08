@@ -35,11 +35,8 @@ public class Singe extends Animal{
 
     @Override
     public void devenirAmi(Personnage personnage, Carte carte) {
-        this.setAmi(true);
-        personnage.ajouterAmiCache(this);
-        changerEtat(EtatSurAmi.getInstance());
-        carte.setCase(getAbscisse(),getOrdonnee(),new ElementCarte(getCachette()));
-        this.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
+        setAmi(true);
+        seCacherSurAmi(personnage,carte);
     }
 
 
@@ -51,10 +48,10 @@ public class Singe extends Animal{
             } else if (seCacher(carte, "R")) {
                 return;
             } else if(carte.verifierCase(nvAbscisse,nvOrdonnee," ")){
-                carte.setCase(getAbscisse(), getOrdonnee(), new ElementCarte(getCachette()));
-                this.nouvellePosition(nvAbscisse, nvOrdonnee);
-                carte.setCase(getAbscisse(), getOrdonnee(), this);
+                fuirPredateur(carte,personnage,nvAbscisse,nvOrdonnee);
             }
+        }else{
+            System.out.println("OUH OUH AH AH !!! (le singe vous prévient d'un danger)");
         }
     }
 

@@ -161,9 +161,7 @@ public class Ihm {
          Si un residu de ligne existe dans le tampon avant l'appel à cette méthode, il sera consomme.
           Cela evite que la boucle s'execute immédiatement sans attendre une nouvelle saisie.
          */
-        if (scanner.hasNextLine()) {
-            scanner.nextLine();
-        }
+
 
         while (!cheminValide) {
             System.out.println("Veuillez saisir le chemin du fichier (ou 'q' pour quitter) :");

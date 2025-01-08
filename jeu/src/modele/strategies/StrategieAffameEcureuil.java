@@ -3,10 +3,9 @@ package modele.strategies;
 import modele.Carte;
 import modele.Personnage;
 import modele.animaux.Animal;
-import modele.animaux.Ecureuil;
 import modele.etats.EtatAffame;
 
-public class StrategieAffameEcureuil implements IStrategieDeplacementAffame{
+public class StrategieAffameEcureuil implements IStrategieDeplacementAnimal {
 
     private static StrategieAffameEcureuil instance;
 

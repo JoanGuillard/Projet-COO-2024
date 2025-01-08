@@ -28,7 +28,9 @@ public class EtatSurAmi extends Etat{
         if(animal.getNbTourCache() <3){
             animal.augmenterNbTourCache();
             animal.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
+            verifierDanger(carte,abscisse,ordonnee,animal,personnage,1);
         }else{
+            animal.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
             animal.changerEtat(EtatAffame.getInstance());
             animal.setEstCache(false);
             personnage.supprimerAmiCache(animal);

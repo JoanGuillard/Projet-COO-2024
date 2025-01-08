@@ -5,7 +5,7 @@ import modele.Personnage;
 import modele.animaux.Animal;
 import modele.etats.EtatAffame;
 
-public class StrategieAffameSinge implements IStrategieDeplacementAffame{
+public class StrategieAffameSinge implements IStrategieDeplacementAnimal {
 
     private static StrategieAffameSinge instance;
 

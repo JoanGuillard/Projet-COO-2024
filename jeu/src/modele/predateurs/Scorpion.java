@@ -59,13 +59,18 @@ public class Scorpion extends Predateur {
 
     private void tuerSinge(Carte carte, int x, int y) {
         Singe singe = (Singe) carte.getCase(x, y);
-        singe.setEstMort(true);
-        this.nouvellePosition(x, y);
-        tourApresMeurtre=2;
-        if (carte.verifierCase(x, y, "R")) {
-            toursCacheSousRocher = 5;
-            estCache =true;
+        if(!singe.isEstCache()){
+            singe.setEstMort(true);
+            this.nouvellePosition(x, y);
+            tourApresMeurtre=2;
+            if (carte.verifierCase(x, y, "R")) {
+                toursCacheSousRocher = 5;
+                estCache =true;
+            }
+        }else{
+            deplacementAleatoire(carte, 1);
         }
+
 
     }
 
