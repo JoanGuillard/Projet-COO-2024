@@ -41,12 +41,12 @@ public class SansDangerPartieForet extends Partie{
         switch(element){
             case "@":
                 getPersonnage().nouvellePosition(abscisse,ordonnee);
-                enregistrerPosition(getPersonnage());
+                //enregistrerPosition(getPersonnage());
                 return getPersonnage();
             case "E":
                 Ecureuil e = new Ecureuil(abscisse,ordonnee,1,5);
                 getLesAnimaux().add(e);
-                enregistrerPosition(e);
+                //enregistrerPosition(e);
                 return e;
             case "2":
                 PierrePrecieuse p2 = new PierrePrecieuse(2);

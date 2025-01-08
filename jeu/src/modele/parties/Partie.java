@@ -19,7 +19,9 @@ public abstract class Partie {
     private ArrayList<Animal> lesAnimaux;
     private ArrayList<Predateur> lesPredateurs;
     private String bordure;
-    private Map<ElementCarte, Queue<int[]>> historiquePositions = new HashMap<>();
+    private ArrayList<Carte> lesCartes;
+    private Stack<ArrayList<ArrayList<ElementCarte>>> historique;
+
 
     private Carte carte;
 
@@ -30,8 +32,9 @@ public abstract class Partie {
         this.lesAnimaux = new ArrayList<Animal>();
         this.lesPredateurs = new ArrayList<Predateur>();
         this.bordure = bordure;
-        this.personnage.setInventaire("2");
-        this.personnage.setInventaire("3");
+        this.personnage.setInventaire("K");
+        this.historique = new Stack<ArrayList<ArrayList<ElementCarte>>>();
+
 
     }
 
@@ -78,14 +81,6 @@ public abstract class Partie {
         }
     }
 
-    /**
-     * Crée une nouvelle carte avec les dimensions spécifiées.
-     *
-     * @param bordure La bordure de la carte.
-     * @param hauteur La hauteur de la carte.
-     * @param largeur La largeur de la carte.
-     * @return La carte créée.
-     */
     public Carte creerNouvelleCarte(String bordure, int hauteur, int largeur) {
         this.carte = new Carte();
         for (int i = 0; i < hauteur; i++) {
@@ -103,12 +98,7 @@ public abstract class Partie {
         return carte;
     }
 
-    /**
-     * Méthode abstraite qui doit être implémentée pour afficher un élément de la carte.
-     *
-     * @param e L'élément à afficher.
-     * @return La représentation sous forme de chaîne de caractères de l'élément.
-     */
+
     public abstract String afficherElement(ElementCarte e);
 
     /**
@@ -152,26 +142,13 @@ public abstract class Partie {
         }
         ajouterPersonnageDansZoneProtegee(carte, random);
     }
-
-    /**
-     * Méthode abstraite pour générer un élément aléatoire selon les règles du jeu.
-     *
-     * @param random L'objet Random pour générer les éléments de manière aléatoire.
-     * @return L'élément généré.
-     */
     protected abstract String genererElementAleatoire(Random random);
 
-    /**
-     * Initialise la carte avec les dimensions et la bordure spécifiée.
-     *
-     * @param hauteur La hauteur de la carte.
-     * @param largeur La largeur de la carte.
-     * @param bordure La bordure de la carte.
-     */
     public void initialiserCarte(int hauteur, int largeur, String bordure) {
         Carte carte = creerNouvelleCarte(bordure, hauteur, largeur);
         remplirCarte(carte, hauteur, largeur);
         this.setCarte(carte);
+        enregistrer();
     }
 
     /**
@@ -217,17 +194,17 @@ public abstract class Partie {
 
         for (Predateur predateur : lesPredateurs) {
             predateur.seDeplacer(carte);
-            enregistrerPosition(predateur);
+           // enregistrerPosition(predateur);
 
 
         }
         for (Animal animal : lesAnimaux) {
             if (!animal.isEstMort()) {
                 animal.seDeplacer(carte, personnage);
-                enregistrerPosition(animal);
+               // enregistrerPosition(animal);
             }
         }
-
+    enregistrer();
 
     }
 
@@ -251,7 +228,7 @@ public abstract class Partie {
         } else {
             throw new DeplacementImpossibleException("Deplacement impossible !");
         }
-        enregistrerPosition(personnage);
+        //enregistrerPosition(personnage);
 
     }
 
@@ -273,6 +250,8 @@ public abstract class Partie {
             personnage.ajouterDansInventaire(carte.setCaseString(new ElementCarte(" "), positionObjet, personnage.getAbscisse(), personnage.getOrdonnee()));
             reculer(p.getNbTours());
             return false;
+        }else if( carte.getCase(nvAbscisse,nvOrdonnee).equals("K")){
+            personnage.ajouterDansInventaire(carte.setCaseString(new ElementCarte(" "), positionObjet, personnage.getAbscisse(), personnage.getOrdonnee()));
         }
         else {
             throw new ObjetNonRamassableException("Cette case est vide ou l'objet ne peut pas être ramassé !");
@@ -298,10 +277,11 @@ public abstract class Partie {
         if (personnage.getNbObjet(objet) > 0 && carte.estCaseVide(coordonnees[0], coordonnees[1])) {
             personnage.deposerObjet(objet);
             carte.getCase(coordonnees[0], coordonnees[1]).setApparence(objet);
-        } else {
+
+        }else
             throw new ActionImpossibleException("Action impossible");
         }
-    }
+
 
     public Personnage getPersonnage() {
         return personnage;
@@ -349,11 +329,8 @@ public abstract class Partie {
         return lesPredateurs;
     }
 
-    /**
-     * remet tous les elements de la carte a la position actuel - nb tours deplacement
-     * @param nbTours
-     */
-    public void reculer(int nbTours) {
+
+    /*public void reculer(int nbTours) {
         for (Map.Entry<ElementCarte, Queue<int[]>> entry : historiquePositions.entrySet()) {
             ElementCarte elementCarte = entry.getKey();
             Queue<int[]> historique = entry.getValue();
@@ -386,13 +363,10 @@ public abstract class Partie {
                 System.out.println("Impossible de reculer " + elementCarte.getApparence() + " : historique vide.");
             }
         }
-    }
-    /**
-     * Enregistre la position d'un élément dans l'historique des positions.
-     *
-     * @param element L'élément dont la position est enregistrée.
-     */
-    public void enregistrerPosition(ElementCarte element) {
+    }*/
+
+
+   /* public void enregistrerPosition(ElementCarte element) {
         historiquePositions.putIfAbsent(element, new LinkedList<>());
         Queue<int[]> historique = historiquePositions.get(element);
 
@@ -405,8 +379,55 @@ public abstract class Partie {
 
         while (historique.size() >4) {
             historique.poll();
+        }*/
+   public void reculer(int nbTours) {
+       if (historique.size() < nbTours) {
+           System.out.println("Il n'y a pas suffisamment d'états dans l'historique pour reculer " + nbTours + " tours.");
+           return;
+       }
+       for (int i = 0; i < nbTours; i++) {
+           historique.pop();
+       }
+       if (!historique.isEmpty()) {
+           ArrayList<ArrayList<ElementCarte>> cartePrecedente = historique.peek();
+           Carte nouvelleCarte = new Carte();
+           for (ArrayList<ElementCarte> ligne : cartePrecedente) {
+               ArrayList<ElementCarte> nouvelleLigne = new ArrayList<>(ligne);
+               nouvelleCarte.ajouterLigne(nouvelleLigne);
+           }
+           this.carte = nouvelleCarte;
+           this.carte.setDimensions();
+           restaurerPositions();
+           System.out.println("Carte restaurée après " + nbTours + " tours.");
+       } else {
+           System.out.println("Aucun état à restaurer.");
+       }
+   }
+
+
+    public void enregistrer() {
+        ArrayList<ArrayList<ElementCarte>> copieCarte = new ArrayList<>();
+        for (ArrayList<ElementCarte> ligne : carte.getCarte()) {
+            ArrayList<ElementCarte> copieLigne = new ArrayList<>(ligne);
+            copieCarte.add(copieLigne);
+        }
+        historique.push(copieCarte);
+    }
+
+    private void restaurerPositions() {
+        for (int x = 0; x < carte.getLargeur(); x++) {
+            for (int y = 0; y < carte.getHauteur(); y++) {
+                ElementCarte element = carte.getCase(x, y);
+                if (element != null) {
+                    element.nouvellePosition(x, y);
+                }
+            }
         }
     }
 
 
 }
+
+
+
+

@@ -44,6 +44,9 @@ public class Personnage extends ElementCarte{
      * @param element Le nom de l'élément à ajouter.
      */
     public void ajouterDansInventaire(String element){
+        if(element.equals("2")||element.equals("3")){
+            element = "K";
+        }
         this.inventaire.put(element,inventaire.get(element)+1);
     }
 

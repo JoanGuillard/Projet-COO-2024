@@ -75,22 +75,22 @@ public class AvecDangerPartieForet extends Partie{
         switch(element){
             case "@":
                 getPersonnage().nouvellePosition(abscisse,ordonnee);
-                enregistrerPosition(getPersonnage());
+                //enregistrerPosition(getPersonnage());
                 return getPersonnage();
             case "E":
                 Ecureuil e = new Ecureuil(abscisse,ordonnee,1,5);
                 getLesAnimaux().add(e);
-                enregistrerPosition(e);
+                //enregistrerPosition(e);
                 return e;
             case "R":
                 Renard r = new Renard("R",abscisse,ordonnee);
                 getLesPredateurs().add(r);
-                enregistrerPosition(r);
+                //enregistrerPosition(r);
                 return r;
             case "H":
                 Hiboux h = new Hiboux("H",abscisse,ordonnee);
                 getLesPredateurs().add(h);
-                enregistrerPosition(h);
+                //enregistrerPosition(h);
                 return h;
             case "2":
                 PierrePrecieuse p2 = new PierrePrecieuse(2);

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Carte {
     private static Carte instance;
@@ -196,5 +197,6 @@ public class Carte {
                 verifierCase(abscisse, ordonnee+1, element) ||
                 verifierCase(abscisse, ordonnee-1, element);
     }
+
 
 }

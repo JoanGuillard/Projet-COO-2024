@@ -84,21 +84,21 @@ public class AvecDangerPartieJungle extends Partie{
             case "S":
                 Singe s = new Singe(abscisse, ordonnee, 2, 3);
                 getLesAnimaux().add(s);
-                enregistrerPosition(s);
+                //enregistrerPosition(s);
                 return s;
             case "O":
                 Predateur o = new Scorpion("O", abscisse, ordonnee);
                 getLesPredateurs().add(o);
-                enregistrerPosition(o);
+                //enregistrerPosition(o);
                 return o;
             case "E":
                 Predateur e = new Serpent("E", abscisse, ordonnee);
                 getLesPredateurs().add(e);
-                enregistrerPosition(e);
+                //enregistrerPosition(e);
                 return e;
             case "@":
                 getPersonnage().nouvellePosition(abscisse, ordonnee);
-                enregistrerPosition(getPersonnage());
+                //enregistrerPosition(getPersonnage());
                 return getPersonnage();
             case "2":
                 PierrePrecieuse p2 = new PierrePrecieuse(2);
