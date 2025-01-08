@@ -51,7 +51,9 @@ public class Singe extends Animal{
                 fuirPredateur(carte,personnage,nvAbscisse,nvOrdonnee);
             }
         }else{
-            System.out.println("OUH OUH AH AH !!! (le singe vous prévient d'un danger)");
+            if(estCacheAvecAmi(personnage)) {
+                System.out.println("OUH OUH AH AH !!! (le singe vous prévient d'un danger)");
+            }
         }
     }
 
