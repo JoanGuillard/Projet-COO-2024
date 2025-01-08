@@ -45,6 +45,15 @@ public abstract class Animal extends ElementCarte {
         this.estMort = false;
     }
 
+
+    /**
+     * Permet à l'animal de se nourrir.
+     *
+     * @param estNourriParAmi Indique si l'animal est nourri par un ami.
+     * @param aliment Le type de nourriture consommé.
+     * @param personnage Le personnage qui interagit avec l'animal.
+     * @param carte La carte de jeu.
+     */
     public void seNourrir(boolean estNourriParAmi,String aliment,Personnage personnage,Carte carte){
         this.cptTourSansManger =0;
         this.setCachette(" ");

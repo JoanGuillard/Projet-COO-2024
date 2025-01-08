@@ -3,8 +3,7 @@ package modele.predateurs;
 import modele.Carte;
 import modele.ElementCarte;
 import modele.animaux.Singe;
-import modele.parties.Partie;
-import modele.predateurs.Predateur;
+
 
 import static modele.CouleursAffichage.*;
 import static modele.CouleursAffichage.ANSI_RESET;
@@ -59,7 +58,13 @@ public class Scorpion extends Predateur {
 
     }
 
-
+/**
+ * Tue un singe sur la position spécifiée et met à jour l'état du scorpion.
+ *
+ * @param carte La carte sur laquelle le meurtre se produit.
+ * @param x     Coordonnée x de la position du singe.
+ * @param y     Coordonnée y de la position du singe.
+ */
     private void tuerSinge(Carte carte, int x, int y) {
         Singe singe = (Singe) carte.getCase(x, y);
         singe.setEstMort(true);

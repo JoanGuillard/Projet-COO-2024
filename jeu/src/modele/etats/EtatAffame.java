@@ -25,7 +25,16 @@ public class EtatAffame extends Etat{
     }
 
 
-
+    /**
+     * Cherche de la nourriture autour de l'animal dans sa position actuelle.
+     *
+     * @param animal L'animal qui cherche de la nourriture.
+     * @param carte La carte de jeu.
+     * @param personnage Le personnage de la partie.
+     * @param abscisseAnimal La position actuelle de l'animal sur l'axe X.
+     * @param ordonneeAnimal La position actuelle de l'animal sur l'axe Y.
+     * @return true si la nourriture a été trouvée et consommée, false sinon.
+     */
     public boolean chercherNourriture(Animal animal, Carte carte, Personnage personnage,int abscisseAnimal,int ordonneeAnimal){
         for (String nourriture : animal.getRegimeAlimentaire()) {
             if (carte.verifierCase(abscisseAnimal, ordonneeAnimal - 1, nourriture)) {

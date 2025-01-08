@@ -48,7 +48,7 @@ public class Ihm {
     }
 
     /**
-     * demande au joueur de choisir un action
+     * demande au joueur de choisir une action
      *
      * @return l'entier qui correspond a l'action demandee par le joueur -1 si rien
      */
@@ -151,7 +151,11 @@ public class Ihm {
 
 
 
-
+    /**
+     * Demande au joueur de saisir le chemin d'un fichier à charger.
+     *
+     * @return le chemin du fichier ou 'q' si l'utilisateur choisit de quitter.
+     */
     public String demanderFichier() {
         Scanner scanner = new Scanner(System.in);
 
@@ -188,7 +192,12 @@ public class Ihm {
     }
 
 
-
+    /**
+     * Demande au joueur de saisir une coordonnée pour la carte.
+     *
+     * @param message le message à afficher pour guider le joueur dans sa saisie.
+     * @return l'entier représentant la coordonnée choisie par le joueur.
+     */
     public int demanderCoordonnes(String message) {
         Scanner scanner = new Scanner(System.in);
 
@@ -211,10 +220,23 @@ public class Ihm {
         }
         return coordonne;
     }
+
+    /**
+     * Affiche un message à l'utilisateur.
+     *
+     * @param message le message à afficher.
+     */
     public void afficherMessage(String message){
         System.out.println(message);
     }
 
+
+    /**
+     * Demande au joueur quel objet de son inventaire il souhaite déposer.
+     *
+     * @param p l'objet `Personnage` représentant le joueur et son inventaire.
+     * @return le nom de l'objet à déposer ou "R" si le joueur souhaite revenir en arrière.
+     */
     public String demanderObjetADeposer(Personnage p){
         Scanner scanner = new Scanner(System.in);
 
@@ -241,6 +263,13 @@ public class Ihm {
         }
         return "";
     }
+
+    /**
+     * Affiche un message d'erreur suivi d'un délai d'attente de 1 seconde, puis affiche l'état actuel de la partie.
+     *
+     * @param e l'exception qui a été levée.
+     * @param partie l'objet `Partie` représentant l'état du jeu à afficher après l'erreur.
+     */
     public void afficherAvecSleep(Exception e, Partie partie){
         afficherMessage("Erreur : " + e.getMessage());
         try {
@@ -250,30 +279,6 @@ public class Ihm {
         }
         afficherMessage(partie.toString());
     }
-    public int demanderChoixDanger(){
-        Scanner scanner = new Scanner(System.in);
-        boolean choixIncorrect = false;
-        int choix = 0;
-        while (!choixIncorrect) {
-            System.out.println("Voulez vous jouer avec ou sans danger?");
-            System.out.println("1 : Avec danger");
-            System.out.println("2 : Sans danger");
-            System.out.println("3 : Quitter le jeu");
-            System.out.println("Veuillez saisir l'entier qui correspond a votre choix.");
 
-            if (scanner.hasNextInt()) {
-                choix = scanner.nextInt();
-                if (0 <= choix && choix <= 3) {
-                    choixIncorrect = true;
-                    return choix;
-                }
-            }
-                System.out.println("L'entier que vous avez choisi ne correspond a aucun choix.Veuillez saisir un entier valide.");
-                scanner.nextLine();
-
-
-        }
-        return choix;
-    }
 
 }

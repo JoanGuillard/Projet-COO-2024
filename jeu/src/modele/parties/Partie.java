@@ -78,6 +78,14 @@ public abstract class Partie {
         }
     }
 
+    /**
+     * Crée une nouvelle carte avec les dimensions spécifiées.
+     *
+     * @param bordure La bordure de la carte.
+     * @param hauteur La hauteur de la carte.
+     * @param largeur La largeur de la carte.
+     * @return La carte créée.
+     */
     public Carte creerNouvelleCarte(String bordure, int hauteur, int largeur) {
         this.carte = new Carte();
         for (int i = 0; i < hauteur; i++) {
@@ -95,7 +103,12 @@ public abstract class Partie {
         return carte;
     }
 
-
+    /**
+     * Méthode abstraite qui doit être implémentée pour afficher un élément de la carte.
+     *
+     * @param e L'élément à afficher.
+     * @return La représentation sous forme de chaîne de caractères de l'élément.
+     */
     public abstract String afficherElement(ElementCarte e);
 
     /**
@@ -139,8 +152,22 @@ public abstract class Partie {
         }
         ajouterPersonnageDansZoneProtegee(carte, random);
     }
+
+    /**
+     * Méthode abstraite pour générer un élément aléatoire selon les règles du jeu.
+     *
+     * @param random L'objet Random pour générer les éléments de manière aléatoire.
+     * @return L'élément généré.
+     */
     protected abstract String genererElementAleatoire(Random random);
 
+    /**
+     * Initialise la carte avec les dimensions et la bordure spécifiée.
+     *
+     * @param hauteur La hauteur de la carte.
+     * @param largeur La largeur de la carte.
+     * @param bordure La bordure de la carte.
+     */
     public void initialiserCarte(int hauteur, int largeur, String bordure) {
         Carte carte = creerNouvelleCarte(bordure, hauteur, largeur);
         remplirCarte(carte, hauteur, largeur);
@@ -322,7 +349,10 @@ public abstract class Partie {
         return lesPredateurs;
     }
 
-
+    /**
+     * remet tous les elements de la carte a la position actuel - nb tours deplacement
+     * @param nbTours
+     */
     public void reculer(int nbTours) {
         for (Map.Entry<ElementCarte, Queue<int[]>> entry : historiquePositions.entrySet()) {
             ElementCarte elementCarte = entry.getKey();
@@ -357,7 +387,11 @@ public abstract class Partie {
             }
         }
     }
-
+    /**
+     * Enregistre la position d'un élément dans l'historique des positions.
+     *
+     * @param element L'élément dont la position est enregistrée.
+     */
     public void enregistrerPosition(ElementCarte element) {
         historiquePositions.putIfAbsent(element, new LinkedList<>());
         Queue<int[]> historique = historiquePositions.get(element);

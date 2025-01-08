@@ -2,7 +2,6 @@ package modele;
 
 import modele.animaux.Animal;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +25,11 @@ public class Personnage extends ElementCarte{
         this.inventaire.putIfAbsent(element,0);
     }
 
+    /**
+     * Dépose un objet de l'inventaire du personnage en diminuant sa quantité de 1.
+     *
+     * @param objet Le nom de l'objet à déposer.
+     */
     public void deposerObjet(String objet){
         this.inventaire.put(objet,inventaire.get(objet)-1);
     }
@@ -34,6 +38,11 @@ public class Personnage extends ElementCarte{
         return inventaire.get(objet);
     }
 
+    /**
+     * Ajoute un objet à l'inventaire du personnage en augmentant sa quantité de 1.
+     *
+     * @param element Le nom de l'élément à ajouter.
+     */
     public void ajouterDansInventaire(String element){
         this.inventaire.put(element,inventaire.get(element)+1);
     }
@@ -42,6 +51,12 @@ public class Personnage extends ElementCarte{
         return inventaire;
     }
 
+    /**
+     * Vérifie si un élément spécifique est présent dans l'inventaire.
+     *
+     * @param element Le nom de l'élément recherché.
+     * @return  true si l'élément est présent dans l'inventaire,false sinon.
+     */
     public boolean isInInventaire(String element){
         return inventaire.containsKey(element);
     }
@@ -50,11 +65,20 @@ public class Personnage extends ElementCarte{
         return lesAmisCaches;
     }
 
-
+    /**
+     * Supprime un animal de la liste des amis cachés.
+     *
+     * @param animal L'animal à supprimer de la liste.
+     */
     public void supprimerAmiCache(Animal animal){
         lesAmisCaches.remove(animal);
     }
 
+    /**
+     * Ajoute un animal à la liste des amis cachés.
+     *
+     * @param animal L'animal à ajouter à la liste.
+     */
     public void ajouterAmiCache(Animal animal) {
         this.lesAmisCaches.add(animal);
     }
