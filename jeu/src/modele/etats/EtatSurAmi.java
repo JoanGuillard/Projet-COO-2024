@@ -32,6 +32,7 @@ public class EtatSurAmi extends Etat{
         }else{
             animal.nouvellePosition(personnage.getAbscisse(), personnage.getOrdonnee());
             animal.changerEtat(EtatAffame.getInstance());
+            animal.seDeplacer(carte,personnage);
             animal.setEstCache(false);
             personnage.supprimerAmiCache(animal);
             animal.setNbTourCache(0);

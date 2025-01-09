@@ -6,6 +6,8 @@ import modele.animaux.Singe;
 import modele.etats.EtatEffraye;
 
 import static modele.CouleursAffichage.*;
+import modele.parties.Partie;
+
 
 public class Serpent extends Predateur {
 
@@ -14,7 +16,6 @@ public class Serpent extends Predateur {
     public Serpent(String apparence, int abscisse, int ordonnee) {
         super(apparence, abscisse, ordonnee);
     }
-
     @Override
     public void seDeplacer(Carte carte) {
         if (toursDigestion > 0) {
@@ -45,9 +46,9 @@ public class Serpent extends Predateur {
         }else{
             deplacementAleatoire(carte,2);
         }
-
         carte.setCase(getAbscisse(),getOrdonnee(),this);
     }
+
 
     public String toString(){
         if(toursDigestion > 0) {

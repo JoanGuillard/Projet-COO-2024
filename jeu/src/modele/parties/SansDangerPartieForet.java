@@ -2,6 +2,7 @@ package modele.parties;
 import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
+import modele.PierrePrecieuse;
 import modele.animaux.Ecureuil;
 
 import java.util.Random;
@@ -40,11 +41,19 @@ public class SansDangerPartieForet extends Partie{
         switch(element){
             case "@":
                 getPersonnage().nouvellePosition(abscisse,ordonnee);
+                //enregistrerPosition(getPersonnage());
                 return getPersonnage();
             case "E":
                 Ecureuil e = new Ecureuil(abscisse,ordonnee,1,5);
                 getLesAnimaux().add(e);
+                //enregistrerPosition(e);
                 return e;
+            case "2":
+                PierrePrecieuse p2 = new PierrePrecieuse(2);
+                return p2;
+            case "3":
+                PierrePrecieuse p3 = new PierrePrecieuse(3);
+                return p3;
             default:
                 return new ElementCarte(element);
         }
@@ -64,9 +73,11 @@ public class SansDangerPartieForet extends Partie{
         int chance = random.nextInt(100);
         if (chance < 90) return " ";
         else if (chance < 92) return "C";
-        else if (chance < 94) return "B";
-        else if (chance < 96) return "E";
-        else if (chance < 97) return "A";
+        else if (chance < 93) return "B";
+        else if (chance < 94) return "E";
+        else if (chance < 95) return "A";
+        else if (chance < 96) return "2";
+        else if (chance < 97) return "3";
         else   return "G";
 
     }

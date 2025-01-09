@@ -6,6 +6,7 @@ public class ElementCarte {
     private int ordonnee;
 
 
+
     public ElementCarte(String apparence){
         this.apparence = apparence;
     }

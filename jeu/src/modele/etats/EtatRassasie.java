@@ -4,6 +4,7 @@ import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.animaux.Animal;
+import modele.parties.Partie;
 
 import static modele.CouleursAffichage.*;
 
@@ -22,6 +23,7 @@ public class EtatRassasie extends Etat{
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
         int abscisse = animal.getAbscisse();
         int ordonnee = animal.getOrdonnee();
+        animal.setEstCache(false);
         animal.augmenterCptSansManger();
         if (animal.getNbTourSansManger() == animal.getCptTourSansManger()) {
             animal.changerEtat(EtatAffame.getInstance());
@@ -32,9 +34,10 @@ public class EtatRassasie extends Etat{
             deplacementAleatoire(carte, abscisse, ordonnee, animal,1);
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(), animal);
             animal.setCachette(" ");
-        }
 
+        }
     }
+
 
     @Override
     public String toString(Animal animal) {

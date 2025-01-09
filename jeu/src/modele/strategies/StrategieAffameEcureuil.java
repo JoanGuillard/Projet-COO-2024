@@ -23,8 +23,9 @@ public class StrategieAffameEcureuil implements IStrategieDeplacementAnimal {
         if(!etat.chercherNourriture(animal,carte,personnage,abscisseAnimal,ordonneeAnimal)){
             if(!etat.verifierDanger(carte,abscisseAnimal,ordonneeAnimal,animal,personnage,1)){
                 etat.deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal,1);
+                carte.setCase(animal.getAbscisse(),animal.getOrdonnee(),animal);
             }
         }
-        carte.setCase(animal.getAbscisse(),animal.getOrdonnee(),animal);
+
     }
 }

@@ -4,10 +4,8 @@ import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.etats.*;
-import modele.strategies.StrategieAffameEcureuil;
 import modele.strategies.StrategieAffameSinge;
 
-import static modele.CouleursAffichage.*;
 public class Singe extends Animal{
 
 

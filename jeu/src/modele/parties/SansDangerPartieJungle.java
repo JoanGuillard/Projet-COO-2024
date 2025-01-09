@@ -2,6 +2,7 @@ package modele.parties;
 import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
+import modele.PierrePrecieuse;
 import modele.animaux.Singe;
 
 import java.util.Random;
@@ -49,10 +50,18 @@ public class SansDangerPartieJungle extends Partie {
             case "S":
                 Singe s = new Singe(abscisse, ordonnee, 2, 3);
                 getLesAnimaux().add(s);
+                //enregistrerPosition(s);
                 return s;
             case "@":
                 getPersonnage().nouvellePosition(abscisse, ordonnee);
+                //enregistrerPosition(getPersonnage());
                 return getPersonnage();
+            case "2":
+                PierrePrecieuse p2 = new PierrePrecieuse(2);
+                return p2;
+            case "3":
+                PierrePrecieuse p3 = new PierrePrecieuse(3);
+                return p3;
             default:
                 return new ElementCarte(element);
         }
@@ -72,11 +81,13 @@ public class SansDangerPartieJungle extends Partie {
     protected String genererElementAleatoire(Random random) {
         int chance = random.nextInt(100);
         if (chance < 90) return " ";
-        else if (chance < 92) return "C";
-        else if (chance < 94) return "R";
-        else if (chance <96 ) return "S";
-        else if (chance < 97) return "T";
-        else return "B"; // 10% cocotiers
+        else if (chance < 91) return "C";
+        else if (chance < 93) return "R";
+        else if (chance <94 ) return "S";
+        else if (chance < 95) return "T";
+        else if (chance < 96) return "2";
+        else if (chance < 97) return "3";
+        else return "B";
     }
 
 }

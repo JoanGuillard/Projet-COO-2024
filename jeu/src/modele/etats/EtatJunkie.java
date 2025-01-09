@@ -4,8 +4,7 @@ import modele.Carte;
 import modele.ElementCarte;
 import modele.Personnage;
 import modele.animaux.Animal;
-import modele.animaux.Ecureuil;
-import modele.animaux.Singe;
+import modele.parties.Partie;
 
 import static modele.CouleursAffichage.*;
 public class EtatJunkie extends Etat{
@@ -24,18 +23,20 @@ public class EtatJunkie extends Etat{
     }
     @Override
     public void seDeplacer(Animal animal, Carte carte, Personnage personnage) {
-        if(animal.getCptTourJunkie() == animal.getNbTourJunkie()){
+        if (animal.getCptTourJunkie() == animal.getNbTourJunkie()) {
             animal.changerEtat(EtatAffame.getInstance());
             animal.setCptTourJunkie(0);
             return;
         }
         int abscisseAnimal = animal.getAbscisse();
         int ordonneeAnimal = animal.getOrdonnee();
+
         if(!verifierDanger(carte,abscisseAnimal,ordonneeAnimal,animal,personnage,2)){
             animal.setEstCache(false);
             carte.setCase(animal.getAbscisse(), animal.getOrdonnee(),new ElementCarte(animal.getCachette()));
             deplacementAleatoire(carte,abscisseAnimal,ordonneeAnimal,animal,2);
         }
+
         animal.augmenterCptTourJunkie();
         carte.setCase(animal.getAbscisse(),animal.getOrdonnee(),animal);
     }

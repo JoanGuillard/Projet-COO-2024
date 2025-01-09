@@ -48,7 +48,7 @@ public class Ihm {
     }
 
     /**
-     * demande au joueur de choisir un action
+     * demande au joueur de choisir une action
      *
      * @return l'entier qui correspond a l'action demandee par le joueur -1 si rien
      */
@@ -132,11 +132,12 @@ public class Ihm {
             System.out.println("B pour Bas");
             System.out.println("G pour Gauche");
             System.out.println("D pour Droite");
-            System.out.println("Entrez une direction (H/B/G/D) :");
+            System.out.println("R pour Revenir en arriere");
+            System.out.println("Entrez une direction (H/B/G/D/R) :");
             String direction = null;
             if (scanner.hasNext()) {
                 direction = scanner.next().toUpperCase();
-                if (direction.matches("[HBGD]")) {
+                if (direction.matches("[HBGDR]")) {
                     choixIncorrect = false;
                     return direction;
                 }
@@ -150,7 +151,11 @@ public class Ihm {
 
 
 
-
+    /**
+     * Demande au joueur de saisir le chemin d'un fichier à charger.
+     *
+     * @return le chemin du fichier ou 'q' si l'utilisateur choisit de quitter.
+     */
     public String demanderFichier() {
         Scanner scanner = new Scanner(System.in);
 
@@ -185,7 +190,12 @@ public class Ihm {
     }
 
 
-
+    /**
+     * Demande au joueur de saisir une coordonnée pour la carte.
+     *
+     * @param message le message à afficher pour guider le joueur dans sa saisie.
+     * @return l'entier représentant la coordonnée choisie par le joueur.
+     */
     public int demanderCoordonnes(String message) {
         Scanner scanner = new Scanner(System.in);
 
@@ -201,18 +211,30 @@ public class Ihm {
                     System.out.println("Vous avez choisi de quitter.");
                     return coordonne;
                 } else {
-                    System.out.println("La " + message + " doit être strictement positive.");
+                    System.out.println("Entrée invalide. Veuillez saisir un entier positif ou 0 pour quitter.");
+                    scanner.nextLine();
                 }
-            } else {
-                System.out.println("Entrée invalide. Veuillez saisir un entier positif ou 0 pour quitter.");
             }
         }
         return coordonne;
     }
+
+    /**
+     * Affiche un message à l'utilisateur.
+     *
+     * @param message le message à afficher.
+     */
     public void afficherMessage(String message){
         System.out.println(message);
     }
 
+
+    /**
+     * Demande au joueur quel objet de son inventaire il souhaite déposer.
+     *
+     * @param p l'objet `Personnage` représentant le joueur et son inventaire.
+     * @return le nom de l'objet à déposer ou "R" si le joueur souhaite revenir en arrière.
+     */
     public String demanderObjetADeposer(Personnage p){
         Scanner scanner = new Scanner(System.in);
 
@@ -221,10 +243,14 @@ public class Ihm {
         for(String item : p.getInventaire().keySet()){
             res += item + " en poche : " + p.getInventaire().get(item) + '\n';
         }
+        res+= "\nR pour revenir en arriere";
         System.out.println(res);
         while(choixIncorrect) {
             if (scanner.hasNext()) {
                 String reponse = scanner.next().toUpperCase();
+                if (reponse.equals("R")){
+                    return "R";
+                }
                 if(p.isInInventaire(reponse)){
                     choixIncorrect = false;
                     return reponse;
@@ -235,6 +261,13 @@ public class Ihm {
         }
         return "";
     }
+
+    /**
+     * Affiche un message d'erreur suivi d'un délai d'attente de 1 seconde, puis affiche l'état actuel de la partie.
+     *
+     * @param e l'exception qui a été levée.
+     * @param partie l'objet `Partie` représentant l'état du jeu à afficher après l'erreur.
+     */
     public void afficherAvecSleep(Exception e, Partie partie){
         afficherMessage("Erreur : " + e.getMessage());
         try {
@@ -244,30 +277,6 @@ public class Ihm {
         }
         afficherMessage(partie.toString());
     }
-    public int demanderChoixDanger(){
-        Scanner scanner = new Scanner(System.in);
-        boolean choixIncorrect = false;
-        int choix = 0;
-        while (!choixIncorrect) {
-            System.out.println("Voulez vous jouer avec ou sans danger?");
-            System.out.println("1 : Avec danger");
-            System.out.println("2 : Sans danger");
-            System.out.println("3 : Quitter le jeu");
-            System.out.println("Veuillez saisir l'entier qui correspond a votre choix.");
 
-            if (scanner.hasNextInt()) {
-                choix = scanner.nextInt();
-                if (0 <= choix && choix <= 3) {
-                    choixIncorrect = true;
-                    return choix;
-                }
-            }
-                System.out.println("L'entier que vous avez choisi ne correspond a aucun choix.Veuillez saisir un entier valide.");
-                scanner.nextLine();
-
-
-        }
-        return choix;
-    }
 
 }

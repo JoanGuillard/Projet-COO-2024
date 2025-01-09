@@ -4,6 +4,7 @@ import modele.*;
 import modele.etats.*;
 import modele.strategies.IStrategieDeplacementAnimal;
 
+
 import java.util.ArrayList;
 import static modele.CouleursAffichage.*;
 
@@ -41,6 +42,15 @@ public abstract class Animal extends ElementCarte {
         this.estMort = false;
     }
 
+
+    /**
+     * Permet à l'animal de se nourrir.
+     *
+     * @param estNourriParAmi Indique si l'animal est nourri par un ami.
+     * @param aliment Le type de nourriture consommé.
+     * @param personnage Le personnage qui interagit avec l'animal.
+     * @param carte La carte de jeu.
+     */
     public void seNourrir(boolean estNourriParAmi,String aliment,Personnage personnage,Carte carte){
         this.cptTourSansManger =0;
         this.setCachette(" ");
@@ -104,9 +114,11 @@ public abstract class Animal extends ElementCarte {
         this.ami = false;
     }
 
+
     public void seDeplacer(Carte carte, Personnage personnage){
         etat.seDeplacer(this,carte,personnage);
     }
+
 
     public String toString(){
         if(estCache){

@@ -8,6 +8,7 @@ import modele.etats.EtatJunkie;
 import modele.etats.EtatSurAmi;
 import modele.strategies.StrategieAffameEcureuil;
 
+
 public class Ecureuil extends Animal{
 
 
@@ -32,8 +33,6 @@ public class Ecureuil extends Animal{
     public void devenirAmi(Personnage personnage,Carte carte) {
         this.setAmi(true);
     }
-
-
 
 
     @Override
