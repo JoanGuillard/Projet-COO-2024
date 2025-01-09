@@ -250,7 +250,7 @@ public abstract class Partie {
             personnage.ajouterDansInventaire(carte.setCaseString(new ElementCarte(" "), positionObjet, personnage.getAbscisse(), personnage.getOrdonnee()));
             reculer(p.getNbTours());
             return false;
-        }else if( carte.getCase(nvAbscisse,nvOrdonnee).equals("K")){
+        }else if( carte.getCase(nvAbscisse,nvOrdonnee).getApparence().equals("K")){
             personnage.ajouterDansInventaire(carte.setCaseString(new ElementCarte(" "), positionObjet, personnage.getAbscisse(), personnage.getOrdonnee()));
         }
         else {
