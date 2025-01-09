@@ -19,9 +19,9 @@ T          T  T               R     R  R                   B C   C            R 
 R   S   T C T                    RRRR   R                        CB   C                  TT R      T
 R        T   B                R    R  R             S            C  C                  RRR         T
 T            RR   B                                                  B  C             R       TT   T
-      C  CRT    CR             R RR            RRRR    S    RRR                            T     T T
-T        B     B                R                    RR     S                      R  TT        TOST
-                            R                       RRRRR     RR                      R   R TT   T R
+      C  CRT    CR             R RR            RRRR    S    RRR                            T     T C
+T        B     B                R                    RR     S                      R  TT        TOSR
+                            R                       RRRRR     RR                      R   R TT   T C
 R                                                         RR                            T          R
                          T     T                      RRRR                           R   R  TT     T
 T      RRRR              T     T    R                                                   T  TTT     T
